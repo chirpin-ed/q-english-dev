@@ -350,6 +350,8 @@ code{font-family:inherit;font-weight:600}
 .cta .row a{flex:1;text-align:center;font-weight:700;padding:12px;border-radius:10px;background:var(--deep);color:#fff}
 .cta .row a.ghost{background:none;color:var(--deep);border:1px solid var(--deep)}
 .info{font-size:14px;color:var(--ink2);line-height:1.9}
+.mapimg{display:block;margin-top:12px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.mapimg img{display:block;width:100%;height:auto}
 .maps{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
 .maps a{display:flex;align-items:center;justify-content:center;height:46px;border:1px solid var(--deep);border-radius:10px;color:var(--deep);font-size:14.5px;font-weight:700}
 .maps a:active{background:var(--soft)}
@@ -383,7 +385,7 @@ const INFO = {
 const CLASS = [
   ["대상",   "예비고1 (현 중3)"],
   ["개강",   "[10월 셋째주 토요일]"],
-  ["인원",   "[정원 4명]"],
+  ["인원",   "반당 정원 4명"],
   ["교재",   "3개년 모의고사 · 수업 유인물 · 단어책, 어법책 각 1권 TBD"]
 ];
 // 예시 링크 — 비워 두면 '준비 중'으로 표시됩니다
@@ -747,9 +749,7 @@ const LINKS = {
     '<div class="info"><a href="tel:'+digits+'" target="_top">전화</a> · <a href="sms:'+digits+'" target="_top">문자</a> &nbsp;<a href="tel:'+digits+'" target="_top"><b>'+INFO.phone+'</b></a><br>' +
       '위치 &nbsp;'+INFO.address +
       (INFO.hours ? '<br>'+INFO.hours : '') + '</div>' +
-    '<div class="maps">' +
-      '<a href="'+map+'" target="_blank" rel="noopener">네이버 지도로 길찾기</a>' +
-    '</div>';
+    '<a class="mapimg" href="'+map+'" target="_blank" rel="noopener"><img src="map.jpg" alt="약도 — 한가람고·이대목동병원 사이, 목동동로" loading="lazy"></a>';
   document.querySelectorAll("[data-cta]").forEach(el => el.innerHTML = ctaHTML);
 
   // 반 안내
