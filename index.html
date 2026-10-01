@@ -384,9 +384,17 @@ const INFO = {
 // 반 정보 — 첫 화면 '반 안내'에 그대로 찍힙니다
 const CLASS = [
   ["대상",   "예비고1 (현 중3)"],
-  ["개강",   "[10월 셋째주 토요일]"],
+  ["개강",   "10월 넷째 주"],
   ["인원",   "반당 정원 4명"],
   ["교재",   "3개년 모의고사 · 수업 유인물 · 단어책, 어법책 각 1권 TBD"]
+];
+// 수강생 결과 — [학교 · 설명, 결과]. 줄을 더하거나 고치면 첫 화면·상세 둘 다 바뀝니다
+const RESULTS = [
+  ["XXX고2 · 주 4회 하프수업", "내신 1개 틀림 · 1등급"],
+  ["XXX고1 · 어법",           "1개 맞음 → 1개 틀림"],
+  ["XX고",                   "2등급 → 합산 1등급 → 1등급"],
+  ["XX고",                   "모의 3등급 → 1등급"],
+  ["XX고",                   "모의 5등급 → 3등급"]
 ];
 // 예시 링크 — 비워 두면 '준비 중'으로 표시됩니다
 const LINKS = {
@@ -421,22 +429,22 @@ const LINKS = {
   <div class="sym-list">
     <a class="sym" href="#L2" data-jump="L2">
       <div class="body"><div class="q"><span>단어는 아는데</span> 문장은 안 읽혀.</div>
-      <div class="why">뜻만 외웠지,<br><b>문맥에 넣어 써본 적은 없으니까요.</b></div></div>
+      <div class="why">뜻만 외웠지,<br><b>문맥에 넣어 써 본 적이 없거든요.</b></div></div>
       <span class="sbtn"><small>해결책</small><i>→</i></span>
     </a>
     <a class="sym" href="#L1" data-jump="L1">
       <div class="body"><div class="q"><span>해석은 했는데</span> 의미는 몰라.</div>
-      <div class="why">문장을 옮기기만 했지,<br><b>관계는 잡혔나요?</b></div></div>
+      <div class="why">문장을 옮기기만 했지,<br><b>관계를 생각해 본 적이 없거든요.</b></div></div>
       <span class="sbtn"><small>해결책</small><i>→</i></span>
     </a>
     <a class="sym" href="#L4" data-jump="L4">
       <div class="body"><div class="q"><span>의미는 아는데</span> 문제는 못 맞춰.</div>
-      <div class="why">통째로 읽고, 감으로 고릅니다.<br><b>쪼개서 따져야 확신이 됩니다.</b></div></div>
+      <div class="why">통째로 읽고, 감으로 고릅니다.<br><b>쪼개서 따져 본 적이 없거든요.</b></div></div>
       <span class="sbtn"><small>해결책</small><i>→</i></span>
     </a>
     <a class="sym" href="#L5" data-jump="L5">
       <div class="body"><div class="q"><span>다 읽었는데</span> 기억은 안 나.</div>
-      <div class="why">기억력이 부족해서가 아니라<br><b>압축하는 법을 몰라서입니다.</b></div></div>
+      <div class="why">기억력이 부족해서가 아니라<br><b>압축하는 방법을 배운 적이 없거든요.</b></div></div>
       <span class="sbtn"><small>해결책</small><i>→</i></span>
     </a>
   </div>
@@ -445,38 +453,39 @@ const LINKS = {
   <div class="sym-list">
     <a class="sym" href="#L3" data-jump="L3">
       <div class="body"><div class="q"><span>달달 외웠더니</span> 변형이야.</div>
-      <div class="why">변형 문제를 많이 푼다고 될까요?<br><b>각도와 기준이 서 있지 않으면, 또 틀립니다.</b></div></div>
+      <div class="why">변형 문제를 많이 푼다고 될까요?<br><b>기준을 세우고, 각도를 볼 수 있어야 합니다.</b></div></div>
       <span class="sbtn"><small>해결책</small><i>→</i></span>
     </a>
     <a class="sym" href="#L6" data-jump="L6">
       <div class="body"><div class="q"><span>어법은 아는데</span> 문제에선 안 보여.</div>
-      <div class="why">규칙은 머리에 있는데,<br><b>쓸 자리를 모르는 겁니다.</b></div></div>
+      <div class="why">규칙은 머리에 있는데,<br><b>어디에 무엇을 적용할지 모르니까요.</b></div></div>
       <span class="sbtn"><small>해결책</small><i>→</i></span>
     </a>
   </div>
 
   <div class="stance">
+    <p class="quote">Practice doesn’t make perfect.<br>Perfect practice makes perfect.<br><small>— Vince Lombardi</small></p>
     <h2 class="st-h">3개년 모의고사를,<br>내신 준비하듯.</h2>
     <p class="st-p">한 번 풀고 채점하고 끝내는 모의고사가 아닙니다.<br>지문 하나하나를 시험범위처럼 파고듭니다.</p>
 
     <div class="grp">수업 진행</div>
-    <p class="cyc"><b>숙제</b><i>→</i><b>테스트 · 리뷰</b><i>→</i><b>체화</b><i>→</i><b class="re">다시 숙제</b></p>
+    <p class="cyc"><b>숙제</b><i>→</i><b>테스트 · 리뷰</b><i>→</i><b>체화</b><i>→</i><b class="re">↻ 루프</b></p>
     <ol class="flow4">
       <li><b>단어</b><ol>
-        <li><em>숙제</em>문맥 추론 체크 → 암기</li>
+        <li><em>숙제</em>어휘 문맥 추론 → 암기</li>
         <li><em>테스트</em>1:1 테스트 · 예문 테스트</li>
-        <li><em>체화</em>문맥 추론 원리 설명</li>
-        <li><em class="re">다시</em>틀린 단어 · 모의고사 단어 → 새 숙제</li></ol></li>
+        <li><em>체화</em>어휘 원리 설명</li>
+        <li><em class="re">루프</em>틀린 단어 · 모의고사 단어 → 새 숙제</li></ol></li>
       <li><b>독해</b><ol>
         <li><em>숙제</em>모의고사 풀이</li>
         <li><em>리뷰</em>채점 · 틀린 문제 해결</li>
         <li><em>체화</em>패러프레이징 · 요약 학습</li>
-        <li><em class="re">다시</em>몇 지문은 다시 숙제로</li></ol></li>
+        <li><em class="re">루프</em>특정 지문 프린트 숙제 · 요약 숙제</li></ol></li>
       <li><b>어법</b><ol>
         <li><em>숙제</em>어법 풀이</li>
         <li><em>분석</em>채점 · 왜 틀렸는지</li>
         <li><em>체화</em>프로토콜 숙지 연습</li>
-        <li><em class="re">다시</em>고쳐서 다시 제출</li></ol></li>
+        <li><em class="re">루프</em>고쳐서 다시 제출</li></ol></li>
     </ol>
 
     <div class="grp">맞춤 추가 과제 <small>더 할 수 있는 학생에게</small></div>
@@ -486,12 +495,7 @@ const LINKS = {
 
   <div class="block">
     <div class="sub-h">수강생 결과</div>
-    <div class="res dense">
-      <div><small>XXX고 · 주 4회 하프수업</small>내신 1개 오답 · 1등급</div>
-      <div><small>XX고</small>2등급 → 합산 1등급</div>
-      <div><small>XX고</small>모의고사 3등급 → 1등급</div>
-      <div><small>XXX고 · 어법</small>1개 맞음 → 1개 틀림</div>
-    </div>
+    <div class="res dense" data-results></div>
     <p class="res-more">외 다수 …</p>
   </div>
 
@@ -652,28 +656,28 @@ const LINKS = {
   </div>
   <div class="sec" id="LS">
   <div class="stance" style="margin-top:0">
+    <p class="quote">Practice doesn’t make perfect.<br>Perfect practice makes perfect.<br><small>— Vince Lombardi</small></p>
     <h2 class="st-h">3개년 모의고사를,<br>내신 준비하듯.</h2>
     <p class="st-p">한 번 풀고 채점하고 끝내는 모의고사가 아닙니다.<br>지문 하나하나를 시험범위처럼 파고듭니다.</p>
-    <p class="quote">Practice doesn’t make perfect.<br>Perfect practice makes perfect.<br><small>— Vince Lombardi</small></p>
 
     <div class="grp">수업 진행</div>
-    <p class="cyc"><b>숙제</b><i>→</i><b>테스트 · 리뷰</b><i>→</i><b>체화</b><i>→</i><b class="re">다시 숙제</b></p>
+    <p class="cyc"><b>숙제</b><i>→</i><b>테스트 · 리뷰</b><i>→</i><b>체화</b><i>→</i><b class="re">↻ 루프</b></p>
     <ol class="flow4">
       <li><b>단어</b><ol>
-        <li><em>숙제</em>문맥 추론 체크 → 암기</li>
+        <li><em>숙제</em>어휘 문맥 추론 → 암기</li>
         <li><em>테스트</em>1:1 테스트 · 예문 테스트</li>
-        <li><em>체화</em>문맥 추론 원리 설명</li>
-        <li><em class="re">다시</em>틀린 단어 · 모의고사 단어 → 새 숙제</li></ol></li>
+        <li><em>체화</em>어휘 원리 설명</li>
+        <li><em class="re">루프</em>틀린 단어 · 모의고사 단어 → 새 숙제</li></ol></li>
       <li><b>독해</b><ol>
         <li><em>숙제</em>모의고사 풀이</li>
         <li><em>리뷰</em>채점 · 틀린 문제 해결</li>
         <li><em>체화</em>패러프레이징 · 요약 학습</li>
-        <li><em class="re">다시</em>몇 지문은 다시 숙제로</li></ol></li>
+        <li><em class="re">루프</em>특정 지문 프린트 숙제 · 요약 숙제</li></ol></li>
       <li><b>어법</b><ol>
         <li><em>숙제</em>어법 풀이</li>
         <li><em>분석</em>채점 · 왜 틀렸는지</li>
         <li><em>체화</em>프로토콜 숙지 연습</li>
-        <li><em class="re">다시</em>고쳐서 다시 제출</li></ol></li>
+        <li><em class="re">루프</em>고쳐서 다시 제출</li></ol></li>
     </ol>
 
     <div class="grp">맞춤 추가 과제 <small>더 할 수 있는 학생에게</small></div>
@@ -684,12 +688,7 @@ const LINKS = {
   <div class="sec" id="LR">
     <div class="num">수강생 결과</div>
     <h2>실제로는 어땠을까요?</h2>
-    <div class="res dense">
-      <div><small>XXX고 · 주 4회 하프수업</small>내신 1개 오답 · 1등급</div>
-      <div><small>XX고</small>2등급 → 합산 1등급</div>
-      <div><small>XX고</small>모의고사 3등급 → 1등급</div>
-      <div><small>XXX고 · 어법</small>1개 맞음 → 1개 틀림</div>
-    </div>
+    <div class="res dense" data-results></div>
     <p class="res-more">외 다수 …</p>
     <p class="note" style="margin-top:10px">※ 실제 수강생 사례이며, 학습 기간·참여도에 따라 결과는 달라질 수 있습니다.</p>
   </div>
@@ -755,6 +754,10 @@ const LINKS = {
   // 반 안내
   const kl = document.getElementById("klass");
   if (kl) kl.innerHTML = CLASS.map(([k,v]) => '<dt>'+k+'</dt><dd>'+v+'</dd>').join("");
+
+  // 수강생 결과
+  document.querySelectorAll("[data-results]").forEach(el =>
+    el.innerHTML = RESULTS.map(([k,v]) => '<div><small>'+k+'</small>'+v+'</div>').join(""));
 
   // 예시 링크
   document.querySelectorAll("[data-link]").forEach(a => {
