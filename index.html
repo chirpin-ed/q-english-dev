@@ -390,11 +390,11 @@ const CLASS = [
 ];
 // 수강생 결과 — [학교 · 설명, 결과]. 줄을 더하거나 고치면 첫 화면·상세 둘 다 바뀝니다
 const RESULTS = [
-  ["XXX고2 · 주 4회 하프수업", "내신 1개 틀림 · 1등급"],
-  ["XXX고1 · 어법",           "1개 맞음 → 1개 틀림"],
-  ["XX고",                   "2등급 → 합산 1등급 → 1등급"],
-  ["XX고",                   "모의 3등급 → 1등급"],
-  ["XX고",                   "모의 5등급 → 3등급"]
+  ["XXX고2 · 내신 · 주 4회 하프수업", "1개 틀림 · 1등급"],
+  ["XXX고1 · 내신 · 어법",           "1개 맞음 → 1개 틀림"],
+  ["XX고2 · 내신",                   "2등급 → 합산 1등급"],
+  ["XX고2 · 모의",                   "3등급 → 1등급"],
+  ["XX고1 · 모의",                   "5등급 → 3등급"]
 ];
 // 예시 링크 — 비워 두면 '준비 중'으로 표시됩니다
 const LINKS = {
@@ -557,7 +557,7 @@ const LINKS = {
   <div class="sec" id="L4">
     <div class="tie">“의미는 아는데 문제는 못 맞춰.”</div>
     <div class="num">해결책 3 · 판단하기</div>
-    <div class="sedtag"><b>Eval</b>정확히 판단한다</div>
+    <div class="sedtag"><b>Assess</b>정확히 판단한다</div>
     <h2>추측이 확신으로</h2>
     <p>아는 것과 판단은 별개입니다. 그래서 <b>노드 단위</b>로 쪼개 따집니다.</p>
     <div class="psg"><p class="lbl">지문 · 2022년 고2 9월 학평 21번 (압축)</p>
@@ -593,7 +593,7 @@ const LINKS = {
   <div class="sec" id="L3">
     <div class="tie">“달달 외웠더니 변형이야.”</div>
     <div class="num">해결책 5 · 변형</div>
-    <div class="sedtag"><b>Eval</b>정확히 판단한다</div>
+    <div class="sedtag"><b>Assess</b>정확히 판단한다</div>
     <h2>여러 각도에서 판단합니다.</h2>
     <p>달달 외워서는 안 풀립니다. 같은 글을 <b>여러 각도</b>로 묻습니다.</p>
     <div class="rvx">
@@ -643,7 +643,7 @@ const LINKS = {
   <div class="sec" id="L6">
     <div class="tie">“어법은 아는데 문제에선 안 보여.”</div>
     <div class="num">해결책 6 · 어법</div>
-    <div class="sedtag"><b>Eval</b>정확히 판단한다</div>
+    <div class="sedtag"><b>Assess</b>정확히 판단한다</div>
     <h2>프로토콜식 어법.</h2>
     <div class="gx">
       <div class="psg"><p class="lbl">2021년 고2 11월 학평 29번 변형</p>
@@ -739,7 +739,7 @@ const LINKS = {
 
   // 상담 블록 (숏·롱 공통)
   const ctaHTML =
-    '<h2>우리 아이는 어디서 막힐까</h2>' +
+    '<h2>무료 진단 및 상담</h2>' +
     '<p>짧은 독해 테스트로 무엇이 문제인지 진단해 드립니다. 주저 마시고 연락 주세요.</p>' +
     '<div class="row">' +
       '<a href="tel:'+digits+'" target="_top">전화로 진단 예약</a>' +
