@@ -30,11 +30,23 @@ b{font-weight:700}
 
 .stat{background:var(--deep);color:#fff;padding:30px 0 30px}
 .stat .lb{font-size:12.5px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.6);margin:0 0 14px}
-.nums{display:grid;grid-template-columns:1.25fr 1fr 1fr;border-top:1px solid rgba(255,255,255,.28)}
+.nums{display:grid;grid-template-columns:1.1fr 1.1fr .9fr;border-top:1px solid rgba(255,255,255,.28)}
 .nums div{padding:14px 0 4px}
 .nums div+div{padding-left:14px;border-left:1px solid rgba(255,255,255,.18)}
-.nums b{display:block;font-family:"Noto Serif KR",serif;font-weight:900;font-size:34px;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.nums b{display:block;font-family:"Noto Serif KR",serif;font-weight:900;font-size:30px;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .nums small{display:block;font-size:13px;color:rgba(255,255,255,.7);margin-top:4px}
+.nums small:first-child{margin:0 0 2px}
+.spd2{margin:22px 0 0}
+.spd2 .h{margin:0 0 4px;font-size:13px;font-weight:700;color:rgba(255,255,255,.75)}
+.spd2 .h span{font-weight:500;color:rgba(255,255,255,.5)}
+.spd2 .r{display:flex;justify-content:space-between;align-items:flex-end;padding:10px 0;border-top:1px solid rgba(255,255,255,.28)}
+.spd2 .n{font-size:16px;font-weight:800;line-height:1.3}
+.spd2 .n small{display:block;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.6)}
+.spd2 b{font-family:"Noto Serif KR",serif;font-weight:900;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.spd2 b small{font-family:Pretendard,sans-serif;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);margin-left:3px}
+.spd2 .me{border-top:2px solid #fff;border-bottom:2px solid #fff}
+.spd2 .me .n{font-size:19px}
+.spd2 .me b{font-size:42px}
 .pace{margin:22px 0 0;border-top:1px solid rgba(255,255,255,.28);padding-top:16px}
 .pace p{margin:0;font-size:17px;line-height:1.7}
 .pace p b{font-size:20px}
@@ -365,7 +377,7 @@ details.pv .psg{margin-top:8px}
 .pil .pk{font-weight:800;color:var(--deep)}
 .plen{background:var(--soft);border-radius:12px;padding:12px 14px;margin:0 0 12px}
 .plen p{margin:0;font-size:14.5px;line-height:1.8}
-.plen span{display:inline-block;min-width:100px;font-weight:800;color:var(--ink)}
+.plen span{display:inline-block;min-width:118px;font-weight:800;color:var(--ink)}
 .vsbox .vq{margin:0 0 10px;font-family:"Noto Serif KR",serif;font-weight:900;font-size:20px;line-height:1.45;color:var(--ink)}
 .waste{list-style:none;margin:0;padding:0}
 .waste li{padding:10px 0;border-top:1px dashed var(--line);font-size:14.5px;line-height:1.65;color:var(--ink2)}
@@ -468,7 +480,7 @@ const INFO = {
 
 <section class="wrap stages">
   <div class="stg"><p class="sn"><i>1</i>기초 다지기<small>내신 기간 전</small></p><ul><li><b>줄긋기</b></li><li><b>노드 잡기</b></li><li><b>QUANT</b></li><li><b>동사 자리 판단</b></li><li><b>해석 달기</b></li><li><b>단어 암기</b></li></ul></div>
-  <div class="stg"><p class="sn"><i>2</i>시리즈<small>수업과 함께</small></p><ul><li><b>긴 TF</b></li><li><b>핵심</b></li><li><b>패러프레이즈</b></li><li><b>요약문</b></li><li><b>대응 · 대조 / 추론 빈칸</b></li></ul></div>
+  <div class="stg"><p class="sn"><i>2</i>시리즈<small>수업과 함께</small></p><ul><li><b>긴 TF 연습지</b></li><li><b>핵심</b></li><li><b>패러프레이즈</b></li><li><b>요약문</b></li><li><b>대응 · 대조 / 추론 빈칸</b></li></ul></div>
   <div class="stg"><p class="sn"><i>3</i>실전<small>시험 2주 전~</small></p><ul><li><b>어법</b></li><li><b>순서 · 삽입</b></li><li><b>원리 적용 세트</b></li><li><b>실전 문제</b></li></ul></div>
   <div class="foot2">
     <a href="hangaram.html"><span>한가람 시험, 이렇게 대비했습니다</span>→</a>
@@ -517,8 +529,8 @@ const SUM = {"통념": {"1": "While we expect a shared resource to benefit every
   document.getElementById("b-sms").href  = "sms:" + digits;
   document.getElementById("b-map").href  = map;
   document.getElementById("cta").innerHTML =
-    '<div class="cta"><h2>무료 진단 및 상담</h2>' +
-    '<p>짧은 독해 테스트로 무엇이 문제인지 진단해 드립니다. 주저 마시고 연락 주세요.</p>' +
+    '<div class="cta"><h2>무료 샘플 · 진단 및 상담</h2>' +
+    '<p>실제 자산 샘플을 직접 보여 드리고, 짧은 독해 테스트로 무엇이 문제인지 진단해 드립니다.</p>' +
     '<div class="row"><a href="tel:'+digits+'" target="_top">전화로 진단 예약</a><a class="ghost" href="sms:'+digits+'" target="_top">문자 문의</a></div>' +
     '<div class="info"><a href="tel:'+digits+'" target="_top"><b>'+INFO.phone+'</b></a><br>위치 &nbsp;'+INFO.address+'</div></div>';
 })();

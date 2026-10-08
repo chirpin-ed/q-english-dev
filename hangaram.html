@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Q English · 한가람 영어</title>
+<title>Q English · 중간고사 영어</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -30,11 +30,23 @@ b{font-weight:700}
 
 .stat{background:var(--deep);color:#fff;padding:30px 0 30px}
 .stat .lb{font-size:12.5px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.6);margin:0 0 14px}
-.nums{display:grid;grid-template-columns:1.25fr 1fr 1fr;border-top:1px solid rgba(255,255,255,.28)}
+.nums{display:grid;grid-template-columns:1.1fr 1.1fr .9fr;border-top:1px solid rgba(255,255,255,.28)}
 .nums div{padding:14px 0 4px}
 .nums div+div{padding-left:14px;border-left:1px solid rgba(255,255,255,.18)}
-.nums b{display:block;font-family:"Noto Serif KR",serif;font-weight:900;font-size:34px;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.nums b{display:block;font-family:"Noto Serif KR",serif;font-weight:900;font-size:30px;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .nums small{display:block;font-size:13px;color:rgba(255,255,255,.7);margin-top:4px}
+.nums small:first-child{margin:0 0 2px}
+.spd2{margin:22px 0 0}
+.spd2 .h{margin:0 0 4px;font-size:13px;font-weight:700;color:rgba(255,255,255,.75)}
+.spd2 .h span{font-weight:500;color:rgba(255,255,255,.5)}
+.spd2 .r{display:flex;justify-content:space-between;align-items:flex-end;padding:10px 0;border-top:1px solid rgba(255,255,255,.28)}
+.spd2 .n{font-size:16px;font-weight:800;line-height:1.3}
+.spd2 .n small{display:block;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.6)}
+.spd2 b{font-family:"Noto Serif KR",serif;font-weight:900;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.spd2 b small{font-family:Pretendard,sans-serif;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);margin-left:3px}
+.spd2 .me{border-top:2px solid #fff;border-bottom:2px solid #fff}
+.spd2 .me .n{font-size:19px}
+.spd2 .me b{font-size:42px}
 .pace{margin:22px 0 0;border-top:1px solid rgba(255,255,255,.28);padding-top:16px}
 .pace p{margin:0;font-size:17px;line-height:1.7}
 .pace p b{font-size:20px}
@@ -365,7 +377,7 @@ details.pv .psg{margin-top:8px}
 .pil .pk{font-weight:800;color:var(--deep)}
 .plen{background:var(--soft);border-radius:12px;padding:12px 14px;margin:0 0 12px}
 .plen p{margin:0;font-size:14.5px;line-height:1.8}
-.plen span{display:inline-block;min-width:100px;font-weight:800;color:var(--ink)}
+.plen span{display:inline-block;min-width:118px;font-weight:800;color:var(--ink)}
 .vsbox .vq{margin:0 0 10px;font-family:"Noto Serif KR",serif;font-weight:900;font-size:20px;line-height:1.45;color:var(--ink)}
 .waste{list-style:none;margin:0;padding:0}
 .waste li{padding:10px 0;border-top:1px dashed var(--line);font-size:14.5px;line-height:1.65;color:var(--ink2)}
@@ -422,25 +434,28 @@ const INFO = {
 
 <header class="top"><div class="wrap">
   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iNzI4IiBoZWlnaHQ9IjMwNCIgdmlld0JveD0iMCAwIDcyOCAzMDQiPg0KPGRlZnM+DQo8cGF0aCBpZD0iZm9udF8xXzUyIiBkPSJNLjY5ODI0MjIgLjEwNDk5NTczIC44MjMyNDIyLS4wNTY2NDA2MjZILjY2MTEzMjhMLjU5NzY1NjI3IC4wMjUzOTA2MjVDLjU0NTI0NzQtLjAwMzI1NTIwODMgLjQ4NjgxNjQtLjAxNzU3ODEyNSAuNDIyMzYzMjktLjAxNzU3ODEyNSAuMzE0NjE1ODktLjAxNzU3ODEyNSAuMjI1MDk3NjYgLjAxOTU4NzE5OSAuMTUzODA4NiAuMDkzOTE3ODUgLjA4MjUxOTUzIC4xNjgyNTg2NyAuMDQ2ODc1IC4yNTY4MjU3OCAuMDQ2ODc1IC4zNTk2MTkxNSAuMDQ2ODc1IC40MjgyNjMzNSAuMDYzNDc2NTYgLjQ5MTI5MjM0IC4wOTY2Nzk2OSAuNTQ4NzA2MDggLjEyOTg4MjgxIC42MDYxMTk4IC4xNzU1MzcxMSAuNjUxNzQzNiAuMjMzNjQyNTggLjY4NTU3NzQgLjI5MTc0ODA2IC43MTk0MTEyIC4zNTQxNjY2NyAuNzM2MzI4MSAuNDIwODk4NDUgLjczNjMyODEgLjUyMjc4NjQ2IC43MzYzMjgxIC42MTAyNzAyIC42OTk1NDQyOCAuNjgzMzQ5NiAuNjI1OTc2NTkgLjc1NjQyOSAuNTUyNDA4OSAuNzkyOTY4NzcgLjQ2MjczMjk1IC43OTI5Njg3NyAuMzU2OTQ4ODYgLjc5Mjk2ODc3IC4yNTk2MTgxNCAuNzYxMzkzMjcgLjE3NTYzMzc1IC42OTgyNDIyIC4xMDQ5OTU3M00uNjEyNzkyOTkgLjIxNTM5MzA3Qy42NDE3NjQzNyAuMjU4MzUxNjYgLjY1NjI1IC4zMDU4NzI2IC42NTYyNSAuMzU3OTU1OTQgLjY1NjI1IC40MjU5Njk0NiAuNjMzMzAwOCAuNDgzNzM0MTQgLjU4NzQwMjM3IC41MzEyNSAuNTQxNTAzOSAuNTc4Nzc2MDkgLjQ4NjAwMjYgLjYwMjUzOTA5IC40MjA4OTg0NSAuNjAyNTM5MDkgLjM1Mzg0MTE3IC42MDI1MzkwOSAuMjk3Njg4OCAuNTc5NDcyODYgLjI1MjQ0MTQgLjUzMzM0MDQ4IC4yMDcxOTQwMiAuNDg3MjA4MDUgLjE4NDU3MDMxIC40Mjg1Njg1IC4xODQ1NzAzMSAuMzU3NDIxODggLjE4NDU3MDMxIC4yNzgxNTc1NyAuMjEzMDUzMzkgLjIxNTQ1OTE5IC4yNzAwMTk1NCAuMTY5MzI2NzggLjMxNDYxNTg5IC4xMzMyNjUxOCAuMzY1MjM0MzggLjExNTIzNDM3OCAuNDIxODc1IC4xMTUyMzQzNzggLjQ1NDQyNzEgLjExNTIzNDM3OCAuNDg1MDI2MDQgLjEyMTQ0NDcgLjUxMzY3MTkgLjEzMzg2NTM2TC4zODUyNTM5IC4yOTg4MjgxM0guNTQ4MzM5ODdMLjYxMjc5Mjk5IC4yMTUzOTMwN1oiLz4NCjxwYXRoIGlkPSJmb250XzJfNjIiIGQ9Ik0uMTgwNjY0MDYgLjczNjMyODFILjM0NDcyNjU3TC4zMzQ5NjA5NSAuNjY2OTkyMkguMjM5MjU3ODFMLjEyNzkyOTY5LS4xMjY5NTMxM0guMjIzMTQ0NTNMLjIxMzg2NzE5LS4xOTQzMzU5NEguMDQ5ODA0Njg5TC4xODA2NjQwNiAuNzM2MzI4MVoiLz4NCjxwYXRoIGlkPSJmb250XzJfMyIgZD0iIi8+DQo8cGF0aCBpZD0iZm9udF8yXzc4IiBkPSJNLjEyMzA0Njg3OCAuNzM2MzI4MUguMTg5NDUzMTNMLjEzMzMwMDc4IC4zMzQ4NjkzOSAuMzg5MTYwMTcgLjUzMTI1SC40OTU2MDU0OEwuMTg3MDExNzIgLjI5Mzk0NTMgLjQ1ODk4NDM4IDBILjM2ODE2NDA3TC4xMjMwNDY4NzggLjI2Mzc0ODE4IC4wODc0MDIzNDcgMEguMDE5MDQyOTY5TC4xMjMwNDY4NzggLjczNjMyODFaIi8+DQo8cGF0aCBpZD0iZm9udF8yXzc3IiBkPSJNLjEzNzIwNzAzIC43NUMuMTUyMTgwOTkgLjc1IC4xNjUwMzkwNiAuNzQ0NjI4OSAuMTc1NzgxMjUgLjczMzg4NjcgLjE4NjUyMzQ0IC43MjMxNDQ1NiAuMTkxODk0NTMgLjcxMDI4NjQ2IC4xOTE4OTQ1MyAuNjk1MzEyNSAuMTkxODk0NTMgLjY4MDAxMyAuMTg2NTIzNDQgLjY2NzA3MzU3IC4xNzU3ODEyNSAuNjU2NDk0MTcgLjE2NTAzOTA2IC42NDU5MTQ3NiAuMTUyMTgwOTkgLjY0MDYyNSAuMTM3MjA3MDMgLjY0MDYyNSAuMTIxOTA3NTU4IC42NDA2MjUgLjEwODg4NjcyIC42NDU5MTQ3NiAuMDk4MTQ0NTMgLjY1NjQ5NDE3IC4wODc0MDIzNDcgLjY2NzA3MzU3IC4wODIwMzEyNSAuNjgwMDEzIC4wODIwMzEyNSAuNjk1MzEyNSAuMDgyMDMxMjUgLjcxMDI4NjQ2IC4wODc0MDIzNDcgLjcyMzE0NDU2IC4wOTgxNDQ1MyAuNzMzODg2NyAuMTA4ODg2NzIgLjc0NDYyODkgLjEyMTkwNzU1OCAuNzUgLjEzNzIwNzAzIC43NU0uMDgzMDA3ODEgLjUzMTI1SC4xNDk5MDIzNUwuMDcyMjY1NjI4LS4wMzQwNTc2MTlDLjA2MjUtLjEwNDA5NTQ2IC4wNDg3NDY3NDctLjE1MDU5NDA3IC4wMzEwMDU4Ni0uMTczNTUzNDcgLjAxMzI2NDk3NC0uMTk2NTIzMDMtLjAwOTQ0MDEwNDktLjIwODAwNzgxLS4wMzcxMDkzNzYtLjIwODAwNzgxLS4wNTQzNjE5OC0uMjA4MDA3ODEtLjA3NDA1NTk5LS4yMDM0MTQ5Mi0uMDk2MTkxNDA5LS4xOTQyMjkxM0wtLjA4Nzg5MDYyOC0uMTM1NzQyMTlDLS4wNzU4NDYzNS0uMTQyOTAzNjQtLjA2NDI5MDM3LS4xNDY0ODQzOC0uMDUzMjIyNjU4LS4xNDY0ODQzOC0uMDM5ODc2My0uMTQ2NDg0MzgtLjAyOTQ1OTYzNS0uMTQxMzAxNDctLjAyMTk3MjY1Ny0uMTMwOTM1NjctLjAxMTIzMDQ2OS0uMTE1NDAyMjItLjAwMzQxNzk2ODgtLjA5MDE0ODkyOSAuMDAxNDY0ODQzOC0uMDU1MTc1NzhMLjA4MzAwNzgxIC41MzEyNVoiLz4NCjxwYXRoIGlkPSJmb250XzJfODgiIGQ9Ik0uMDkxNzk2ODc4IC41MzEyNUguMTYwMTU2MjVMLjEyOTM5NDUzIC4zMDkwNTE1Qy4xMjA5MzA5OSAuMjQ2MjQ2MzQgLjExNjY5OTIyIC4yMDU4OTE5MiAuMTE2Njk5MjIgLjE4Nzk4ODI4IC4xMTY2OTkyMiAuMTQ3Mjk4MTcgLjEzMDI4OTcyIC4xMTQwOTUwNTggLjE1NzQ3MDcgLjA4ODM3ODkwOSAuMTg0NjUxNjkgLjA2MjY2Mjc2IC4yMjA1NDAzNiAuMDQ5ODA0Njg5IC4yNjUxMzY3MyAuMDQ5ODA0Njg5IC4zMDIyNDYxIC4wNDk4MDQ2ODkgLjMzNDQ3MjY3IC4wNTk1NzAzMTQgLjM2MTgxNjQgLjA3OTEwMTU2IC4zODkxNjAxNyAuMDk4NjMyODEgLjQwODY5MTQgLjEyNDE4NjE5OSAuNDIwNDEwMTcgLjE1NTc2MTcyIC40MjYyNjk1NCAuMTcxNzEyMjQgLjQzMzI2ODIzIC4yMDgzMzMzMyAuNDQxNDA2MjYgLjI2NTYyNUwuNDc5NDkyMiAuNTMxMjVILjU0NjM4NjdMLjUxOTA0Mjk5IC4zMzAwNzgxM0MuNTA2MDIyMTggLjIzNDA0OTQ5IC40OTIxODc1IC4xNjU3NzE0OSAuNDc3NTM5MDcgLjEyNTI0NDE0IC40NjI4OTA2MyAuMDg0NzE2OCAuNDM2NzY3NTkgLjA1MTQzMjI5NCAuMzk5MTY5OTMgLjAyNTM5MDYyNSAuMzYxNTcyMjgtLjAwMDY1MTA0MTcgLjMxNTc1NTIzLS4wMTM2NzE4NzUgLjI2MTcxODc2LS4wMTM2NzE4NzUgLjIwMDE5NTMxLS4wMTM2NzE4NzUgLjE0OTgyMDk3IC4wMDUxMjY5NTMgLjExMDU5NTcgLjA0MjcyNDYxIC4wNzEzNzA0NDggLjA4MDMyMjI2OSAuMDUxNzU3ODE0IC4xMjcyNzg2NCAuMDUxNzU3ODE0IC4xODM1OTM3NSAuMDUxNzU3ODE0IC4yMDYwNTQ2OSAuMDUzNTQ4MTc3IC4yMzIyNDM4NSAuMDU3MTI4OTA4IC4yNjIxNjEyNkwuMDYyMDExNzIgLjMwOTAyMSAuMDY0NDUzMTI4IC4zMjkwMjUyOCAuMDkxNzk2ODc4IC41MzEyNVoiLz4NCjxwYXRoIGlkPSJmb250XzJfMjkiIGQ9Ik0uMTQ4OTI1NzggLjU0NDkyMTlDLjE2NTUyNzM1IC41NDQ5MjE5IC4xNzk2MDYxMyAuNTM5MDYyNSAuMTkxMTYyMTEgLjUyNzM0Mzc3IC4yMDI3MTgxIC41MTU2MjUgLjIwODQ5NjEgLjUwMTYyNzYgLjIwODQ5NjEgLjQ4NTM1MTU3IC4yMDg0OTYxIC40Njg3NSAuMjAyNzE4MSAuNDU0NjcxMjQgLjE5MTE2MjExIC40NDMxMTUyNCAuMTc5NjA2MTMgLjQzMTU1OTI0IC4xNjU1MjczNSAuNDI1NzgxMjYgLjE0ODkyNTc4IC40MjU3ODEyNiAuMTMyMzI0MjIgLjQyNTc4MTI2IC4xMTgyNDU0NDggLjQzMTU1OTI0IC4xMDY2ODk0NSAuNDQzMTE1MjQgLjA5NTEzMzQ2IC40NTQ2NzEyNCAuMDg5MzU1NDcgLjQ2ODc1IC4wODkzNTU0NyAuNDg1MzUxNTcgLjA4OTM1NTQ3IC41MDE2Mjc2IC4wOTUyMTQ4NDcgLjUxNTYyNSAuMTA2OTMzNTk3IC41MjczNDM3NyAuMTE4NjUyMzQ3IC41MzkwNjI1IC4xMzI2NDk3NCAuNTQ0OTIxOSAuMTQ4OTI1NzggLjU0NDkyMTlNLjA4ODg2NzE5IC4xMDU0Njg3NUMuMTA1NDY4NzUgLjEwNTQ2ODc1IC4xMTk1NDc1MiAuMDk5NjA5Mzc4IC4xMzExMDM1MiAuMDg3ODkwNjI4IC4xNDI2NTk1IC4wNzYxNzE4NzggLjE0ODQzNzUgLjA2MjE3NDQ4IC4xNDg0Mzc1IC4wNDU4OTg0MzkgLjE0ODQzNzUgLjAyOTYyMjM5NyAuMTQyNjU5NSAuMDE1NjI1IC4xMzExMDM1MiAuMDAzOTA2MjUgLjExOTU0NzUyLS4wMDc4MTI1IC4xMDU0Njg3NS0uMDEzNjcxODc1IC4wODg4NjcxOS0uMDEzNjcxODc1IC4wNzIyNjU2MjgtLjAxMzY3MTg3NSAuMDU4MTg2ODQ5LS4wMDc4MTI1IC4wNDY2MzA4NiAuMDAzOTA2MjUgLjAzNTA3NDg3IC4wMTU2MjUgLjAyOTI5Njg3NSAuMDI5NjIyMzk3IC4wMjkyOTY4NzUgLjA0NTg5ODQzOSAuMDI5Mjk2ODc1IC4wNjIxNzQ0OCAuMDM1MDc0ODcgLjA3NjE3MTg3OCAuMDQ2NjMwODYgLjA4Nzg5MDYyOCAuMDU4MTg2ODQ5IC4wOTk2MDkzNzggLjA3MjI2NTYyOCAuMTA1NDY4NzUgLjA4ODg2NzE5IC4xMDU0Njg3NVoiLz4NCjxwYXRoIGlkPSJmb250XzJfNjQiIGQ9Ik0uMTE3MTg3NS0uMTk0MzM1OTRILS4wNDY4NzVMLS4wMzcxMDkzNzYtLjEyNUguMDU4MTA1NDdMLjE2OTkyMTg4IC42Njg5NDUzSC4wNzQ3MDcwM0wuMDgzOTg0Mzc4IC43MzYzMjgxSC4yNDgwNDY4OEwuMTE3MTg3NS0uMTk0MzM1OTRaIi8+DQo8cGF0aCBpZD0iZm9udF8zXzQwIiBkPSJNLjExOTYyODkwOSAuNzE4NzVILjUwOTc2NTZMLjQ5MzE2NDA3IC41OTA4MjAzSC4yMzkyNTc4MUwuMjE4NzUgLjQ0MzM1OTM4SC40NzM2MzI4TC40NTc1MTk1NCAuMzE2NDA2MjZILjIwMjYzNjcyTC4xNzcyNDYxIC4xMjU5NzY1NkguNDMzNTkzNzZMLjQxNjUwMzkgMEguMDI1MzkwNjI1TC4xMTk2Mjg5MDkgLjcxODc1WiIvPg0KPHBhdGggaWQ9ImZvbnRfM184MSIgZD0iTS4wOTQyMzgyOCAuNTMxMjVILjIyNDEyMTFMLjIxNjMwODYgLjQ3NzQ2Mjc4Qy4yNjYxMTMyOSAuNTIyNDM1NSAuMzE3ODcxMSAuNTQ0OTIxOSAuMzcxNTgyMDQgLjU0NDkyMTkgLjQxNzQ4MDQ4IC41NDQ5MjE5IC40NTUwNzgxMyAuNTMwMzU0OCAuNDg0Mzc1IC41MDEyMjA3IC41MTM2NzE5IC40NzIwODY1OSAuNTI4MzIwMyAuNDM1Mzg0MTMgLjUyODMyMDMgLjM5MTExMzI5IC41MjgzMjAzIC4zNzAyNzk5NSAuNTI1NTUzNCAuMzM5MTkyNzMgLjUyMDAxOTU2IC4yOTc4NTE1N0wuNDgwNDY4NzYgMEguMzUxMDc0MjNMLjM4OTY0ODQ1IC4yOTA1MjczNUMuMzkzNTU0NyAuMzIwNDc1MjYgLjM5NTUwNzggLjM0MjkzNjIgLjM5NTUwNzggLjM1NzkxMDE3IC4zOTU1MDc4IC4zNzkzOTQ1NCAuMzg5NDA0MyAuMzk1OTE0NyAuMzc3MTk3MjggLjQwNzQ3MDcgLjM2NDk5MDI0IC40MTkwMjY3IC4zNDc2NTYyNiAuNDI0ODA0NyAuMzI1MTk1MyAuNDI0ODA0NyAuMzAzMzg1NCAuNDI0ODA0NyAuMjgxNTc1NTQgLjQxNzIzNjM0IC4yNTk3NjU2MyAuNDAyMDk5NiAuMjM3OTU1NzQgLjM4Njk2MjkgLjIyMTE5MTQgLjM2NTk2NjggLjIwOTQ3MjY2IC4zMzkxMTEzNCAuMTk3NzUzOSAuMzEyMjU1ODcgLjE4NzAxMTcyIC4yNjE4ODE1IC4xNzcyNDYxIC4xODc5ODgyOEwuMTUyMzQzNzUgMEguMDIyNDYwOTM4TC4wOTQyMzgyOCAuNTMxMjVaIi8+DQo8cGF0aCBpZD0iZm9udF8zXzc0IiBkPSJNLjQ4MDQ2ODc2IC41MzEyNUguNjEwODM5ODdMLjU1MjczNDQgLjEwNTk3MjI5Qy41NDEzNDExIC4wMjE5ODc5MTUgLjUyOTYyMjQtLjAzMzY4MTIzNCAuNTE3NTc4MS0uMDYxMDM1MTU4IC40OTg2OTc5LS4xMDMzNTI4NyAuNDY2OTU5NjQtLjEzODQyNzc0IC40MjIzNjMyOS0uMTY2MjU5NzcgLjM3Nzc2Njk1LS4xOTQwOTE4IC4zMjE3NzczNS0uMjA4MDA3ODEgLjI1NDM5NDU0LS4yMDgwMDc4MSAuMTk4NDA0OTYtLjIwODAwNzgxIC4xNDk2NTgyLS4xOTcxNzQwNyAuMTA4MTU0My0uMTc1NTA2NTkgLjA2NjY1MDM5LS4xNTM4MzkxMSAuMDM1NjQ0NTMtLjEyNTg5NTE5IC4wMTUxMzY3MTktLjA5MTY3NDgwOEwuMTI2OTUzMTMtLjAzMzAyMDAyQy4xNjA0ODE3Ny0uMDY4Mjk4MzQgLjIwNDEwMTU2LS4wODU5Mzc1IC4yNTc4MTI1LS4wODU5Mzc1IC4yODkwNjI1LS4wODU5Mzc1IC4zMTYwODA3My0uMDgwMjQwODggLjMzODg2NzItLjA2ODg0NzY1OSAuMzYxNjUzNjctLjA1NzQ1NDQyNyAuMzc5Mzk0NTQtLjA0MjA2ODQ4IC4zOTIwODk4NS0uMDIyNjg5ODIgLjQwNDc4NTE3LS4wMDMzMjEzMjk5IC40MTM3MzY5OCAuMDI1NDEwOTcgLjQxODk0NTMgLjA2MzUwNzA4IC4zNzE3NDQ3OSAuMDIxMTY5MDI4IC4zMTgxOTY2MyAwIC4yNTgzMDA3OSAwIC4yMTY2MzQxMSAwIC4xNzgxNDEyOCAuMDEwNDk4MDQ3IC4xNDI4MjIyNyAuMDMxNDk0MTQgLjEwNzUwMzI2IC4wNTI0OTAyMzYgLjA3OTc1MjYgLjA4MjAzMTI1IC4wNTk1NzAzMTQgLjEyMDExNzE5IC4wMzkzODgwMiAuMTU4MjAzMTMgLjAyOTI5Njg3NSAuMjAwNTIwODMgLjAyOTI5Njg3NSAuMjQ3MDcwMzEgLjAyOTI5Njg3NSAuMjk5NDc5MTcgLjA0MjQ4MDQ3IC4zNDg3MTQyIC4wNjg4NDc2NTkgLjM5NDc3NTQgLjA5NTIxNDg0NyAuNDQwODM2NTkgLjEzMTEwMzUyIC40NzczNzYzIC4xNzY1MTM2NyAuNTA0Mzk0NTYgLjIyMTkyMzgzIC41MzE0MTI4IC4yNjkzNjg1IC41NDQ5MjE5IC4zMTg4NDc2NyAuNTQ0OTIxOSAuMzQ4Nzk1NTcgLjU0NDkyMTkgLjM3NTk3NjU3IC41MzkwNjI1IC40MDAzOTA2MyAuNTI3MzQzNzcgLjQyNDgwNDcgLjUxNTYyNSAuNDQ4NzMwNDggLjQ5NTkzMSAuNDcyMTY3OTggLjQ2ODI2MTczTC40ODA0Njg3NiAuNTMxMjVNLjMyNTY4MzYgLjQyMTg3NUMuMjc4NDgzMDcgLjQyMTg3NSAuMjM4Njg4MTYgLjQwNTMyNDMgLjIwNjI5ODgzIC4zNzIyMjI5IC4xNzM5MDk1IC4zMzkxMzE2OSAuMTU3NzE0ODUgLjI5ODQxMTA1IC4xNTc3MTQ4NSAuMjUwMDYxMDUgLjE1NzcxNDg1IC4yMTA4MDUyNSAuMTY5NzU5MTEgLjE3OTMzMTQ3IC4xOTM4NDc2NiAuMTU1NjM5NjUgLjIxNzkzNjIgLjEzMTk1ODAxIC4yNTAxNjI3NiAuMTIwMTE3MTkgLjI5MDUyNzM1IC4xMjAxMTcxOSAuMzIwODAwNzkgLjEyMDExNzE5IC4zNDg3OTU1NyAuMTI3NDAwNzEgLjM3NDUxMTczIC4xNDE5Njc3OCAuNDAwMjI3ODggLjE1NjUzNDg0IC40MjA1NzI5IC4xNzc0MTM5NCAuNDM1NTQ2ODggLjIwNDYwNTEgLjQ1MDUyMDg1IC4yMzE3OTYyNyAuNDU4MDA3OCAuMjYxMDkzMTUgLjQ1ODAwNzggLjI5MjQ5NTc0IC40NTgwMDc4IC4zMjk2MDUxIC40NDU2MzgwNCAuMzYwNDQzMTMgLjQyMDg5ODQ1IC4zODUwMDk3OCAuMzk2MTU4ODUgLjQwOTU4NjU5IC4zNjQ0MjA1NyAuNDIxODc1IC4zMjU2ODM2IC40MjE4NzVaIi8+DQo8cGF0aCBpZD0iZm9udF8zXzc5IiBkPSJNLjEwNDQ5MjE5IC43MzYzMjgxSC4yMzQzNzVMLjEzNjcxODc1IDBILjAwNjgzNTkzNzdMLjEwNDQ5MjE5IC43MzYzMjgxWiIvPg0KPHBhdGggaWQ9ImZvbnRfM183NiIgZD0iTS4xNTgyMDMxMyAuNzQ5MDIzNDZDLjE4MDMzODU1IC43NDkwMjM0NiAuMTk5MzAwMTMgLjc0MTEyOTYgLjIxNTA4Nzg5IC43MjUzNDE4IC4yMzA4NzU2NiAuNzA5NTU0IC4yMzg3Njk1MyAuNjkwNTkyNDkgLjIzODc2OTUzIC42Njg0NTcwNiAuMjM4NzY5NTMgLjY0NjMyMTYgLjIzMDg3NTY2IC42MjczNjAwNyAuMjE1MDg3ODkgLjYxMTU3MjI5IC4xOTkzMDAxMyAuNTk1Nzg0NSAuMTgwMzM4NTUgLjU4Nzg5MDYgLjE1ODIwMzEzIC41ODc4OTA2IC4xMzYwNjc3IC41ODc4OTA2IC4xMTcxMDYxMiAuNTk1Nzg0NSAuMTAxMzE4MzYgLjYxMTU3MjI5IC4wODU1MzA2IC42MjczNjAwNyAuMDc3NjM2NzIgLjY0NjMyMTYgLjA3NzYzNjcyIC42Njg0NTcwNiAuMDc3NjM2NzIgLjY5MDU5MjQ5IC4wODU1MzA2IC43MDk1NTQgLjEwMTMxODM2IC43MjUzNDE4IC4xMTcxMDYxMiAuNzQxMTI5NiAuMTM2MDY3NyAuNzQ5MDIzNDYgLjE1ODIwMzEzIC43NDkwMjM0Nk0uMDc3MTQ4NDQgLjUzMTI1SC4yMDYwNTQ2OUwuMTM0NzY1NjMgMEguMDA0ODgyODEyN0wuMDc3MTQ4NDQgLjUzMTI1WiIvPg0KPHBhdGggaWQ9ImZvbnRfM184NiIgZD0iTS4zODU3NDIyIC40NTcwNzcwNCAuMzIzNzMwNDggLjM1NzUyODdDLjMwNzc3OTk1IC4zODEyNTEgLjI5MTAxNTYzIC4zOTg3MTcyNiAuMjczNDM3NSAuNDA5OTI3MzggLjI1NTg1OTM4IC40MjExNDc2OCAuMjM5NDIwNTggLjQyNjc1NzggLjIyNDEyMTEgLjQyNjc1NzggLjIxMjQwMjM1IC40MjY3NTc4IC4yMDI0NzM5NiAuNDIzNTAyNiAuMTk0MzM1OTQgLjQxNjk5MjIgLjE4NjE5NzkyIC40MTA0ODE3OSAuMTgyMTI4OSAuNDAzMTU3NTcgLjE4MjEyODkgLjM5NTAxOTU0IC4xODIxMjg5IC4zODcyMDcwNCAuMTg1Mzg0MTEgLjM3OTM5NDU0IC4xOTE4OTQ1MyAuMzcxNTgyMDQgLjE5ODA3OTQyIC4zNjM3Njk1NCAuMjE2Nzk2ODggLjM0ODYzMjggLjI0ODA0Njg4IC4zMjYxNzE4OCAuMjk3ODUxNTcgLjI5MDM2NDYgLjMzMDY0NzggLjI1OTY4NDI0IC4zNDY0MzU1NiAuMjM0MTMwODYgLjM2MjIyMzMgLjIwODU3NzQ3IC4zNzAxMTcyIC4xODA4MjY4MyAuMzcwMTE3MiAuMTUwODc4OSAuMzcwMTE3MiAuMTExNDkwODggLjM1MzkyMjUzIC4wNzQyMTg3NSAuMzIxNTMzMiAuMDM5MDYyNSAuMjg5MTQzOSAuMDAzOTA2MjUgLjI0MjE4NzUtLjAxMzY3MTg3NSAuMTgwNjY0MDYtLjAxMzY3MTg3NSAuMTQ1MTgyMy0uMDEzNjcxODc1IC4xMTI4NzQzNS0uMDA2NDk1MTU3OSAuMDgzNzQwMjM4IC4wMDc4NTgyNzYgLjA1NDYwNjEyIC4wMjIyMTE3MSAuMDIyMTM1NDE2IC4wNDg0NjctLjAxMzY3MTg3NSAuMDg2NjI0MTQ5TC4wNjY4OTQ1MyAuMTgwNTU3MjVDLjEwMzM1Mjg3IC4xMzI0NTEzNyAuMTQzMjI5MTcgLjEwODM5ODQ0IC4xODY1MjM0NCAuMTA4Mzk4NDQgLjIwMzc3NjA1IC4xMDgzOTg0NCAuMjE3NTI5MyAuMTEyNTQzNzQgLjIyNzc4MzIgLjEyMDgzNDM1IC4yMzgwMzcxMSAuMTI5MTI0OTYgLjI0MzE2NDA2IC4xMzg5NjE3OSAuMjQzMTY0MDYgLjE1MDM0NDg1IC4yNDMxNjQwNiAuMTU5NDQ5MjcgLjIzOTI1NzgxIC4xNjg3OTc4IC4yMzE0NDUzMSAuMTc4MzkwNSAuMjIzNjMyODEgLjE4Nzk4MzIgLjIwMjMxMTIgLjIwNTEzNDA4IC4xNjc0ODA0NyAuMjI5ODQzMTQgLjEyNzExNTg5IC4yNTg0NTg0OCAuMDk5MjgzODUgLjI4MzAwOTg3IC4wODM5ODQzNzggLjMwMzQ5NzMgLjA2MjUgLjMzMjExMjY1IC4wNTE3NTc4MTQgLjM2MjM1MDQ3IC4wNTE3NTc4MTQgLjM5NDIxMDgzIC4wNTE3NTc4MTQgLjQzODc1NjMzIC4wNjg2MDM1MTkgLjQ3NTAxMTIgLjEwMjI5NDkyIC41MDI5NzU0OSAuMTM1OTg2MzMgLjUzMDkzOTc4IC4xNzU3ODEyNSAuNTQ0OTIxOSAuMjIxNjc5NjkgLjU0NDkyMTkgLjI1MzkwNjI2IC41NDQ5MjE5IC4yODQ1MDUyMyAuNTM3Mjc3MiAuMzEzNDc2NTcgLjUyMTk4NzkgLjM0MjQ0NzkgLjUwNjY5ODYgLjM2NjUzNjQ4IC40ODUwNjE2NiAuMzg1NzQyMiAuNDU3MDc3MDRaIi8+DQo8cGF0aCBpZD0iZm9udF8zXzc1IiBkPSJNLjEyMjA3MDMxIC43MzYzMjgxSC4yNTE0NjQ4NUwuMjE2MzA4NiAuNDc3NDkzM0MuMjY2MTEzMjkgLjUyMjQ0NTcgLjMxNzg3MTEgLjU0NDkyMTkgLjM3MTU4MjA0IC41NDQ5MjE5IC40MTc0ODA0OCAuNTQ0OTIxOSAuNDU1MDc4MTMgLjUzMDM1NDggLjQ4NDM3NSAuNTAxMjIwNyAuNTEzNjcxOSAuNDcyMDg2NTkgLjUyODMyMDMgLjQzNTM4NDEzIC41MjgzMjAzIC4zOTExMTMyOSAuNTI4MzIwMyAuMzcwMjc5OTUgLjUyNTU1MzQgLjMzOTE5MjczIC41MjAwMTk1NiAuMjk3ODUxNTdMLjQ4MDQ2ODc2IDBILjM1MTA3NDIzTC4zODk2NDg0NSAuMjkwNTI3MzVDLjM5MzU1NDcgLjMyMDQ3NTI2IC4zOTU1MDc4IC4zNDI5MzYyIC4zOTU1MDc4IC4zNTc5MTAxNyAuMzk1NTA3OCAuMzc5Mzk0NTQgLjM4OTQwNDMgLjM5NTkxNDcgLjM3NzE5NzI4IC40MDc0NzA3IC4zNjQ5OTAyNCAuNDE5MDI2NyAuMzQ3NjU2MjYgLjQyNDgwNDcgLjMyNTE5NTMgLjQyNDgwNDcgLjMwMzM4NTQgLjQyNDgwNDcgLjI4MTU3NTU0IC40MTcyMzEyNCAuMjU5NzY1NjMgLjQwMjA4NDM2IC4yMzc5NTU3NCAuMzg2OTQ3NjQgLjIyMTE5MTQgLjM2NTk0NjQ1IC4yMDk0NzI2NiAuMzM5MDgwOCAuMTk3NzUzOSAuMzEyMjI1MzUgLjE4NzAxMTcyIC4yNjE4NDU5MyAuMTc3MjQ2MSAuMTg3OTQyNUwuMTUyMzQzNzUgMEguMDIyNDYwOTM4TC4xMjIwNzAzMSAuNzM2MzI4MVoiLz4NCjwvZGVmcz4NCjx1c2UgZGF0YS10ZXh0PSJRIiB4bGluazpocmVmPSIjZm9udF8xXzUyIiB0cmFuc2Zvcm09Im1hdHJpeCgzMzYuNzIsMCwyMS45NiwtMzY2LC0yMC4yNSwyNzAuNSkiLz4NCjx1c2UgZGF0YS10ZXh0PSJbIiB4bGluazpocmVmPSIjZm9udF8yXzYyIiB0cmFuc2Zvcm09Im1hdHJpeCg4OC4yNTUyOTgsMCwwLC04OC43NzI4NCwzMTIuNzUxMzUsODIuNzUpIiBmaWxsPSIjOGY4ZjhmIi8+DQo8dXNlIGRhdGEtdGV4dD0iICIgeGxpbms6aHJlZj0iI2ZvbnRfMl8zIiB0cmFuc2Zvcm09Im1hdHJpeCg4OC4yNTUyOTgsMCwwLC04OC43NzI4NCwzNDMuNzI4OTgsODIuNzUpIiBmaWxsPSIjOGY4ZjhmIi8+DQo8dXNlIGRhdGEtdGV4dD0iayIgeGxpbms6aHJlZj0iI2ZvbnRfMl83OCIgdHJhbnNmb3JtPSJtYXRyaXgoODguMjU1Mjk4LDAsMCwtODguNzcyODQsMzY4LjA4NzQ0LDgyLjc1KSIgZmlsbD0iIzhmOGY4ZiIvPg0KPHVzZSBkYXRhLXRleHQ9ImoiIHhsaW5rOmhyZWY9IiNmb250XzJfNzciIHRyYW5zZm9ybT0ibWF0cml4KDg4LjI1NTI5OCwwLDAsLTg4Ljc3Mjg0LDQxMi4zMDMzLDgyLjc1KSIgZmlsbD0iIzhmOGY4ZiIvPg0KPHVzZSBkYXRhLXRleHQ9InUiIHhsaW5rOmhyZWY9IiNmb250XzJfODgiIHRyYW5zZm9ybT0ibWF0cml4KDg4LjI1NTI5OCwwLDAsLTg4Ljc3Mjg0LDQzMC4yMTkxNiw4Mi43NSkiIGZpbGw9IiM4ZjhmOGYiLz4NCjx1c2UgZGF0YS10ZXh0PSI6IiB4bGluazpocmVmPSIjZm9udF8yXzI5IiB0cmFuc2Zvcm09Im1hdHJpeCg4OC4yNTUyOTgsMCwwLC04OC43NzI4NCw0ODMuNzkwMTQsODIuNzUpIiBmaWxsPSIjOGY4ZjhmIi8+DQo8dXNlIGRhdGEtdGV4dD0iXSIgeGxpbms6aHJlZj0iI2ZvbnRfMl82NCIgdHJhbnNmb3JtPSJtYXRyaXgoODguMjU1Mjk4LDAsMCwtODguNzcyODQsNTA4LjE0ODYsODIuNzUpIiBmaWxsPSIjOGY4ZjhmIi8+DQo8dXNlIGRhdGEtdGV4dD0iRSIgeGxpbms6aHJlZj0iI2ZvbnRfM180MCIgdHJhbnNmb3JtPSJtYXRyaXgoMTI3LjQ3MjMzLDAsMCwtMTY2LjA1NzQ0LDMxNC43NTA0LDI2Ny41KSIvPg0KPHVzZSBkYXRhLXRleHQ9Im4iIHhsaW5rOmhyZWY9IiNmb250XzNfODEiIHRyYW5zZm9ybT0ibWF0cml4KDEyNy40NzIzMywwLDAsLTE2Ni4wNTc0NCwzODEuMDM2LDI2Ny41KSIvPg0KPHVzZSBkYXRhLXRleHQ9ImciIHhsaW5rOmhyZWY9IiNmb250XzNfNzQiIHRyYW5zZm9ybT0ibWF0cml4KDEyNy40NzIzMywwLDAsLTE2Ni4wNTc0NCw0NTcuNTE5NCwyNjcuNSkiLz4NCjx1c2UgZGF0YS10ZXh0PSJsIiB4bGluazpocmVmPSIjZm9udF8zXzc5IiB0cmFuc2Zvcm09Im1hdHJpeCgxMjcuNDcyMzMsMCwwLC0xNjYuMDU3NDQsNTQxLjY1MTEsMjY3LjUpIi8+DQo8dXNlIGRhdGEtdGV4dD0iaSIgeGxpbms6aHJlZj0iI2ZvbnRfM183NiIgdHJhbnNmb3JtPSJtYXRyaXgoMTI3LjQ3MjMzLDAsMCwtMTY2LjA1NzQ0LDU3Mi4xMTcwOSwyNjcuNSkiLz4NCjx1c2UgZGF0YS10ZXh0PSJzIiB4bGluazpocmVmPSIjZm9udF8zXzg2IiB0cmFuc2Zvcm09Im1hdHJpeCgxMjcuNDcyMzMsMCwwLC0xNjYuMDU3NDQsNjAyLjU4MjksMjY3LjUpIi8+DQo8dXNlIGRhdGEtdGV4dD0iaCIgeGxpbms6aHJlZj0iI2ZvbnRfM183NSIgdHJhbnNmb3JtPSJtYXRyaXgoMTI3LjQ3MjMzLDAsMCwtMTY2LjA1NzQ0LDY1OC41NDMzNiwyNjcuNSkiLz4NCjwvc3ZnPg0K" alt="Q English">
-  <a class="all" href="assets.html">자산 구조 보기 →</a>
 </div></header>
 
 <main>
 <section class="wrap hero">
-  <div class="eyebrow">한가람고 영어 내신</div>
-  <h1>한가람 영어,<br>어려웠다구요?</h1>
+  <h1>이번 중간고사 영어,<br>어려웠다구요?</h1>
 </section>
 
 <section class="stat"><div class="wrap">
   <p class="lb">2학기 중간 · 듣기 제외</p>
   <div class="nums">
-    <div><b>5,818</b><small>단어</small></div>
-    <div><b>40</b><small>분</small></div>
-    <div><b>1,550</b><small>단어가 선지</small></div>
+    <div><small>총</small><b>5,818</b><small>단어</small></div>
+    <div><small>선지만</small><b>1,550</b><small>단어</small></div>
+    <div><small>가장 긴 선지</small><b>49</b><small>단어</small></div>
   </div>
-  <p class="foot">선지 하나가 평균 <b>37단어</b>(14번). 범위 지문 17개 중 8개는 원문 그대로 나왔습니다.</p>
-  <div class="pace"><p>1분에 <b>145</b>단어 · 문제당 약 <b>1분 30초</b>.</p>
-    <p class="dim">읽기만 하는 속도가 아닙니다. 읽고, 이해하고, <b>판단까지</b> 이 안에 끝내야 합니다.</p>
+  <div class="spd2">
+    <p class="h">요구되는 분당 단어 처리 속도 <span>· 지문 기준</span></p>
+    <div class="r"><span class="n">LSAT 독해<small>미국 로스쿨 시험</small></span><b>53<small>단어</small></b></div>
+    <div class="r"><span class="n">MCAT 독해<small>미국 의대 시험</small></span><b>55<small>단어</small></b></div>
+    <div class="r me"><span class="n">이번 중간고사</span><b>107<small>단어</small></b></div>
+  </div>
+  <div class="pace">
+    <p class="dim">문제당 약 1분 30초. 읽기만 하는 속도가 아닙니다. 읽고, 이해하고, <b>판단까지</b> 이 안에 끝내야 합니다.</p>
     <p class="hard">최상위권 학생들도 시간에 쫓겨 오판과 실수가 쏟아졌습니다.</p></div>
 </div></section>
 
@@ -448,37 +463,35 @@ const INFO = {
 
 
 <section class="wrap curri">
-  <p class="hitq">AI 시대에, 아직도 적중을 찾고 계신가요?<br>적중은 점쟁이에게, 점수는 저희에게 맡기시죠.</p>
+  <p class="hitq">그럼 “그냥” 영어를 더 잘하는 수밖에 없을까요?</p>
   <h2>Curriculum이 달라야,<br><span>점수도 달라집니다.</span></h2>
 
   <div class="alt">
-    <p class="aq">그럼 영어를 더 잘하는 수밖에 없을까요?</p>
-    <p class="aa">대안은 있습니다.<br><b>인지 기반 curriculum</b>입니다.</p>
+    <p class="aa"><b>인지 기반 학습</b>이 대안입니다.</p>
     <p class="an">시험에 무엇이 나올지는 알 수 없지만,</p>
   </div>
 
   <ol class="pil">
     <li>
       <p class="pt"><i>1</i>나올 자리는 정해져 있습니다.</p>
-      <p>영어 시험이 묻는 건 둘, 문법과 의미입니다.</p>
-      <p>문법은 원래 정해져 있습니다.<br>이번 문법은 모두 처음 보는 글이었는데도,<br>틀린 자리와 함정 <b>13곳 모두</b> 저희가 연습한 자리였습니다.</p>
-      <p>의미는 변수가 많다고들 하죠.<br>그런데 출제된 의미 자리 <b>27곳 중 26곳</b>이<br>저희가 연습한 문장 안에 있었습니다.</p>
+      <p>영어 시험의 두 축, 문법과 독해.</p>
+      <p>어법은 나올 곳이 뻔합니다.<br>어법 틀린 자리와 함정 <b>13곳 모두</b> 저희가 연습한 자리였습니다.</p>
+      <p>변수 많은 독해도<br>출제된 독해 자리 <b>27곳 중 26곳</b>이<br>저희가 연습한 문장 안에 있었습니다.</p>
       <p class="pk">어떤 바둑 기사의 말을 빌리자면,<br>“둘 곳은 거기밖에 없었습니다.”</p>
     </li>
     <li>
       <p class="pt"><i>2</i>표현은 다양하게,<br>판정은 엄격하게.</p>
-      <p>자리만 알면 뭐 하나요?<br>어떤 말로 나올지가 문제인데요.</p>
-      <p>그래서 <b>어휘 · 문맥 · 적용, 3단 패러프레이즈</b>에 요약까지 합니다.</p>
-      <p>이번 시험에서 저희가 미리 못 본 선지는<br>“천체가 마찰로 소리를 낸다” · “민간 기업에 넘긴다”<br>본문을 단 한 번이라도 읽었다면 틀릴 수 없는, 뻔한 것들이었습니다.</p>
-      <p>그러면 엄청 많이 해야 하지 않나요?<br>표현을 달달 외워야 하나요?</p>
-      <p>거꾸로 여쭤 볼게요.<br>한 문제를 맞히기 위해, 얼마나 공부할 준비가 되어 있나요?<br>세 문제? 여섯 문제?</p>
+      <p>자리만 알면 뭐 하나요?<br>변형해서 낼 텐데요.</p>
+      <p>지문별로 <b>어휘 · 문맥 · 응용, 패러프레이즈에 요약문에 양자화</b>까지 해 보셨나요?</p>
+      <p>출제자가 무엇으로 바꿀지는 아무도 모릅니다.<br>하지만 <b>어느 쪽으로</b> 바꿀지는 정해져 있습니다.</p>
+      <p>긴 TF 연습지 <b>104문장 중 31문장</b>,<br>패러프레이즈 <b>156구절 중 28구절</b>이 이번 시험과 같은 결이었습니다.</p>
       <p class="pk">저희는 대략 세 ‘문장’, 여섯 ‘구절’이면 잡아낼 수 있었습니다.</p>
     </li>
     <li>
-      <p class="pt"><i>3</i>너무 길어서 힘들었다구요?<br>길면, 잘라서 하나씩.</p>
-      <p>영어 시험인지 인지 과부하 테스트인지, 구별이 안 되는 세상입니다.<br>언제까지 머리 탓만 하실 건가요?</p>
-      <p>과부하가 걸리지 않게 판단하는 연습을 하면 됩니다.</p>
-      <div class="plen"><p><span>이번 시험 선지</span>평균 25단어 · 최장 49단어</p><p><span>저희 TF</span>평균 28.4단어 · 최장 50단어</p></div>
+      <p class="pt"><i>3</i>너무 길어서 힘들었다구요?</p>
+      <p>영어 시험인지 인지 과부하 테스트인지, 구별이 안 되는 세상입니다. 언제까지 머리 탓만 하실 건가요?</p>
+      <p>인지 과부하에 걸리지 않게 연습하면 됩니다.</p>
+      <div class="plen"><p><span>이번 시험 선지</span>평균 25단어 · 최장 49단어</p><p><span>저희 TF 연습지</span>평균 28.4단어 · 최장 50단어</p></div>
       <p class="pk">늘 이런 걸로 연습합니다.</p>
     </li>
     <li>
@@ -500,7 +513,7 @@ const INFO = {
     <div class="gh"><div class="t"><i>1</i>긴 진술의 참·거짓 판단<em class="bt">판단</em></div><div class="why">8 · 14~19번</div></div>
     <p class="src1">실제 자산</p>
     <dl class="cmp"><dt>시험</dt><dd>선지가 낱말이 아니라 명제입니다. 앞은 맞고, 틀린 곳은 뒤에 붙은 절 하나.</dd>
-      <dt class="our">자산</dt><dd><b>긴 TF.</b> 서너 줄짜리 진술을 쪼개서 판단합니다. 거짓은 이유절·조건절·뒤에 붙는 구에 한 군데만 심습니다.</dd></dl>
+      <dt class="our">자산</dt><dd><b>긴 TF 연습지.</b> 서너 줄짜리 진술을 쪼개서 판단합니다. 거짓은 이유절·조건절·뒤에 붙는 구에 한 군데만 심습니다.</dd></dl>
     <p class="same">이번 시험 15번과 같은 지문</p>
     <div class="tm"><button type="button" class="go"><div>이번 시험 속도로 풀기<small>누르면 시작합니다</small></div><span class="sec0">0:00</span></button>
       <div class="clock"><span class="tt">0:00</span><span class="bar0"><i></i></span><span class="lbl">남은 시간</span></div>
@@ -621,7 +634,7 @@ const INFO = {
   </article>
 
   <!-- 6 어법 (웹 정비문) -->
-  <article class="gl" data-nopsg="1">
+  <article class="gl" data-nopsg="1" data-sec="5">
     <div class="gh"><div class="t"><i>6</i>어법 판단<em class="bt">판단</em></div><div class="why">4~7번 · 서답형 2</div></div>
     <p class="src1">실제 자산</p>
     <dl class="cmp"><dt>시험</dt><dd>어법은 전부 범위 밖 글. 틀린 곳을 찾아 직접 고쳐 씁니다.</dd>
@@ -670,30 +683,6 @@ const INFO = {
     <div><b>19<small>/19</small></b><span>독해 문제 중 정답 내용이 저희 자산에 있었던 경우</span></div>
   </div>
 
-  <p class="phd">어? 이런 걸 어떻게 미리 봤지?</p>
-  <div class="pair">
-    <p class="ph">11번 · 과학 설명 <span>사례 덧붙이기</span></p>
-    <div class="pr"><b>시험</b><p>원문 뒤에 <b>천동설 → 지동설</b> 이야기를 새로 붙이고, 결론 빈칸을 물었다</p></div>
-    <div class="pr our"><b>자산</b><p>같은 지문에 <b>프톨레마이오스 · 코페르니쿠스 · 케플러</b> 사례를 붙인 원리 적용 문제 — 정답이 시험 빈칸 정답과 같은 말</p></div>
-  </div>
-  <div class="pair">
-    <p class="ph">20번 · 박쥐와 나방 <span>소재 바꾸기</span></p>
-    <div class="pr"><b>시험</b><p>박쥐 · 나방을 <b>돌고래 · 물고기</b>로 통째로 바꿔, 같은 쫓고 쫓기는 원리를 물었다</p></div>
-    <div class="pr our"><b>자산</b><p>같은 원리를 <b>잠수함</b>에 대 본 적용 문제 — "<span class="en">A submarine is covered with rubber tiles that soak up the sound pulses of an enemy’s sonar, so that little of them returns.</span>" (상대가 쏜 신호를 흡수 = 나방의 음향 위장)</p></div>
-  </div>
-  <div class="pair">
-    <p class="ph">16번 · Mum Effect <span>지문에 없는 비교</span></p>
-    <div class="pr"><b>시험</b><p>오답: "Serena 의 Mum Effect 가 부하보다 더 강하다" — 지문에 없는 윗사람-부하 비교</p></div>
-    <div class="pr our"><b>자산</b><p>오답: "<span class="en">Senior managers are generally more optimistic than their subordinates</span>" — 같은 지문, 같은 함정<br>+ 같은 지문을 통째로 다시 쓴 변형: 보고가 윗선으로 올라가며 단계마다 순해지는 사슬. 시험의 Step 1~4와 같은 흐름</p></div>
-  </div>
-
-  <div class="miss">
-    <p class="mt">솔직히, 놓친 것과 손댈 수 없는 것</p>
-    <div class="mrow"><b>놓친 것</b><p><b>10번 제목</b> — 교과서 여섯 단락을 한 편으로 묶은 글. 이번 시험에서 가장 당황스러웠던 유형이지만, 얼마든지 대비할 수 있는 유형입니다. 정답과 같은 말은 저희 자산에 이미 있었습니다("<span class="en">That constant presence lets textiles shape and change the world we live in.</span>" — 9월 14일 요약문). 다만 난이도가 낮을 것으로 판단해, 학습지로 배포하지는 않았습니다.</p></div>
-    <div class="mrow"><b>손댈 수 없는 것</b><p><b>흐름에 맞지 않는 문장(20 · 21번)</b> — 끼워 넣을 문장은 누구도 미리 볼 수 없습니다. 그렇다고 어렵지도 않습니다. 푸는 요령만 알면 됩니다.<br>
-      <b>지문 밖에서 지어 온 오답</b> — 역시 예측할 수 없지만, 지문 근거로 지우는 건 어렵지 않습니다.</p></div>
-  </div>
-  <p class="vnote">적중률이 아닙니다. 시험이 판단하게 한 바로 그 내용을, 시험 전에 미리 판단해 봤는지를 셌습니다.</p>
 </section>
 
 <section class="wrap close">
@@ -795,8 +784,8 @@ document.querySelectorAll(".gl").forEach(gl => {
   document.getElementById("b-sms").href  = "sms:" + digits;
   document.getElementById("b-map").href  = map;
   document.getElementById("cta").innerHTML =
-    '<div class="cta"><h2>무료 진단 및 상담</h2>' +
-    '<p>짧은 독해 테스트로 무엇이 문제인지 진단해 드립니다. 주저 마시고 연락 주세요.</p>' +
+    '<div class="cta"><h2>무료 샘플 · 진단 및 상담</h2>' +
+    '<p>실제 자산 샘플을 직접 보여 드리고, 짧은 독해 테스트로 무엇이 문제인지 진단해 드립니다.</p>' +
     '<div class="row"><a href="tel:'+digits+'" target="_top">전화로 진단 예약</a><a class="ghost" href="sms:'+digits+'" target="_top">문자 문의</a></div>' +
     '<div class="info"><a href="tel:'+digits+'" target="_top"><b>'+INFO.phone+'</b></a><br>위치 &nbsp;'+INFO.address+'</div>' +
     '<a class="full" href="assets.html"><span>세 단계로 보는 자산 구조</span>→</a></div>';
