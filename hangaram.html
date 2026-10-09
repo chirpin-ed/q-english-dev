@@ -63,7 +63,10 @@ b{font-weight:700}
 /* 맛보기 */
 .show{padding-top:56px}
 .kick{font-size:12.5px;font-weight:800;letter-spacing:.16em;color:var(--brass)}
-.show h2{font-family:"Noto Serif KR",serif;font-weight:900;font-size:25px;line-height:1.4;letter-spacing:-.02em;margin:8px 0 10px}
+.show h2{font-family:"Noto Serif KR",serif;font-weight:900;font-size:21px;line-height:1.45;letter-spacing:-.02em;margin:6px 0 10px;color:var(--ink2)}
+.show h2 span{color:var(--ink)}
+.show .dir{margin:0;font-family:"Noto Serif KR",serif;font-weight:900;font-size:30px;letter-spacing:-.03em;line-height:1.3}
+.show .dir b{color:var(--deep);box-shadow:inset 0 -.32em 0 var(--hl)}
 .show .lead{margin:0 0 6px;color:var(--ink2);font-size:15.5px}
 .rule{display:flex;align-items:center;gap:8px;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:13.5px;color:var(--ink2)}
 .rule svg{flex:none;width:18px;height:18px;color:var(--deep)}
@@ -393,6 +396,86 @@ details.pv .psg{margin-top:8px}
 .sumh span{color:var(--mute);font-weight:700}
 .bogi{margin:8px 0 0;padding:10px 12px;border:1px dashed var(--line);border-radius:10px;font-family:Georgia,serif;font-size:14.5px;line-height:1.7;color:var(--ink2)}
 .bogi b{font-family:"Pretendard",sans-serif;font-size:12px;font-weight:800;color:var(--mute);margin-right:8px}
+.wh{margin:6px 0 14px;font-family:"Noto Serif KR",serif;font-weight:900;font-size:22px;line-height:1.4;letter-spacing:-.02em}
+.wh b{font-size:1.3em;color:#fff;box-shadow:inset 0 -.26em 0 rgba(199,132,26,.75)}
+.wpre{margin:0 0 14px;font-size:14.5px;line-height:1.7;color:rgba(255,255,255,.75)}
+.wpre b{color:#fff}
+.share{margin:0 0 6px}
+.share .cap,.cap2{margin:0 0 6px;font-size:12.5px;font-weight:700;color:rgba(255,255,255,.75)}
+.share .cap span{font-weight:500;color:rgba(255,255,255,.5)}
+.share ol{list-style:none;margin:0;padding:0}
+.share li{display:grid;grid-template-columns:104px 1fr;align-items:center;column-gap:10px;padding:6px 0;border-top:1px solid rgba(255,255,255,.14)}
+.share .n{font-size:14px;font-weight:800;line-height:1.25}
+.share .n small{display:block;font-size:11px;font-weight:500;color:rgba(255,255,255,.55)}
+.share .sb{display:flex;align-items:center;gap:6px}
+.share .sb i{display:block;height:14px;border-radius:0 4px 4px 0;background:rgba(199,132,26,.55)}
+.share .sb b{font-size:13px;font-weight:700;color:rgba(255,255,255,.85);white-space:nowrap}
+.share .me{background:rgba(255,255,255,.07);margin:0 -8px;padding-left:8px;padding-right:8px}
+.share .me .n{font-size:16px}
+.share .me .sb i{background:#c7841a;height:18px}
+.share .me .sb b{font-size:16px;font-weight:900;color:#fff}
+.share .e .sb i{background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.18) 0 3px,transparent 3px 7px)}
+.share .sn{margin:6px 0 0;font-size:11px;color:rgba(255,255,255,.5)}
+.wk{margin:12px 0 22px;font-size:17px;font-weight:700}
+.wk b{color:#fff;font-size:1.15em}
+.cap2{margin-top:4px}
+.cap2 span{font-weight:500;color:rgba(255,255,255,.5)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 4px}
+.pr2{padding:12px;border-radius:12px;background:rgba(255,255,255,.07)}
+.q2{margin:0 0 8px;font-size:15px;font-weight:900;color:#fff}
+.r2{display:flex;align-items:center;gap:6px;margin:0 0 6px;font-size:12px;color:rgba(255,255,255,.75)}
+.r2 span{flex:none;width:26px}
+.r2 i{display:block;height:14px;border-radius:0 4px 4px 0}
+.r2 i.p{background:#2fa77a}.r2 i.o{background:#c7841a}
+.r2 b{font-size:14px;font-weight:800;color:#fff}
+.mean{margin:0 0 24px;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.07)}
+.mean .mh{margin:0 0 8px;font-size:13px;font-weight:800;color:rgba(255,255,255,.75)}
+.mean ol{margin:0;padding:0;list-style:none;counter-reset:m}
+.mean li{counter-increment:m;position:relative;padding:8px 0 8px 26px;border-top:1px solid rgba(255,255,255,.14);font-size:15.5px;line-height:1.55}
+.mean li:first-child{border-top:0}
+.mean li::before{content:counter(m);position:absolute;left:0;top:9px;width:18px;height:18px;border-radius:50%;background:#c7841a;color:#fff;font-size:11.5px;font-weight:800;text-align:center;line-height:18px}
+.mean li b{color:#fff}
+.mean li span{display:block;margin-top:3px;font-size:13.5px;color:rgba(255,255,255,.7)}
+.concl{margin:22px 0 0;padding-top:18px;border-top:2px solid #fff}
+.concl p{margin:0 0 8px;font-size:16px;line-height:1.7;color:rgba(255,255,255,.8)}
+.concl .k{margin:10px 0 0;font-family:"Noto Serif KR",serif;font-weight:900;font-size:21px;line-height:1.45;color:#fff}
+.wchart{position:relative}
+.wlg{display:flex;align-items:center;gap:14px;margin:0 0 8px;font-size:12.5px;color:rgba(255,255,255,.8)}
+.wlg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.wlg small{margin-left:auto;color:rgba(255,255,255,.55);font-size:12px}
+.wlg{flex-wrap:wrap;row-gap:4px}
+.wchart em.ord{background:rgba(255,255,255,.12)}
+.wnote{margin:8px 0 0;font-size:12.5px;color:rgba(255,255,255,.7)}
+.wchart i.p{background:#2fa77a}.wchart i.o{background:#c7841a}
+.wchart i.c{background:#c7841a repeating-linear-gradient(135deg,rgba(23,61,51,.55) 0 3px,transparent 3px 7px)}
+.wchart ol{list-style:none;margin:0;padding:0}
+.wchart li{display:grid;grid-template-columns:44px 1fr;align-items:center;column-gap:8px;padding:3px 0;cursor:default}
+.wchart .q{font-size:12px;color:rgba(255,255,255,.7);text-align:right;font-variant-numeric:tabular-nums}
+.wchart .wb{display:flex;align-items:center;gap:2px;min-height:14px}
+.wchart .wb i{display:block;height:12px}
+.wchart .wb i.p,.wchart .wb i.c{border-radius:4px 0 0 4px}
+.wchart .wb i:only-of-type{border-radius:4px}
+.wchart .wb i.o{border-radius:0 4px 4px 0}
+.wchart .wb b{margin-left:6px;font-size:12px;font-weight:700;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums}
+.wchart .wb em{margin-left:6px;font-style:normal;font-size:11.5px;font-weight:800;color:#fff;background:rgba(199,132,26,.35);border-radius:4px;padding:0 5px}
+.wchart li.x .q{color:#fff;font-weight:800}
+.wchart li:hover .wb i,.wchart li.on .wb i{filter:brightness(1.18)}
+.wtip{position:absolute;left:52px;margin:0;padding:5px 9px;border-radius:6px;background:#fff;color:#173d33;font-size:12.5px;font-weight:700;pointer-events:none;opacity:0;transform:translateY(-100%);transition:opacity .12s;white-space:nowrap}
+.wtip.on{opacity:1}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.wsum{display:grid;grid-template-columns:1.15fr 1fr 1fr;margin:16px 0 0;border-top:1px solid rgba(255,255,255,.28)}
+.wsum p{margin:0;padding:12px 0 2px;font-size:13px;color:rgba(255,255,255,.75)}
+.wsum p+p{padding-left:10px;border-left:1px solid rgba(255,255,255,.18)}
+.wsum b{font-family:"Noto Serif KR",serif;font-weight:900;font-size:26px;color:#fff;margin-right:3px;font-variant-numeric:tabular-nums}
+.wsum span{display:block;margin-top:2px;font-size:12.5px;color:rgba(255,255,255,.65)}
+.wsum span:first-child{margin:0 0 2px;font-weight:700;color:rgba(255,255,255,.8)}
+.pace p.dim .ru{color:#fff;font-size:inherit;box-shadow:inset 0 -.3em 0 rgba(199,132,26,.6)}
+.rat{margin:0 0 10px;border-radius:12px;background:var(--soft);padding:4px 14px}
+.rat p{margin:0;display:flex;align-items:baseline;gap:8px;padding:9px 0;font-size:14.5px;color:var(--ink2)}
+.rat p+p{border-top:1px dashed var(--line)}
+.rat span{min-width:84px;font-weight:700;color:var(--ink)}
+.rat b{color:var(--ink)}
+.rat em{margin-left:auto;font-style:normal;font-family:"Noto Serif KR",serif;font-weight:900;font-size:20px;color:var(--deep)}
 /* 증거 */
 .proof{margin:60px 0 0;padding:30px 0 0;border-top:1px solid var(--ink)}
 .proof .l1{margin:0;font-size:18px;color:var(--ink2)}
@@ -443,20 +526,34 @@ const INFO = {
 
 <section class="stat"><div class="wrap">
   <p class="lb">2학기 중간 · 듣기 제외</p>
-  <div class="nums">
-    <div><small>총</small><b>5,818</b><small>단어</small></div>
-    <div><small>선지만</small><b>1,550</b><small>단어</small></div>
-    <div><small>가장 긴 선지</small><b>49</b><small>단어</small></div>
+  <p class="wh">어려움은 지문이 아니라 <b>선지</b>에 있었습니다.</p>
+  <p class="wpre">단어와 개념의 수준은 물론 LSAT · MCAT이 훨씬 높습니다.<br>그런데 글 가운데 <b>선지가 차지하는 무게</b>는 이랬습니다.</p>
+  <div class="share">
+    <p class="cap">선지 비중 <span>· 선지 ÷ (지문 + 선지)</span></p>
+    <ol><li class=""><span class="n">수능 영어<small>2026학년도 수능</small></span><span class="sb"><i style="width:22%"></i><b>11%</b></span></li><li class="e"><span class="n">MCAT 독해<small>미국 의대 시험</small></span><span class="sb"><i style="width:32%"></i><b>13~19%</b></span></li><li class="me"><span class="n">이번 중간고사</span><span class="sb"><i style="width:54%"></i><b>27%</b></span></li><li class="e"><span class="n">LSAT 독해<small>미국 로스쿨 시험</small></span><span class="sb"><i style="width:100%"></i><b>약 50%</b></span></li></ol>
+    <p class="sn">수능 · 이번 시험은 시험지 전체 실측, MCAT · LSAT은 공식 샘플 기준 추산</p>
   </div>
-  <div class="spd2">
-    <p class="h">요구되는 분당 단어 처리 속도 <span>· 지문 기준</span></p>
-    <div class="r"><span class="n">LSAT 독해<small>미국 로스쿨 시험</small></span><b>53<small>단어</small></b></div>
-    <div class="r"><span class="n">MCAT 독해<small>미국 의대 시험</small></span><b>55<small>단어</small></b></div>
-    <div class="r me"><span class="n">이번 중간고사</span><b>107<small>단어</small></b></div>
+  <p class="wk">수능의 <b>2.5배</b>, 미국 의대 시험보다 무거웠습니다.</p>
+  <div class="mean">
+    <p class="mh">선지 비중이 높다는 것은</p>
+    <ol>
+      <li><b>읽고 처리해야 할 새로운 정보가 그만큼 많다</b>는 겁니다.</li>
+      <li>당연히 <b>판단해야 할 진술이 많습니다.</b></li>
+      <li>당연히 <b>실수할 자리도 많아집니다.</b></li>
+    </ol>
+  </div>
+  <div class="wsum">
+    <p><span>선지만</span><b>1,550</b>단어<span>시험 글의 4분의 1</span></p>
+    <p><span>선지 평균 길이</span><b>20</b>단어<span>순서 문항 제외</span></p>
+    <p><span>가장 긴 선지 하나</span><b>49</b>단어</p>
   </div>
   <div class="pace">
-    <p class="dim">문제당 약 1분 30초. 읽기만 하는 속도가 아닙니다. 읽고, 이해하고, <b>판단까지</b> 이 안에 끝내야 합니다.</p>
+    <p class="dim">문제당 약 1분 30초. 읽기만 하는 속도가 아닙니다.<br><b class="ru">읽고, 이해하고, 판단까지</b> 이 안에 끝내야 합니다.</p>
     <p class="hard">최상위권 학생들도 시간에 쫓겨 오판과 실수가 쏟아졌습니다.</p></div>
+  <div class="concl">
+    <p>지문은 미리 공부할 수 있습니다.<br>선지는 시험장에서 처음 봅니다.</p>
+    <p class="k">본문을 외운다고 해결될 일은 아닙니다.</p>
+  </div>
 </div></section>
 
 
@@ -467,7 +564,6 @@ const INFO = {
   <h2>Curriculum이 달라야,<br><span>점수도 달라집니다.</span></h2>
 
   <div class="alt">
-    <p class="aa"><b>인지 기반 학습</b>이 대안입니다.</p>
     <p class="an">시험에 무엇이 나올지는 알 수 없지만,</p>
   </div>
 
@@ -484,15 +580,16 @@ const INFO = {
       <p>자리만 알면 뭐 하나요?<br>변형해서 낼 텐데요.</p>
       <p>지문별로 <b>어휘 · 문맥 · 응용, 패러프레이즈에 요약문에 양자화</b>까지 해 보셨나요?</p>
       <p>출제자가 무엇으로 바꿀지는 아무도 모릅니다.<br>하지만 <b>어느 쪽으로</b> 바꿀지는 정해져 있습니다.</p>
-      <p>긴 TF 연습지 <b>104문장 중 31문장</b>,<br>패러프레이즈 <b>156구절 중 28구절</b>이 이번 시험과 같은 결이었습니다.</p>
-      <p class="pk">저희는 대략 세 ‘문장’, 여섯 ‘구절’이면 잡아낼 수 있었습니다.</p>
+      <div class="rat"><p><span>긴 TF 연습지</span><b>104문장 중 31문장</b><em>3 : 1</em></p><p><span>패러프레이즈</span><b>156구절 중 28구절</b><em>6 : 1</em></p></div>
+      <p>이번 시험과 같은 결이었습니다.</p>
+      <p class="pk">저희는 대략 3배수, 6배수 안에 잡아낼 수 있었습니다.</p>
     </li>
     <li>
       <p class="pt"><i>3</i>너무 길어서 힘들었다구요?</p>
-      <p>영어 시험인지 인지 과부하 테스트인지, 구별이 안 되는 세상입니다. 언제까지 머리 탓만 하실 건가요?</p>
-      <p>인지 과부하에 걸리지 않게 연습하면 됩니다.</p>
+      <p>AI로 누구나 길고 정교한 글을 쓰는 시대입니다.<br>시험 출제도 예외가 아닙니다.</p>
+      <p>이제 시험 선지는 <b>한 번에 처리할 수 있는 양의 한계</b>를 묻습니다.<br>머리의 문제가 아니라, 연습의 문제입니다.</p>
       <div class="plen"><p><span>이번 시험 선지</span>평균 25단어 · 최장 49단어</p><p><span>저희 TF 연습지</span>평균 28.4단어 · 최장 50단어</p></div>
-      <p class="pk">늘 이런 걸로 연습합니다.</p>
+      <p class="pk">저희는 늘 이런 걸로 연습합니다.</p>
     </li>
     <li>
       <p class="pt"><i>4</i>그 결과가, 속도입니다.</p>
@@ -502,11 +599,10 @@ const INFO = {
 </section>
 
 <section class="wrap show">
-  <div class="kick">중요한 것은 방향</div>
-  <h2>이 시험은<br>무엇을 원했을까요?</h2>
-  <p class="lead"><b>저희는 이미 그렇게 가르치고 있었습니다.</b></p>
+  <p class="dir">중요한 것은 <b>방향</b></p>
+  <h2>이 시험이 원하는 것을<br><span>저희는 이미 준비하고 있었습니다.</span></h2>
   <div class="rule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>
-    <span>아래는 모두 시험 전에 학생들이 <b>실제로 푼 자산에서 그대로</b> 가져온 문항입니다. 타이머는 이번 시험 속도 기준.</span></div>
+    <span>모두 학생들이 시험 전에 <b>실제로 푼 자산</b>입니다. 타이머는 이번 시험 속도.</span></div>
 
   <!-- 1 긴 TF -->
   <article class="gl" data-psg="1" data-sec="90">
@@ -706,6 +802,19 @@ const INFO = {
 const PASSAGE = "Any new resource (e.g., a new airport, a new mall) always opens with people benefiting individually by sharing a common resource (e.g., the city or state budget). Soon, at some point, the amount of traffic grows too large for the “commons” to support. Traffic jams, overcrowding, and overuse lessen the benefits of the common resource for everyone ― the tragedy of the commons! If the new resource cannot be expanded or provided with additional space, it becomes a problem, and you cannot solve the problem on your own, in isolation from your fellow drivers or walkers or competing users. The total activity on this new resource keeps increasing, and so does individual activity; but if the dynamic of common use and overuse continues too long, both begin to fall after a peak, leading to a crash. What makes the “tragedy of commons” tragic is the crash dynamic ― the destruction or degeneration of the common resource’s ability to regenerate itself.";
 document.querySelectorAll(".psgtext").forEach(p => p.textContent = PASSAGE);
 
+// 문항별 지문·선지 막대: 누르거나 올리면 숫자
+(function(){
+  const box = document.querySelector(".wchart"); if (!box) return;
+  const tip = box.querySelector(".wtip");
+  const show = li => { box.querySelectorAll("li.on").forEach(x => x.classList.remove("on"));
+    li.classList.add("on"); tip.textContent = li.dataset.t;
+    tip.style.top = (li.offsetTop + 2) + "px"; tip.classList.add("on"); };
+  box.querySelectorAll("li").forEach(li => {
+    li.addEventListener("mouseenter", () => show(li));
+    li.addEventListener("click", () => show(li));
+  });
+  box.addEventListener("mouseleave", () => { tip.classList.remove("on"); box.querySelectorAll("li.on").forEach(x => x.classList.remove("on")); });
+})();
 // 이번 시험 속도: 듣기 제외 5,818단어 ÷ 약 40분 ≈ 1분에 145단어
 const WPM = 145;
 const words = s => (s.match(/[A-Za-z][A-Za-z’'\-]*/g) || []).length;
