@@ -1,0 +1,1337 @@
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수업 프레젠테이션</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700&amp;family=IBM+Plex+Mono:wght@300;400;500&amp;family=Gowun+Batang:wght@400;700&amp;family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+--ink: #1a1a1a;
+--ink2: #3a3a3a;
+--ink3: #6a6a6a;
+--ink4: #a0a0a0;
+--border: #d8d4ca;
+--bg: #fbfaf6;
+--paper: #ffffff;
+--accent: #8a3324;
+--serif-en: 'Newsreader', Georgia, serif;
+--serif-ko: 'Gowun Batang', 'Nanum Myeongjo', serif;
+--mono: 'IBM Plex Mono', monospace;
+}
+body { font-family: var(--serif-ko); background: var(--bg); color: var(--ink); font-size: 14px; min-height: 100vh; }
+.app { display: grid; grid-template-columns: 360px 1fr; min-height: 100vh; }
+.panel { background: var(--bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; min-height: 0; }
+.panel-scroll { flex: 1 1 auto; overflow-y: auto; padding: 22px 20px 16px; min-height: 0; }
+.panel-foot { flex: 0 0 auto; padding: 14px 20px 18px; background: var(--bg); border-top: 2px solid var(--ink2); box-shadow: 0 -2px 8px rgba(0,0,0,.05); }
+.panel-head { margin-bottom: 18px; }
+.panel-back { font-size: 12px; color: var(--ink3); text-decoration: none; font-family: var(--mono); }
+.panel-back:hover { color: var(--ink); }
+.panel-title { font-family: var(--serif-ko); font-size: 22px; font-weight: 700; color: var(--ink); margin-top: 4px; }
+.section { margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
+.section:last-of-type { border-bottom: none; }
+.section h2 { font-size: 11px; font-family: var(--mono); text-transform: uppercase; color: var(--ink3); letter-spacing: 0.06em; margin-bottom: 9px; font-weight: 500; }
+.section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
+#filterInput { width: 100%; border: 1px solid var(--border); background: var(--paper); padding: 7px 10px; font-family: var(--mono); font-size: 12px; color: var(--ink); margin-bottom: 8px; }
+#filterInput:focus { outline: 1px solid var(--accent); }
+.cat-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 5px;
+margin-bottom: 10px;
+}
+.cat-btn {
+padding: 8px 9px;
+border: 1px solid var(--border);
+background: var(--paper);
+color: var(--ink2);
+font-family: var(--serif-ko);
+font-size: 11.5px;
+cursor: pointer;
+border-radius: 3px;
+text-align: left;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 4px;
+}
+.cat-btn:hover { background: #f6f3ec; border-color: var(--ink4); }
+.cat-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.cat-btn .cat-cnt {
+font-family: var(--mono);
+font-size: 9.5px;
+color: var(--ink3);
+flex: 0 0 auto;
+}
+.cat-btn.active .cat-cnt { color: rgba(255,255,255,0.7); }
+.cat-back {
+font-family: var(--mono);
+font-size: 10px;
+color: var(--ink3);
+background: transparent;
+border: none;
+cursor: pointer;
+padding: 4px 0;
+margin-bottom: 4px;
+}
+.cat-back:hover { color: var(--accent); }
+.passage-list { max-height: 280px; overflow-y: auto; border: 1px solid var(--border); background: var(--paper); }
+.passage-row {
+padding: 6px 10px;
+font-family: var(--mono);
+font-size: 11.5px;
+color: var(--ink2);
+border-bottom: 1px solid #f0eee8;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.passage-row:hover { background: #f6f3ec; }
+.passage-row.selected { background: #f0e8d8; color: var(--ink); font-weight: 500; }
+.passage-row input[type="checkbox"] { accent-color: var(--accent); cursor: pointer; flex: 0 0 auto; }
+.passage-row .pinfo { flex: 1 1 auto; overflow: hidden; min-width: 0; }
+.passage-row .pid { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.passage-row .ptitle { display: block; font-size: 10px; color: var(--ink3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; font-family: var(--serif-ko); }
+.btn-mini { font-family: var(--mono); font-size: 10px; padding: 3px 7px; border: 1px solid var(--border); background: var(--paper); color: var(--ink3); cursor: pointer; }
+.btn-mini:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.opt-row { display: flex; align-items: center; gap: 7px; padding: 4px 0; font-size: 13px; color: var(--ink2); cursor: pointer; }
+.opt-row input { accent-color: var(--accent); cursor: pointer; }
+.btn-row { display: grid; grid-auto-flow: column; gap: 4px; margin-bottom: 7px; }
+.btn.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.rng { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.rng label { flex: 0 0 46px; font-family: var(--mono); font-size: 10.5px; color: var(--ink3); }
+.rng input[type=range] { flex: 1; accent-color: var(--accent); }
+.rng .v { flex: 0 0 30px; text-align: right; font-family: var(--mono); font-size: 11px; }
+.stat { font-family: var(--mono); font-size: 11px; color: var(--ink3); margin-top: 6px; }
+.btn { border: 1px solid var(--border); background: var(--paper); padding: 8px 6px; font-family: var(--mono); font-size: 11px; color: var(--ink2); cursor: pointer; text-align: center; transition: all 0.1s; }
+.btn:hover { background: #f6f3ec; color: var(--ink); border-color: var(--ink4); }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); width: 100%; padding: 10px; font-size: 12px; font-weight: 500; }
+.btn-primary:hover { background: #6e2818; color: #fff; }
+.foot-row { display: flex; gap: 6px; margin-bottom: 8px; }
+.foot-row:last-child { margin-bottom: 0; }
+.foot-print { align-items: center; }
+.foot-print-label { font-family: var(--mono); font-size: 10px; color: var(--ink3); flex: 0 0 auto; min-width: 24px; }
+.btn-print { flex: 1 1 auto; padding: 7px 6px; }
+.btn-print:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.preview { padding: 24px; background: #ececec; overflow-y: auto; overflow-x: hidden; height: 100vh; display:flex; flex-direction:column; }
+.preview #view { flex:1 1 auto; }
+.preview-msg { padding: 80px 30px; text-align: center; color: var(--ink3); font-size: 14px; }
+.app { height: 100vh; overflow: hidden; }
+.app.standalone { grid-template-columns: 1fr !important; }
+.app.standalone .preview { padding: 0; }
+#view {
+--paper:#f6f6f2; --paper2:#ecece6; --ink:#101010;
+--muted:#a8a8a1; --muted2:#6f6f69; --rule:#d6d6cf;
+--ui:"Noto Sans KR","Noto Sans CJK KR","Malgun Gothic",Arial,sans-serif;
+--body-serif:"Newsreader","Noto Serif CJK KR",Georgia,serif;
+--body-sans:"Noto Sans KR","Noto Sans CJK KR","Malgun Gothic",Arial,sans-serif;
+--body:var(--body-serif);
+background: var(--paper); color: var(--ink); font-family: var(--ui);
+}
+body.font-sans #view { --body:var(--body-sans); }
+#view * { box-sizing: border-box; }
+#view button, #view input, #view textarea { font: inherit; }
+#view button { border: 0; background: none; color: inherit; }
+#view .cls-head { display:flex; align-items:baseline; gap:4mm; padding:6px 10px;
+border-bottom:1px solid var(--rule); }
+#view .cls-head .pid { font-family:var(--mono); font-size:11px; color:var(--muted2); }
+#view .cls-help { font-family:var(--mono); font-size:10px; color:var(--muted); margin-left:auto; }
+#view .cls-foot { display:flex; gap:8px; padding:5px 10px; border-top:1px solid var(--rule);
+font-family:var(--mono); font-size:10px; color:var(--muted); }
+#view { display:flex; flex-direction:column; min-height:100%; }
+#view #main { position:relative; display:flex; flex-direction:column; flex:1 1 auto; min-height:0; }
+#view .cls-head, #view .cls-foot { flex:0 0 auto; }
+#view .flow-whole { flex:0 0 auto; padding:14px 5vw 12px; border-bottom:1px solid var(--rule);
+font-family:var(--body); font-size:clamp(14px,1.15vw,20px); line-height:1.55;
+letter-spacing:-.005em; cursor:pointer; transition:font-size .16s ease; }
+#view .flow-whole .wh-off { color:var(--muted); opacity:.5; }
+#view .flow-whole .wh-on  { color:var(--ink); font-weight:650; }
+#view .flow-whole.big { font-size:clamp(24px,2.6vw,46px); line-height:1.4; padding:5vh 5vw 4vh;
+border-bottom:0; }
+#view .flow-whole.big .wh-off { opacity:.34; }
+#view .flow-whole.intro { cursor:default; color:var(--ink); display:flex; align-items:center;
+flex:1 1 auto; min-height:0; }
+body.hicon #view .flow-whole.intro { color:#fff; }
+#view .flow-stage.dim { opacity:.28; filter:saturate(.6); }
+body.hicon #view .flow-whole { border-bottom-color:#3a3a36; }
+body.hicon #view .flow-whole .wh-off { color:#8a8a85; opacity:.75; }
+body.hicon #view .flow-whole .wh-on  { color:#fff; }
+#view .cv-wrap { flex:1 1 auto; display:flex; flex-direction:column; align-items:center;
+justify-content:center; gap:18px; padding:40px; text-align:center; }
+#view .cv-title { font-family:var(--body); font-size:44px; line-height:1.3; }
+#view .cv-title .hd-code { font-family:var(--mono); font-size:.6em; color:var(--muted2); }
+#view .cv-title .hd-sub { font-family:var(--body); font-size:.72em; color:var(--muted2); display:block; margin-top:8px; }
+#view .cv-title .hd-sep { display:inline-block; width:14px; }
+#view .cv-meta { font-family:var(--mono); font-size:13px; color:var(--muted); }
+#view .cv-first { font-family:var(--body); font-size:19px; line-height:1.6; color:var(--muted2); max-width:70ch; margin-top:10px; }
+#view .cv-go { font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:22px; letter-spacing:.08em; }
+#view .cv-brand { font-family:var(--body); font-style:italic; font-size:13px; color:var(--muted); opacity:.6; letter-spacing:.06em; margin-top:30px; }
+#view .screen { height:100%; min-height:0; overflow-y:auto; overflow-x:hidden; padding:42px 5vw 52px; overscroll-behavior:contain; }
+#view .cv-wrap { overflow-y:auto; overscroll-behavior:contain; }
+#view .eyebrow { font-size:11px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; color:var(--muted2); margin-bottom:18px; }
+#view .screen-title { font-size:18px; font-weight:800; margin:0 0 28px; }
+#view .macro-wrap { max-width:1380px; margin:0 auto; }
+#view .macro-head { display:flex; align-items:end; gap:18px; margin-bottom:20px; }
+#view .macro-head .screen-title { margin:0; }
+#view .macro-head .phase { font-size:11px; color:var(--muted2); font-weight:700; }
+#view .sentence-list { border-top:2px solid var(--ink); }
+#view .srow { display:grid; grid-template-columns:64px minmax(0,1fr) 260px; gap:20px; padding:18px 0;
+border-bottom:1px solid var(--rule); align-items:start; cursor:pointer; }
+#view .srow:hover .stext { font-weight:800; }
+#view .snum { font-size:13px; font-weight:900; color:var(--muted2); padding-top:4px; }
+#view .stext { font-family:var(--body); font-size:clamp(19px,1.55vw,27px); line-height:1.55; font-weight:650; letter-spacing:-.01em; }
+#view .snote { width:100%; min-height:36px; resize:vertical; border:0; border-bottom:1px solid var(--rule);
+background:transparent; padding:6px 2px; font-size:12px; line-height:1.45; color:var(--muted2); outline:none; }
+#view .snote:focus { border-color:var(--ink); color:var(--ink); }
+#view .take-wrap { max-width:1200px; margin:0 auto; }
+#view .take-grid { display:grid; grid-template-columns:170px minmax(0,1fr); border-top:2px solid var(--ink); }
+#view .take-label { padding:20px 18px 20px 0; border-bottom:1px solid var(--rule); font-size:12px; font-weight:900; color:var(--muted2); }
+#view .take-input { border:0; border-bottom:1px solid var(--rule); background:transparent; resize:vertical; min-height:74px;
+padding:18px 4px; outline:none; font-family:var(--body); font-size:22px; line-height:1.45; font-weight:650; }
+#view .take-input:focus { background:#f0f0ea; }
+#view .saved { margin-top:16px; font-size:11px; color:var(--muted2); }
+#view .tp-wrap { flex:0 0 auto; padding:13px 30px 14px; border-bottom:1px solid var(--rule);
+font-family:var(--body); font-size:clamp(18px,1.28vw,25px); line-height:1.38; letter-spacing:-.005em;
+background:rgba(255,255,255,.16); }
+#view .tp-off  { color:var(--muted); opacity:.34; }
+#view .tp-done { color:var(--muted2); opacity:.62; }
+#view .tp-on  { color:var(--ink); font-weight:650; }
+#view .flow-measure-row.bt-row { position:absolute; left:34px; right:34px; top:0; height:1px;
+margin:0; padding:0; visibility:hidden; pointer-events:none; overflow:hidden; }
+#view .bt-wrap { flex:1 1 auto; display:flex; align-items:flex-start; padding:18px 34px; min-height:0; overflow-y:auto; }
+#view .bt-in { width:100%; }
+#view .bt-row { font-family:var(--body); line-height:1.3; margin:5px 0; color:var(--ink); font-weight:500; }
+#view .bt-row.bt-past { color:var(--muted2); font-weight:400; }
+#view .bt-row.bt-on { color:var(--ink); font-weight:600; }
+#view .bt-row.bt-mark { color:var(--muted); font-weight:400; }
+#view .bt-row.bt-co { padding-left:1.6em; }
+#view .bt-row.bt-sub { padding-left:2.2em; color:var(--muted2); }
+#view .bt-lab { font-family:var(--mono); font-size:11px; color:var(--muted); margin-right:12px;
+vertical-align:.35em; letter-spacing:.02em; }
+#view .flow-stage { flex:1 1 auto; min-height:0; position:relative; overflow:hidden;
+display:flex; flex-direction:column; justify-content:center;
+gap:clamp(4px,.7vh,9px); padding:10px 40px 12px; }
+#view .flow-band { width:100%; min-width:0; flex:0 0 auto; display:flex; align-items:flex-start; overflow:visible; }
+#view .flow-card { width:100%; font-family:var(--body); letter-spacing:-.008em; line-height:1.16;
+transform-origin:left center; }
+#view .flow-line { white-space:nowrap; width:max-content; max-width:none; }
+#view .flow-line + .flow-line { margin-top:.10em; }
+#view .flow-past { transform:translateX(0); }
+#view .flow-past .flow-card { color:var(--muted2); opacity:.72; font-weight:450;
+animation:flowRetire .20s cubic-bezier(.2,.7,.25,1) both; }
+#view .flow-now { transform:translateX(1.5vw); }
+#view .flow-now .flow-card { color:var(--ink); opacity:1; font-weight:600;
+animation:flowArrive .20s cubic-bezier(.2,.7,.25,1) both; }
+#view .flow-next { transform:translateX(4vw); }
+#view .flow-next .flow-card { color:var(--muted2); opacity:.46; font-weight:450;
+animation:flowQueue .20s cubic-bezier(.2,.7,.25,1) both; }
+#view .flow-empty { opacity:0 !important; }
+#view .flow-now-memo { width:min(72vw,1180px); margin-top:5px; }
+#view .flow-now-memo.collapsed { height:24px; display:flex; align-items:flex-end; }
+#view .memo-line { width:100%; height:24px; padding:0 2px 4px; cursor:text;
+border:0; border-bottom:1px dashed var(--rule); background:transparent; text-align:left;
+color:var(--muted); font-family:var(--ui); font-size:11px; opacity:.58; }
+#view .memo-line:hover { color:var(--muted2); border-bottom-color:var(--muted2); opacity:.9; }
+#view .flow-now-memo.open .pv-memo { margin-top:0; min-height:50px; padding:6px 2px;
+font-size:clamp(17px,1.02vw,21px); line-height:1.35; }
+@keyframes flowRetire {
+from { transform:translate(1vw,.38em) scale(1.06); opacity:.94; }
+to   { transform:translate(0,0) scale(1); opacity:.72; }
+}
+@keyframes flowArrive {
+from { transform:translate(1vw,.38em) scale(.94); opacity:.54; }
+to   { transform:translate(0,0) scale(1); opacity:1; }
+}
+@keyframes flowQueue {
+from { transform:translate(.5vw,.20em); opacity:.22; }
+to   { transform:translate(0,0); opacity:.46; }
+}
+@media (prefers-reduced-motion: reduce) {
+#view .flow-card { animation:none !important; }
+}
+#view .pv-focus { font-family:var(--body); font-size:15px; line-height:1.75; color:var(--muted);
+padding:12px 26px 14px; border-bottom:1px solid var(--rule); flex:0 0 auto; }
+#view .fc-num { font-family:var(--mono); font-size:.8em; color:var(--muted); margin-right:8px; }
+#view .fc-first { color:var(--muted); font-style:italic; }
+#view .pv-body { flex:1 1 auto; display:flex; align-items:center; justify-content:center; padding:20px 40px; }
+#view .pv-one { width:100%; max-width:100%; text-align:left; }
+#view .pv-row { font-family:var(--body); line-height:1.28; margin:4px 0; white-space:normal; }
+#view .pv-past, #view .pv-tail { color:var(--muted); font-weight:400; letter-spacing:-.005em; }
+#view .pv-past { opacity:.5; }
+#view .pv-tail { opacity:.62; }
+#view .pv-t { color:var(--ink); font-weight:500; }
+#view .pv-memo { display:block; width:100%; margin-top:14px; resize:vertical; font-family:var(--ui);
+font-size:15px; line-height:1.5; color:var(--ink); background:transparent; border:none;
+border-bottom:1px dashed var(--rule); padding:6px 2px; outline:none; }
+#view .pv-memo:focus { border-bottom-color:var(--muted2); }
+#view .pv-foot { flex:0 0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:12px 16px;
+padding:10px 26px; border-top:1px solid var(--rule); }
+#view .pv-pnav { display:flex; align-items:center; gap:6px; }
+#view .pv-dots { display:flex; gap:6px; flex-wrap:wrap; }
+#view .pv-dot { font-family:var(--mono); font-size:11px; padding:3px 9px; border:1px solid var(--rule);
+background:transparent; color:var(--muted2); border-radius:2px; cursor:pointer; }
+#view .pv-dot.on { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+#view .pv-pid { font-family:var(--mono); font-size:11px; color:var(--muted2); white-space:nowrap; }
+#view .pv-size { display:flex; align-items:center; gap:5px; margin-left:auto; }
+#view .pv-keys { font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; }
+#view .pv-brand { font-family:var(--body); font-style:italic; font-size:11px; color:var(--muted); opacity:.55; letter-spacing:.04em; white-space:nowrap; }
+#view .pv-prog { margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--muted); }
+body.blank #view .pv-body, body.blank #view .cv-wrap, body.blank #view .pv-focus { visibility:hidden; }
+body.blank #view #main::after { content:'화면 감춤 — b 로 복귀'; position:absolute; left:50%; top:50%;
+transform:translate(-50%,-50%); font-family:var(--mono); font-size:13px; color:var(--muted); }
+body.hicon .preview { background:#050505; }
+body.hicon #view {
+--paper:#050505; --paper2:#0b0b0b; --ink:#f7f7f4;
+--muted:#777773; --muted2:#b9b9b4; --rule:#343432;
+background:#050505; color:var(--ink);
+}
+body.hicon #view .tp-wrap { background:rgba(255,255,255,.025); }
+body.hicon #view .tp-off { color:#686864; opacity:.72; }
+body.hicon #view .tp-done { color:#a2a29d; opacity:.82; }
+body.hicon #view .tp-on { color:#fff; }
+body.hicon #view .flow-past .flow-card { color:#bdbdb8; opacity:.78; }
+body.hicon #view .flow-now .flow-card { color:#fff; opacity:1; }
+body.hicon #view .flow-next .flow-card { color:#858580; opacity:.62; }
+body.hicon #view .pv-focus { color:#bdbdb8; background:#080808; }
+body.hicon #view .pv-t, body.hicon #view .cv-title { color:#fff; }
+body.hicon #view .cv-first, body.hicon #view .cv-meta, body.hicon #view .pv-pid,
+body.hicon #view .pv-keys, body.hicon #view .pv-prog { color:#b7b7b2; }
+body.hicon #view .pv-dot { color:#d0d0cb; border-color:#565652; }
+body.hicon #view .pv-dot.on { background:#f4f4f0; color:#080808; border-color:#f4f4f0; }
+body.hicon #view .pv-memo { color:#fff; border-bottom-color:#696964; }
+body.hicon #view .pv-memo::placeholder { color:#787874; }
+body.hicon #view .memo-line { color:#7f7f7a; border-bottom-color:#4b4b48; }
+body.hicon #view .memo-line:hover { color:#bdbdb8; border-bottom-color:#777772; }
+body.hicon #view .pv-brand, body.hicon #view .cv-brand { color:#8e8e89; opacity:.85; }
+body.hicon #view .snote, body.hicon #view .take-input { color:#fff; }
+@media print { #view .cls-head, #view .cls-foot, .panel { display:none !important; } }</style>
+<style>.tidy-hid{display:none!important}.tidy-q{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-left:6px;border:1px solid #bbb;border-radius:50%;font:600 10px/1 sans-serif;color:#888;cursor:pointer;background:none;vertical-align:middle;padding:0}.tidy-q:hover,.tidy-q.on{border-color:#555;color:#222}.tidy-fold{margin-top:6px;border-top:1px dashed #ccc}.tidy-fold>summary{cursor:pointer;list-style:none;padding:10px 2px;font:600 12px sans-serif;color:#666}.tidy-fold>summary::-webkit-details-marker{display:none}.tidy-fold>summary::before{content:"▸ ";}.tidy-fold[open]>summary::before{content:"▾ ";}@media print{.tidy-q{display:none!important}}</style><style>.tp-tree{grid-column:1/-1;display:flex;flex-direction:column;gap:6px;max-height:520px;overflow-y:auto;border:1px solid var(--border,#ddd);border-radius:4px;background:var(--paper,#fff);padding:6px 8px}.tp-g{border-bottom:1px dashed #ddd;padding-bottom:5px}.tp-g:last-child{border-bottom:none}.tp-gh{display:flex;align-items:center;gap:6px;font:600 12.5px var(--serif-ko,serif);cursor:pointer;padding:2px 0}.tp-gh .tp-n{margin-left:auto;font:10px var(--mono,monospace);color:#999}.tp-items{display:flex;flex-wrap:wrap;gap:3px 5px;padding:3px 0 0 20px}.tp-i{display:inline-flex;align-items:center;gap:3px;font:11px var(--mono,monospace);border:1px solid #e3e0d8;border-radius:3px;padding:2px 5px;cursor:pointer;background:#fff}.tp-i.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}.tp-i input{display:none}.tp-bar{grid-column:1/-1;display:flex;gap:6px;align-items:center}</style><style>#rangeDrawer{margin:0 0 8px;padding:0 0 8px;border-bottom:1px dashed var(--border,#ccc);font-size:12px}
+#rangeDrawer .rd-h{display:flex;justify-content:space-between;align-items:baseline;
+color:var(--ink3,#888);font-size:11px;letter-spacing:.04em;margin:2px 0 4px}
+#rangeDrawer .rd-h a{color:var(--ink3,#888);text-decoration:none}
+#rangeDrawer .rd-h a:hover{text-decoration:underline}
+#rangeDrawer .rd-row{display:flex;align-items:center;gap:6px;padding:3px 0}
+#rangeDrawer .rd-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+color:var(--ink,#222)}
+#rangeDrawer .rd-n{color:var(--ink3,#888);font-size:11px;flex:0 0 auto}
+#rangeDrawer button{flex:0 0 auto;font-size:11px;padding:2px 8px;cursor:pointer;border-radius:4px;
+border:1px solid var(--border,#ccc);background:transparent;color:var(--ink,#222)}
+#rangeDrawer button.on{background:var(--ink,#222);color:#fff;border-color:var(--ink,#222)}
+#rangeDrawer .rd-empty{color:var(--ink3,#888)}
+@media print{#rangeDrawer{display:none!important}}</style></head>
+<body>
+<div class="app standalone">
+  
+  <main class="preview">
+    <div id="initMsg" class="preview-msg" style="display: none;">좌측에서 지문을 선택하고 [렌더]를 누르세요.</div>
+    <div id="view" style="display: flex;">
+      <div class="cls-head"><span class="pid" id="pid">모의고사 고2<span class="hd-sep"></span><span class="hd-code">2026-10-21</span></span>
+        <span class="cls-help">space/→ 다음 · ← 이전 · n/p 문장 · g 문장지도 · a 전체 · [ ] 자수 · - = 배율</span></div>
+      <main id="main"><div class="cv-wrap">
+      <div class="cv-title">모의고사 고2<span class="hd-sep"></span><span class="hd-code">2026-10-21</span></div>
+      <div class="cv-meta">7문장 · 159낱말</div>
+      <div class="cv-first">To see how borrowing and lending changes a person's worldview, consider what the rate of interest does to people's perception of time.</div>
+      <div class="cv-go">space / → 시작</div>
+      <div class="cv-brand">Quod Erat Demonstrandum</div></div></main>
+      <div class="cls-foot"><span id="pos">지문 1/1</span><span id="posR">표지</span></div>
+    </div>
+  </main>
+</div>
+
+<script>let passages = [];
+let selectedIds = new Set();
+let lastData = null;
+let shuffleSalt = 0;
+let catLevel = 1;
+let catSelected = null;
+let bookSelected = null;
+let pubSelected = null;
+let stepSelected = null;
+const CAT_LABELS = {
+textbook: '교과서',
+ebs: 'EBS',
+sub: '부교재',
+mock: '모의고사',
+worksheet: '학습지',
+etc: '기타',
+};
+const CAT_ORDER = ['textbook', 'ebs', 'sub', 'mock', 'worksheet', 'etc'];
+async function loadPassages() {
+try {
+const r = await fetch('/api/passages');
+const data = await r.json();
+passages = data.passages || data || [];
+renderCategoryStep1();
+} catch (e) {
+const _pl = document.getElementById('passageList');
+if(_pl) _pl.innerHTML = '<div style="padding:10px;color:#a33">불러오기 실패</div>';
+}
+}
+function escapeHtml(s) {
+return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function _hideAllRows() {
+document.getElementById('catRow1').style.display = 'none';
+document.getElementById('catRow2').style.display = 'none';
+document.getElementById('catRow3').style.display = 'none';
+document.getElementById('catRow4').style.display = 'none';
+document.getElementById('filterInput').style.display = 'none';
+document.getElementById('passageList').style.display = 'none';
+}
+function renderCategoryStep1() {
+const cnt = {};
+passages.forEach(p => {
+const c = p.lv_src || '(출처 없음)';
+cnt[c] = (cnt[c] || 0) + 1;
+});
+const html = Object.keys(cnt).sort().map(c => `
+<button class="cat-btn" onclick="pickCategory('${c}')">
+<span>${escapeHtml(c)}</span>
+<span class="cat-cnt">${cnt[c]}</span>
+</button>
+`).join('');
+_hideAllRows();
+document.getElementById('catRow1').innerHTML = html;
+document.getElementById('catRow1').style.display = '';
+catLevel = 1;
+catSelected = null;
+bookSelected = null;
+pubSelected = null;
+document.getElementById('passageStat').textContent = `선택: ${selectedIds.size} 지문 · 출처 선택 →`;
+}
+function pickCategory(c) {
+catSelected = c;
+catLevel = 2;
+renderCategoryStep2();
+}
+function renderCategoryStep2() {
+bookSelected = null; pubSelected = null; catLevel = 2;
+const cnt = {};
+passages.filter(p => p.lv_src === catSelected).forEach(p => {
+const b = p.lv_book || '(교재 없음)';
+cnt[b] = (cnt[b] || 0) + 1;
+});
+const books = Object.keys(cnt).sort();
+const html = `
+<button class="cat-back" onclick="renderCategoryStep1()">← ${escapeHtml(catSelected||'')} 뒤로</button>
+${books.map(b => `
+<button class="cat-btn" onclick="pickBook('${b.replace(/'/g, '&#39;')}')">
+<span>${escapeHtml(b)}</span>
+<span class="cat-cnt">${cnt[b]}</span>
+</button>
+`).join('')}
+`;
+_hideAllRows();
+document.getElementById('catRow2').innerHTML = html;
+document.getElementById('catRow2').style.display = '';
+document.getElementById('passageStat').textContent = `선택: ${selectedIds.size} 지문 · 책 선택 →`;
+}
+function pickBook(b) {
+bookSelected = b.replace(/&#39;/g, "'");
+catLevel = 3;
+renderCategoryStep3();
+}
+function renderCategoryStep3() {
+pubSelected = null; catLevel = 3;
+const cnt = {};
+passages
+.filter(p => p.lv_src === catSelected && (p.lv_book || '(교재 없음)') === bookSelected)
+.forEach(p => {
+const pub = p.lv_grade || '(등급 없음)';
+cnt[pub] = (cnt[pub] || 0) + 1;
+});
+const pubs = Object.keys(cnt).sort();
+if (pubs.length === 0) {
+pubSelected = null;
+catLevel = 4;
+renderCategoryStep4();
+return;
+}
+const html = `
+<button class="cat-back" onclick="renderCategoryStep2()">← ${escapeHtml(bookSelected || '')} 뒤로</button>
+${pubs.map(p => `
+<button class="cat-btn" onclick="pickPublisher('${p.replace(/'/g, '&#39;')}')">
+<span>${escapeHtml(p)}</span>
+<span class="cat-cnt">${cnt[p]}</span>
+</button>
+`).join('')}
+`;
+_hideAllRows();
+document.getElementById('catRow3').innerHTML = html;
+document.getElementById('catRow3').style.display = '';
+document.getElementById('passageStat').textContent = `선택: ${selectedIds.size} 지문 · 등급 선택 →`;
+}
+function pickPublisher(p) {
+pubSelected = p.replace(/&#39;/g, "'");
+catLevel = 4;
+renderCategoryStep4();
+}
+function backFromStep4() {
+if (pubSelected === null || pubSelected === undefined || pubSelected === '') {
+renderCategoryStep2();
+} else {
+renderCategoryStep3();
+}
+}
+function renderCategoryStep4() {
+stepSelected = null; catLevel = 4;
+const cnt = {};
+passages
+.filter(p => p.lv_src === catSelected
+&& (p.lv_book || '(교재 없음)') === bookSelected
+&& (p.lv_grade || '(등급 없음)') === pubSelected)
+.forEach(p => {
+const k = p.lv_step4 || '(구분 없음)';
+cnt[k] = (cnt[k] || 0) + 1;
+});
+const keys = Object.keys(cnt).sort();
+if (keys.length === 0) {
+stepSelected = null; catLevel = 5;
+renderPassageList();
+return;
+}
+const html = `
+<button class="cat-back" onclick="backFromStep4()">← ${escapeHtml(stepSelected || '')} 뒤로</button>
+${keys.map(k => `
+<button class="cat-btn" onclick="pickStep4('${k.replace(/'/g, '&#39;')}')">
+<span>${escapeHtml(k)}</span>
+<span class="cat-cnt">${cnt[k]}</span>
+</button>
+`).join('')}
+`;
+_hideAllRows();
+document.getElementById('catRow4').innerHTML = html;
+document.getElementById('catRow4').style.display = '';
+document.getElementById('passageStat').textContent =
+`선택: ${selectedIds.size} 지문 · 세부 선택 →`;
+}
+function pickStep4(k) {
+stepSelected = k.replace(/&#39;/g, "'");
+catLevel = 5;
+renderPassageList();
+}
+function renderPassageList() {
+let list = passages;
+if (catSelected) list = list.filter(p => p.lv_src === catSelected);
+if (bookSelected) list = list.filter(p => (p.lv_book || '(교재 없음)') === bookSelected);
+if (pubSelected !== null) list = list.filter(p => (p.lv_grade || '(등급 없음)') === pubSelected
+&& (!stepSelected || (p.lv_step4 || '(구분 없음)') === stepSelected));
+const q = document.getElementById('filterInput').value.toLowerCase();
+if (q) {
+list = list.filter(p =>
+(p.display_id || '').toLowerCase().includes(q) ||
+(p.title || '').toLowerCase().includes(q)
+);
+}
+const backLabel = pubSelected
+? `← ${escapeHtml(pubSelected)} 뒤로`
+: `← ${escapeHtml(bookSelected || '')} 뒤로`;
+const backFn = pubSelected ? 'renderCategoryStep3()' : 'renderCategoryStep2()';
+const backHtml = `<button class="cat-back" onclick="${backFn}">${backLabel}</button>`;
+const html = list.map(p => {
+const checked = selectedIds.has(p.id) ? 'checked' : '';
+const sel = selectedIds.has(p.id) ? 'selected' : '';
+const did = (p.display_id || p.id || '');
+const rightId = did.includes(' // ') ? did.split(' // ').pop().trim() : did;
+const book = p.lv_book || p.title || '';
+const pub = p.lv_grade || '';
+const subline = pub ? `${book} · ${pub}` : book;
+return `
+<label class="passage-row ${sel}">
+<input type="checkbox" ${checked} onchange="togglePassage('${p.id}', this.checked, this)">
+<span class="pinfo">
+<span class="pid">${escapeHtml(rightId)}</span>
+${subline ? `<span class="ptitle">${escapeHtml(subline)}</span>` : ''}
+</span>
+</label>`;
+}).join('');
+_hideAllRows();
+const lastRow = pubSelected ? 'catRow3' : 'catRow2';
+document.getElementById(lastRow).innerHTML = backHtml;
+document.getElementById(lastRow).style.display = '';
+document.getElementById('filterInput').style.display = '';
+document.getElementById('passageList').style.display = '';
+if(!document.getElementById('passageList')) return;
+document.getElementById('passageList').innerHTML =
+html || '<div style="padding:10px;color:#999;font-size:11px">결과 없음</div>';
+}
+function filterList() { renderPassageList(); }
+function togglePassage(id, checked, el) {
+if (checked) selectedIds.add(id);
+else selectedIds.delete(id);
+if (el) { el.closest('.passage-row').classList.toggle('selected', checked); const st = document.getElementById('passageStat'); if (st) st.textContent = st.textContent.replace(/\d+ 지문/, selectedIds.size + ' 지문'); }
+else renderPassageList();
+}
+function selectAll(on) {
+if (catLevel !== 4 && catLevel !== 5) return;
+let list = passages;
+if (catSelected) list = list.filter(p => p.lv_src === catSelected);
+if (bookSelected) list = list.filter(p => (p.lv_book || '(교재 없음)') === bookSelected);
+if (pubSelected !== null) list = list.filter(p => (p.lv_grade || '(등급 없음)') === pubSelected
+&& (!stepSelected || (p.lv_step4 || '(구분 없음)') === stepSelected));
+const q = document.getElementById('filterInput').value.toLowerCase();
+if (q) {
+list = list.filter(p =>
+(p.display_id || '').toLowerCase().includes(q) ||
+(p.title || '').toLowerCase().includes(q)
+);
+}
+if (on) list.forEach(p => selectedIds.add(p.id));
+else list.forEach(p => selectedIds.delete(p.id));
+renderPassageList();
+}
+let EDITED = {};
+async function generate(){
+if(selectedIds.size===0){ document.getElementById('passageStat').textContent='지문을 먼저 선택하세요'; return; }
+const meta=document.getElementById('meta');
+meta.textContent='준비 중…';
+document.getElementById('initMsg').style.display='none';
+document.getElementById('view').style.display='flex';
+try{
+const r=await fetch('/api/presentation',{method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify({passage_ids:Array.from(selectedIds), level:2, show_label:false, show_why:false, show_note:true})});
+const d=await r.json();
+if(d.error){ meta.textContent=d.error; return; }
+window.__classBoot(d.data||[]);
+const m=d.meta||{};
+meta.textContent=`${m.passage_count||0}지문 · ${m.sentence_count||0}문장`;
+}catch(e){ meta.textContent='실패: '+e.message; }
+}
+window.addEventListener('DOMContentLoaded', ()=>{ loadPassages(); });</script>
+<script>let _probe = null;
+function _measure(txt, px){
+if(!_probe){
+_probe = document.createElement('div');
+_probe.style.cssText = 'position:absolute;left:-9999px;top:-9999px;white-space:nowrap;visibility:hidden;';
+document.body.appendChild(_probe);
+}
+const src = document.querySelector('#view .bt-row') || document.querySelector('#view .tp-wrap');
+const cs = src ? getComputedStyle(src) : null;
+_probe.style.fontFamily = cs ? cs.fontFamily : '"Newsreader","Noto Serif CJK KR",Georgia,serif';
+_probe.style.fontWeight = '600';
+_probe.style.letterSpacing = cs ? cs.letterSpacing : 'normal';
+_probe.style.fontSize = px + 'px';
+_probe.textContent = txt;
+return _probe.getBoundingClientRect().width;
+}
+function _availW(){
+const el = document.getElementById('main') || document.querySelector('.preview');
+return Math.max(320, (el ? el.clientWidth : 1000) - 80);
+}
+function _rowW(){
+const el = document.getElementById('main') || document.querySelector('.preview');
+const w = (el ? el.clientWidth : 1000) - 84;
+return Math.max(240, w);
+}
+const _REF = 'When we think about science, we might consider it as a domain reserved for those who ';
+function nomPx(W){
+const ref = _REF.repeat(Math.ceil(FIT_CH/_REF.length)+1).slice(0, FIT_CH);
+const w0 = _measure(ref, 40) || 1;
+return 40 * W / w0 * FONT_SCALE;
+}
+function basePx(W){ return Math.round(Math.max(18, Math.min(72, nomPx(W)))); }
+function FIT(txt, px, W){ return _measure(txt.replace(/^[\s,;:—–-]+/,'').trim(), px) <= W * 1.02; }
+function textOf(s, a, b){
+const t = s.text;
+let e = b; while(e<t.length && /\s/.test(t[e])) e++;
+const opening = /['"“‘(]/.test(t[e]||'') && /\S/.test(t[e+1]||'');
+if(e<t.length && !opening && /[,;:—–.!?'"”’)]/.test(t[e])) b = e+1;
+return t.slice(a,b).replace(/^[\s,;:—–]+/,'').trim();
+}
+function hasWord(s, n){ return /[A-Za-z0-9]/.test(s.text.slice(n.a, n.b)); }
+const ASK = {
+'주어':'', '유도부사':'', '초점':'', '술부':'', '명사핵':'', '전치사목적어':'',
+'가주어':'', '가목적어':'', '보어':'', '부사적수식':'', '접속부사':'', '표제':'',
+'호격':'', '서명':'', '인사':'',
+'목적어':'무엇을?', '직접목적어':'무엇을?', '진목적어':'무엇을?', '간접목적어':'누구에게?',
+'목적격보어':'어떻게 된?', '진주어':'무엇이?', '의미상주어':'누가?',
+'명사후치수식':'어떤?', '동격':'어떤?', '명사내용':'무슨 내용?', '부연':'덧붙이면?',
+'관계절':'어떤?', '후속절':'어떤?', '삽입':'덧붙이면?', '예시':'예를 들면?',
+'시간':'언제?', '장소':'어디서?', '방향':'어디로?', '이유':'왜?', '원인':'왜 그런가?',
+'조건':'어떤 경우에?', '양보':'그런데도?', '목적':'무엇하러?', '결과':'그래서?',
+'양태':'어떻게?', '방법':'어떻게?', '수단':'무엇으로?', '재료':'무엇으로?',
+'비교':'무엇에 비해?', '대조':'무엇과 달리?', '범위':'어느 범위에서?', '정도':'얼마나?',
+'대상':'무엇과?', '행위자':'누가 해서?', '수혜':'누구 덕에?', '자격':'무엇으로서?',
+'부대상황':'그러면서?', '인용':'무슨 말로?'
+};
+function askOf(n){
+const lab = ASK[n.lab] ? n.lab : (n.qlab || n.lab);
+const q = ASK[lab];
+if(q) return q;
+return '';
+}
+const CONJ_ADV = /^(therefore|however|thus|hence|moreover|furthermore|besides|nevertheless|nonetheless|consequently|accordingly|meanwhile|instead|otherwise|still|likewise|similarly|indeed|in fact|in addition|in contrast|in other words|in short|in sum|as a result|for example|for instance|on the other hand|on the contrary|after all|above all|of course|that is|first|second|finally|then|yet)$/i;
+function isConjAdv(s, x){
+const t = s.text.slice(x.a, x.b).trim();
+const after = s.text.slice(x.b).match(/^\s*([,;:])?/);
+return CONJ_ADV.test(t.replace(/[,;:]$/, '')) && (/[,;:]$/.test(t) || (after && after[1] === ','));
+}
+function mustGlue(n){ return n.kind !== 'span'; }
+function flatten(s, n, out, d){
+out = out || []; d = d || 0;
+const ks = (n.ch||[]).filter(x=>hasWord(s,x)).sort((x,y)=>x.a-y.a);
+if(!ks.length){
+const prev = out[out.length-1];
+if(hasWord(s,n) && !(prev && n.a < prev.b)) out.push(Object.assign({}, n, {d}));
+return out;
+}
+const at = out.length;
+ks.forEach(k=>flatten(s, k, out, d+1));
+if(out[at]){
+out[at].d = Math.min(out[at].d, d);
+if(n.mac) out[at].mac = 1;
+if(ASK[n.lab] && !ASK[out[at].lab]){ out[at].qlab = n.lab; out[at].qend = n.b; }
+}
+return out;
+}
+const CLAUSE_OPEN = /^(that|which|who|whom|whose|what|why|how|whatever|whoever|whichever|wherever|whenever|where|when|while|whereas|because|since|although|though|if|unless|whether|once|until|as if|even if|even though)\b/i;
+const COORD_OPEN = /^(and|but|or|yet)\b/i;
+const NO_SPLIT = (before, after)=>/\b(as (long|soon|well|far|much|many))\s*$/i.test(before) && /^as\b/i.test(after)
+|| /\b([a-z]+er|less|more|rather|other|fewer)\s*$/i.test(before) && /^than\b/i.test(after);
+const NO_TAIL = /\b(and|but|or|so|the|a|an|to|of|as|in|on|at|by|for|with|from|into|via|than|about|between|through|among|across|against|without|within|toward|towards|upon|onto|over|under|after|before|during|like|unlike|beyond|around|along|despite|that|which|who|whose|whom|because|since|although|though|if|unless|whether|while|whereas|until|such|is|are|was|were|be|been|being|am|have|has|had|do|does|did|will|would|can|could|may|might|shall|should|must|not|I|we|they|he|she)\s*$/i;
+function markerLed(t){ return PREP_OPEN.test(t) || CLAUSE_OPEN.test(t) || COORD_OPEN.test(t); }
+const MODAL = /^(can|could|will|would|shall|should|may|might|must|not|never)$/i;
+const HAVE = /^(have|has|had)$/i, BE = /^(be|is|are|was|were|been|being|am)$/i, DO = /^(do|does|did)$/i;
+const ADVW = /^([a-z]+ly|not|never|also|still|often|always|even|only|just|already|once)$/i;
+const PART = /^[a-z]+(ed|en|wn|ne|ht|lt|ng)$/i;
+const DETW = /^(the|a|an|our|their|his|her|its|my|your|this|that|these|those|it|them|him|us|me|some|any|no|all|each|every)$/i;
+const PRTCL = /^(out|up|down|off|away|back)$/i;
+function verbGroupEnd(words){
+let i = 0;
+if(/^(and|but|or)$/i.test((words[0]||{}).w||'')) i++;
+const adv = ()=>{ while(i < words.length && ADVW.test(words[i].w)) i++; };
+while(i < words.length && MODAL.test(words[i].w)) i++;
+adv();
+const w = (words[i]||{}).w || '';
+if(BE.test(w)){
+i++; adv();
+if(i < words.length && PART.test(words[i].w)) i++; else return -1;
+} else if(HAVE.test(w)){
+i++; adv();
+if(i+1 < words.length && PART.test(words[i].w) && DETW.test(words[i+1].w)) i++;
+} else if(DO.test(w)){
+i++; adv(); if(i < words.length) i++;
+} else if(w){ i++; }
+else return -1;
+while(i < words.length && PRTCL.test(words[i].w)) i++;
+return i < words.length ? i : -1;
+}
+const PREP_OPEN = /^(to|of|in|on|at|by|for|with|as|from|into|via|through|over|under|without|during|than|such as|about|across|against|along|alongside|among|around|before|after|behind|beyond|between|despite|like|toward|towards|within|rather than|instead of)\b/i;
+function opensClause(x, t){
+if(/^that\s/i.test(t) && x.kind !== 'marker') return false;
+return CLAUSE_OPEN.test(t) || (x.kind === 'marker' && /^(명사절|부사절|관계절|인용절)$/.test(x.form||''));
+}
+function isRelative(x, t, prev, pv){
+if(/[,;:—]$/.test(prev)) return false;
+if(!/^(who|whom|whose|which|that|where|when)\b/i.test(t)) return false;
+if(x.form === '관계절' || /명사후치수식/.test(x.lab||'') || /명사후치수식/.test(x.qlab||'')) return true;
+return !!pv && x.kind !== 'marker' && /^(who|whom|which|that)$/i.test(t) && /명사구/.test(pv.form||'');
+}
+function seamCands(s, ps){
+const T = (a,b)=>s.text.slice(a,b).trim();
+const out = [], open = [];
+const setT1 = (pos, why)=>{ const c = out.find(c=>c.pos === pos); if(c) Object.assign(c, {tier:1, why}); };
+const spanEnd = new Map();
+(function walk(n){
+const p = ps.find(x=>x.a >= n.a && x.a < n.b);
+if(p) spanEnd.set(p.a, Math.max(spanEnd.get(p.a)||0, n.b));
+(n.ch||[]).forEach(walk);
+})(s.tree || {a:0, b:s.text.length});
+ps.forEach((x,k)=>{
+const t = T(x.a, x.b);
+if(k > 0){
+const prev = T(ps[k-1].a, x.a);
+let closed = false;
+while(open.length && x.d <= open[open.length-1].d && k > open[open.length-1].k + 1){ open.pop(); closed = true; }
+let tier = 3, why = 'k10';
+if(isConjAdv(s, ps[k-1]))           { tier = 1; why = 'k7'; }
+else if(/([;:—]|[.?!]["”’']?)$/.test(prev)) { tier = 1; why = 'k11'; }
+else if(opensClause(x, t) && isRelative(x, t, prev, ps[k-1])) { tier = 2; why = '관계절'; }
+else if(opensClause(x, t))          { tier = 1; why = 'k12'; }
+else if(COORD_OPEN.test(t))         { if(wc(T(x.a, spanEnd.get(x.a) || x.b)) >= 3){ tier = 1; why = '등위'; } else why = 'k8'; }
+else if(closed)                     { tier = 1; why = 'k15'; }
+else if(/,$/.test(prev) && !isConjAdv(s, x)) { tier = 1; why = 'k13'; }
+else if(x.form === '동사구' || /술부/.test(x.lab||'')) { tier = 2; why = 'k9'; }
+else if(/^(부정사구|분사구|동명사구|전치사구)$/.test(x.form||'') || x.kind === 'verbal') { tier = 2; why = 'k16'; }
+out.push({pos:x.a, d:x.d, tier, why, bad:NO_TAIL.test(prev)});
+if(opensClause(x, t) && !isRelative(x, t, prev, ps[k-1])){
+let h = k-1;
+if(wc(T(ps[h].a, x.a)) === 1 && PREP_OPEN.test(T(ps[h].a, x.a)) && h > 0){
+Object.assign(out[out.length-1], {tier:3, why:'k10'});
+setT1(ps[h].a, 'k12'); h--;
+}
+const vb = h > 0 && ps[h-1].form === '동사구' && ps[h-1].kind !== 'span';
+const inf = ps[h] && (ps[h].kind === 'verbal' || ps[h].form === '부정사구');
+const objCl = /^(that|what|whether|how|why|which|who|whom|where)\b/i.test(t);
+if(h > 0 && !vb && inf && objCl && /^to\s/i.test(T(ps[h].a, ps[h].b)) && wc(T(ps[h].a, ps[h].b)) <= 3) setT1(ps[h].a, 'to+절');
+}
+}
+if(opensClause(x, t)) open.push({d:x.d, k});
+const seg = s.text.slice(x.a, x.b), re = /\s+(?=\S)/g;
+let m;
+while((m = re.exec(seg))){
+const p = x.a + m.index + m[0].length;
+const before = T(x.a, p);
+if(/[,;:—]$/.test(before)) out.push({pos:p, d:x.d+1, tier:1, why:'k4', bad:NO_TAIL.test(before)});
+else if(PREP_OPEN.test(s.text.slice(p))) out.push({pos:p, d:x.d+2, tier:2, why:'k3', bad:NO_TAIL.test(before)});
+else if(CLAUSE_OPEN.test(s.text.slice(p)) && !/^that\b/i.test(s.text.slice(p))) out.push({pos:p, d:x.d+1, tier:2, why:'k0', bad:NO_TAIL.test(before)});
+else if(/^(and|but|or)\s+/i.test(s.text.slice(p)) && markerLed(s.text.slice(p).replace(/^(and|but|or)\s+/i, '')))
+out.push({pos:p, d:x.d+1, tier:2, why:'k5', bad:NO_TAIL.test(before)});
+}
+if(/술부/.test(x.lab||'') && x.kind === 'span'){
+const ws = [...seg.matchAll(/\S+/g)].map(m=>({w:m[0].replace(/[^A-Za-z'-]/g,''), a:x.a + m.index}));
+const e = verbGroupEnd(ws);
+let j = e + 1; while(e > 0 && j < ws.length && !(PREP_OPEN.test(ws[j].w) && !/^of$/i.test(ws[j].w))) j++;
+if(e > 0 && j - e >= 3) out.push({pos:ws[e].a, d:x.d+1, tier:0, why:'k1', bad:NO_TAIL.test(T(x.a, ws[e].a))});
+}
+});
+(function walk(n, d){
+const ks = (n.ch||[]).filter(x=>hasWord(s,x)).sort((x,y)=>x.a-y.a);
+const v = ks[0];
+ks.forEach((k,i)=>{
+if(i && /술부/.test(k.lab||'') && /주어/.test(ks[i-1].lab||'')){
+const p = ps.find(x=>x.a >= k.a && x.a < k.b);
+if(p && p.a > 0) out.push({pos:p.a, d:d+0.5, tier:0, why:'k9', subjW:wc(T(ks[i-1].a, ks[i-1].b)), bad:NO_TAIL.test(T(0, p.a))});
+}
+});
+if(n.form === '동사구' && v && v.form === '동사구' && (v.kind === 'head' || v.kind === 'verbal'))
+ks.slice(1).forEach((c, i)=>{
+if(c.lab === '목적격보어' && ks[i].lab === '목적어') return;
+const p = ps.find(x=>x.a >= c.a && x.a < c.b);
+if(p && p.a > 0) out.push({pos:p.a, d, tier:0, why:'k6', bad:NO_TAIL.test(T(0, p.a))});
+});
+ks.forEach(k=>walk(k, d+1));
+})(s.tree || {a:0, b:s.text.length}, 0);
+out.forEach(c=>{ if(NO_SPLIT(s.text.slice(0, c.pos), s.text.slice(c.pos))) c.bad = true; });
+const paren = []; { let o = -1; for(let i=0; i<s.text.length; i++){ if(s.text[i] === '(') o = i; else if(s.text[i] === ')' && o >= 0){ paren.push([o, i]); o = -1; } } }
+out.forEach(c=>{ if(paren.some(([o, e])=>c.pos > o + 1 && c.pos <= e)) c.bad = true; });
+ps.forEach((x, k)=>{
+if(!k) return;
+const pv = ps[k-1], t = T(x.a, x.b);
+if(((pv.form === '동사구' && pv.kind !== 'span') || pv.form === '형용사구') && /^to\s+(?!the\b|a\b|an\b|this\b|that\b|these\b|those\b|his\b|her\b|their\b|its\b|our\b|my\b|your\b)/i.test(t))
+out.forEach(c=>{ if(c.pos === x.a && c.tier !== 1) Object.assign(c, {tier:3, why:'k2'}); });
+});
+return out;
+}
+function steps(s){
+const W = _rowW(), px = nomPx(_availW());
+const key = (s.id||'')+'|'+W+'|'+Math.round(px);
+if(s._sk===key) return s._st;
+const ps = flatten(s, s.tree || {a:0, b:s.text.length});
+const END = s.text.length;
+const T = (a,b)=>s.text.slice(a,b).trim();
+const fits = (a,b)=>FIT(textOf(s, a, b), px, W);
+const roomy = (a,b)=>FIT(textOf(s, a, b), px, W * 0.8);
+const inQuote = p => { const h = s.text.slice(0, p); return ((h.match(/"/g)||[]).length % 2 === 1
+|| (h.match(/“/g)||[]).length > (h.match(/”/g)||[]).length)
+&& /^\s*[.,;:!?]*["”]/.test(s.text.slice(p)); };
+const cand = seamCands(s, ps).filter(c => !inQuote(c.pos));
+const HARD = new Set();
+const isT1 = p => HARD.has(p);
+const lead = (a, b)=>{
+const t = T(a, b);
+if(/^to\s/i.test(t)){
+const pv = ps.filter(x=>x.b <= a + 1).pop();
+if(pv && pv.form === '동사구' && pv.kind !== 'span') return false;
+}
+return markerLed(t) && wc(t) >= 3;
+};
+const subjW = (c, a)=>{ const k = cand.find(x=>x.pos === c.pos && x.subjW != null); return k ? k.subjW : wc(T(a, c.pos).replace(CLAUSE_OPEN, '').replace(COORD_OPEN, '')); };
+const ok = (c, a, b, L3 = true) => !c.bad && wc(T(a, c.pos)) >= (c.tier === 1 || !L3 ? 2 : 3) && wc(T(c.pos, b)) >= 2
+&& !(c.why === 'k9' && subjW(c, a) < 4);
+const LIST = /^(k13|k4|등위)$/;
+const needOf = p => cand.some(c=>c.pos === p && c.tier === 1 && !LIST.test(c.why)) ? 2 : 3;
+function breath(a, b){
+const ps1 = [...new Set(cand.filter(c=>c.tier === 1 && !c.bad && c.pos > a && c.pos < b).map(c=>c.pos))].sort((x,y)=>x-y);
+const out = []; let lo = a;
+const headLike = p => /^(and|but|or|so|yet|that|which|who|what|how|whether)\b/i.test(s.text.slice(p))
+|| ps.some(x=>x.a === p && (x.form === '동사구' || /술부/.test(x.lab||'')));
+let skip = -1;
+ps1.forEach((p, i)=>{
+if(p === skip) return;
+const nx = i+1 < ps1.length ? ps1[i+1] : b, need = needOf(p);
+if(wc(T(lo, p)) < need || wc(T(p, b)) < 2) return;
+if(wc(T(p, nx)) >= need){ out.push([lo, p]); lo = p; HARD.add(p); }
+else if(headLike(p) && nx < b){ out.push([lo, p]); lo = p; HARD.add(p); skip = nx; }
+});
+out.push([lo, b]);
+return out;
+}
+function fold(a, b){
+if(fits(a, b)) return [[a, b]];
+let cs = cand.filter(c=>c.pos > a && c.pos < b && ok(c, a, b));
+if(!cs.length) cs = cand.filter(c=>c.pos > a && c.pos < b && ok(c, a, b, false));
+const w3 = c => wc(T(c.pos, b)) >= 3;
+const lv = [c=>c.tier === 0, c=>c.tier === 1 || c.tier === 2, c=>c.tier === 3];
+let pool = [];
+for(const g of [w3, ()=>true]){ for(const f of lv){ pool = cs.filter(c=>g(c) && f(c)); if(pool.length) break; } if(pool.length) break; }
+if(!pool.length) return [[a, b]];
+const dm = Math.min(...pool.map(c=>c.d));
+const cuts = [...new Set(pool.filter(c=>c.d === dm).map(c=>c.pos))].sort((x,y)=>x-y);
+const bd = [a, ...cuts, b], parts = [];
+for(let i=0; i<bd.length-1; i++) parts.push([bd[i], bd[i+1]]);
+const merged = [parts[0]];
+for(let i=1; i<parts.length; i++){
+const L = merged[merged.length-1], P = parts[i];
+const leads = i === parts.length-1 && b < END && isT1(b)
+&& cand.some(c=>c.pos === P[0] && c.why === 'k9');
+if(!isT1(P[0]) && !leads && (lead(P[0], P[1]) ? roomy(L[0], P[1]) : fits(L[0], P[1]))) L[1] = P[1]; else merged.push(P);
+}
+return merged.flatMap(p=>fold(p[0], p[1]));
+}
+let start = 0, spans = [];
+if(fits(0, END)){
+const rows = [{a:0, b:END, ask:'', lab:''}];
+const q = ps.find(x=>askOf(x)); if(q){ rows[0].ask = askOf(q); rows[0].lab = q.lab||q.qlab||''; }
+rows[0].text = textOf(s, 0, END);
+s._sk = key; s._st = [rows];
+return s._st;
+}
+if(ps.length > 1 && isConjAdv(s, ps[0])){ spans.push([0, ps[1].a]); start = ps[1].a; HARD.add(start); }
+spans = spans.concat(breath(start, END).flatMap(p=>fold(p[0], p[1])));
+for(let n2=1; n2<spans.length; ){
+const P = spans[n2], L = spans[n2-1];
+const leads = P[1] < END && isT1(P[1]) && cand.some(c=>c.pos === P[0] && c.why === 'k9');
+if(!isT1(P[0]) && !leads && (lead(P[0], P[1]) ? roomy(L[0], P[1]) : fits(L[0], P[1]))){ L[1] = P[1]; spans.splice(n2, 1); } else n2++;
+}
+const rows = spans.map(([a, b])=>{
+const q = ps.find(x=>x.a >= a && x.a < b && askOf(x));
+return {a, b, ask:q?askOf(q):'', lab:q?(q.lab||q.qlab||''):''};
+});
+for(let n2=1;n2<rows.length;n2++){
+const head = s.text.slice(rows[n2-1].a, rows[n2].a).replace(/\s+$/,'');
+const m = head.match(/["“'(]+$/);
+const closing = m && m[0] === '"' && ((s.text.slice(0, rows[n2-1].a + head.length - 1).match(/"/g)||[]).length % 2 === 1);
+if(m && !closing && wc(head.slice(0, head.length-m[0].length)) > 0)
+rows[n2].a = rows[n2-1].a + head.length - m[0].length;
+}
+for(let n2=0;n2<rows.length-1;n2++) rows[n2].b = rows[n2+1].a;
+rows.forEach(r=>r.text = textOf(s, r.a, r.b));
+for(let n2=1;n2<rows.length;n2++){
+const tail = rows[n2-1].text.slice(-1);
+if(tail && /["”’')\]]/.test(tail) && s.text[rows[n2].a] === tail)
+rows[n2].text = textOf(s, rows[n2].a + 1, rows[n2].b);
+}
+const st = [];
+for(const r of rows){
+if(!r.text) continue;
+const g = st[st.length-1];
+if(g && !r.mac && FIT(textOf(s, g[0].a, r.b), px, W)){ g.push(r); continue; }
+st.push([r]);
+}
+s._sk = key; s._st = st;
+return st;
+}
+function coLines(s, n, px, W){
+if(!n.co) return null;
+if(FIT(textOf(s,n.a,n.b), px, W)) return null;
+const m = n.co.filter(x=>x>n.a && x<n.b);
+if(!m.length) return null;
+const last = m[m.length-1];
+const two = [[n.a,last],[last,n.b]];
+if(two.every(r=>FIT(textOf(s,r[0],r[1]), px, W))) return two;
+const bd = [n.a, ...m, n.b], out = [];
+for(let i=0;i<bd.length-1;i++) out.push([bd[i], bd[i+1]]);
+return out;
+}
+let DATA = [{"notes":{},"pid":"(2026)교육청-고2-2026-10-21","sents":[{"coords":[{"hi":32,"lo":11,"m":[11,21]}],"cuts":[32],"frames":[],"id":"(2026)교육청-고2-2026-10-21-01","seq":1,"text":"To see how borrowing and lending changes a person's worldview, consider what the rate of interest does to people's perception of time.","tree":{"a":0,"b":134,"ch":[{"a":0,"b":61,"ch":[{"a":0,"b":7,"form":"부정사구","kind":"verbal","lab":""},{"a":7,"b":61,"ch":[{"a":7,"b":11,"form":"명사절","kind":"marker","lab":""},{"a":11,"b":32,"co":[21],"form":"동명사구","kind":"span","lab":"주어"},{"a":33,"b":61,"ch":[{"a":33,"b":41,"form":"동사구","kind":"head","lab":""},{"a":41,"b":61,"form":"명사구","kind":"span","lab":"목적어"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"명사절","kind":"span","lab":"목적어"}],"form":"부정사구","kind":"span","lab":"목적","mac":1},{"a":61,"b":134,"form":"문장","kind":"span","lab":"절","mac":1}],"form":"문장","kind":"span","lab":"문장"}},{"coords":[],"cuts":[],"frames":[],"id":"(2026)교육청-고2-2026-10-21-02","seq":2,"text":"Imagine you are lending to somebody at an interest rate of 10 percent per year for five years.","tree":{"a":0,"b":94,"form":"문장","kind":"span","lab":"문장"}},{"coords":[{"hi":157,"lo":64,"m":[64,97]}],"cuts":[],"frames":[],"id":"(2026)교육청-고2-2026-10-21-03","seq":3,"text":"This rate tells us that the money lent has a cost that reflects the risk of you not being repaid and the opportunity cost of not spending that money yourself.","tree":{"a":0,"b":158,"ch":[{"a":0,"b":9,"form":"명사구","kind":"span","lab":"주어"},{"a":10,"b":157,"ch":[{"a":10,"b":16,"form":"동사구","kind":"head","lab":""},{"a":16,"b":18,"form":"명사구","kind":"span","lab":"간접목적어"},{"a":19,"b":157,"ch":[{"a":19,"b":24,"form":"명사절","kind":"marker","lab":""},{"a":24,"b":38,"ch":[{"a":24,"b":34,"form":"명사구","kind":"head","lab":""},{"a":34,"b":38,"form":"분사구","kind":"span","lab":"명사후치수식"}],"form":"명사구","kind":"span","lab":"주어"},{"a":39,"b":157,"ch":[{"a":39,"b":43,"form":"동사구","kind":"head","lab":""},{"a":43,"b":49,"form":"명사구","kind":"span","lab":"명사핵"},{"a":43,"b":157,"ch":[{"a":43,"b":50,"form":"명사구","kind":"head","lab":""},{"a":50,"b":157,"ch":[{"a":50,"b":54,"form":"명사구","kind":"span","lab":"주어"},{"a":55,"b":157,"ch":[{"a":55,"b":64,"form":"동사구","kind":"head","lab":""},{"a":64,"b":157,"ch":[{"a":64,"b":96,"ch":[{"a":64,"b":73,"form":"명사구","kind":"head","lab":""},{"a":73,"b":96,"form":"전치사구","kind":"span","lab":""}],"form":"명사구","kind":"span","lab":"명사핵"},{"a":96,"b":122,"form":"명사구","kind":"head","lab":""},{"a":122,"b":157,"form":"전치사구","kind":"span","lab":""}],"co":[97],"form":"명사구","kind":"span","lab":"목적어"}],"co":[64,97],"form":"동사구","kind":"span","lab":"술부"}],"co":[64,97],"form":"관계절","kind":"span","lab":"명사후치수식"}],"co":[64,97],"form":"명사구","kind":"span","lab":"목적어"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"명사절","kind":"span","lab":"목적어"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"주절","kind":"span","lab":"주절"}},{"coords":[{"hi":225,"lo":0,"m":[0,154]}],"cuts":[],"frames":[],"id":"(2026)교육청-고2-2026-10-21-04","seq":4,"text":"The longer the term of the loan, the higher the chance you won't be paid back because it is further into the future — which by definition is unknowable — and the longer you will have to wait before spending the money yourself.","tree":{"a":0,"b":226,"ch":[{"a":0,"b":31,"ch":[{"a":0,"b":11,"form":"부사절","kind":"head","lab":""},{"a":11,"b":31,"ch":[{"a":11,"b":20,"form":"명사구","kind":"head","lab":""},{"a":20,"b":31,"form":"전치사구","kind":"span","lab":""}],"form":"명사구","kind":"span","lab":"주어"}],"form":"부사절","kind":"span","lab":"조건"},{"a":33,"b":115,"ch":[{"a":33,"b":43,"form":"형용사구","kind":"span","lab":"보어"},{"a":44,"b":54,"form":"명사구","kind":"span","lab":"명사핵"},{"a":44,"b":77,"ch":[{"a":44,"b":55,"form":"명사구","kind":"head","lab":""},{"a":55,"b":77,"ch":[{"a":55,"b":58,"form":"명사구","kind":"span","lab":"주어"},{"a":59,"b":77,"ch":[{"a":59,"b":73,"form":"동사구","kind":"head","lab":""},{"a":73,"b":77,"form":"명사구","kind":"span","lab":"목적어"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"명사절","kind":"span","lab":"명사내용"}],"form":"명사구","kind":"span","lab":"주어"},{"a":78,"b":115,"ch":[{"a":78,"b":86,"form":"부사절","kind":"marker","lab":""},{"a":86,"b":88,"form":"명사구","kind":"span","lab":"주어"},{"a":89,"b":115,"ch":[{"a":89,"b":92,"form":"동사구","kind":"head","lab":""},{"a":92,"b":115,"form":"전치사구","kind":"span","lab":"보어"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"부사절","kind":"span","lab":"이유"}],"form":"주절","kind":"span","lab":"주절","mac":1},{"a":118,"b":151,"ch":[{"a":118,"b":123,"form":"명사구","kind":"span","lab":"주어"},{"a":124,"b":137,"form":"전치사구","kind":"span","lab":"양태"},{"a":138,"b":151,"ch":[{"a":138,"b":141,"form":"동사구","kind":"head","lab":""},{"a":141,"b":151,"form":"형용사구","kind":"span","lab":"보어"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"관계절","kind":"span","lab":"부연","mac":1},{"a":154,"b":225,"ch":[{"a":154,"b":158,"form":"주절","kind":"marker","lab":""},{"a":158,"b":168,"form":"부사구","kind":"span","lab":"정도"},{"a":169,"b":172,"form":"명사구","kind":"span","lab":"주어"},{"a":173,"b":225,"ch":[{"a":173,"b":191,"form":"동사구","kind":"verbal","lab":""},{"a":191,"b":225,"ch":[{"a":191,"b":198,"form":"전치사구","kind":"marker","lab":""},{"a":198,"b":225,"ch":[{"a":198,"b":207,"form":"동명사구","kind":"verbal","lab":""},{"a":207,"b":216,"form":"명사구","kind":"span","lab":"목적어"},{"a":216,"b":225,"form":"동명사구","kind":"head","lab":""}],"form":"동명사구","kind":"span","lab":"전치사목적어"}],"form":"전치사구","kind":"span","lab":"시간"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"주절","kind":"span","lab":"주절","mac":1}],"co":[154],"form":"문장","kind":"span","lab":"문장"}},{"coords":[{"hi":124,"lo":77,"m":[77,100]}],"cuts":[],"frames":[],"id":"(2026)교육청-고2-2026-10-21-05","seq":5,"text":"In order to make this worthwhile for the lender, money has to have a price — a cost to the borrower and income to the lender.","tree":{"a":0,"b":125,"ch":[{"a":0,"b":47,"ch":[{"a":0,"b":8,"form":"전치사구","kind":"span","lab":"양태"},{"a":8,"b":17,"form":"부정사구","kind":"verbal","lab":""},{"a":17,"b":21,"form":"명사구","kind":"span","lab":"목적어"},{"a":22,"b":32,"form":"형용사구","kind":"span","lab":"목적격보어"},{"a":33,"b":47,"form":"전치사구","kind":"span","lab":"부사적수식"}],"form":"부정사구","kind":"span","lab":"목적","mac":1},{"a":47,"b":125,"ch":[{"a":49,"b":54,"form":"명사구","kind":"span","lab":"주어"},{"a":55,"b":124,"ch":[{"a":55,"b":67,"form":"동사구","kind":"verbal","lab":""},{"a":67,"b":124,"ch":[{"a":67,"b":77,"form":"명사구","kind":"head","lab":""},{"a":77,"b":124,"ch":[{"a":77,"b":84,"form":"명사구","kind":"head","lab":""},{"a":84,"b":99,"form":"전치사구","kind":"span","lab":"명사후치수식"},{"a":99,"b":111,"form":"명사구","kind":"head","lab":""},{"a":111,"b":124,"form":"전치사구","kind":"span","lab":"명사후치수식"}],"co":[100],"form":"명사구","kind":"span","lab":"동격"}],"co":[77,100],"form":"명사구","kind":"span","lab":"목적어"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"주절","kind":"span","lab":"주절","mac":1}],"form":"문장","kind":"span","lab":"문장"}},{"coords":[],"cuts":[],"frames":[],"id":"(2026)교육청-고2-2026-10-21-06","seq":6,"text":"This price factors in the value of time.","tree":{"a":0,"b":40,"ch":[{"a":0,"b":10,"form":"명사구","kind":"span","lab":"주어"},{"a":11,"b":39,"ch":[{"a":11,"b":22,"form":"동사구","kind":"head","lab":""},{"a":22,"b":39,"ch":[{"a":22,"b":32,"form":"명사구","kind":"head","lab":""},{"a":32,"b":39,"form":"전치사구","kind":"span","lab":""}],"form":"명사구","kind":"span","lab":"목적어"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"주절","kind":"span","lab":"주절"}},{"coords":[],"cuts":[],"frames":[],"id":"(2026)교육청-고2-2026-10-21-07","seq":7,"text":"To put it another way, a bird in the hand is worth two in the bush.","tree":{"a":0,"b":67,"ch":[{"a":0,"b":21,"form":"부사구","kind":"span","lab":"접속부사","mac":1},{"a":21,"b":67,"ch":[{"a":23,"b":41,"ch":[{"a":23,"b":30,"form":"명사구","kind":"head","lab":""},{"a":30,"b":41,"form":"전치사구","kind":"span","lab":"명사후치수식"}],"form":"명사구","kind":"span","lab":"주어"},{"a":42,"b":66,"ch":[{"a":42,"b":45,"form":"동사구","kind":"head","lab":""},{"a":45,"b":66,"ch":[{"a":45,"b":55,"form":"형용사구","kind":"head","lab":""},{"a":55,"b":66,"form":"전치사구","kind":"span","lab":"양태"}],"form":"형용사구","kind":"span","lab":"보어"}],"form":"동사구","kind":"span","lab":"술부"}],"form":"주절","kind":"span","lab":"주절","mac":1}],"form":"문장","kind":"span","lab":"문장"}}],"title":"모의고사 고2<span class=\"hd-sep\"></span><span class=\"hd-code\">2026-10-21</span>","why":{},"macro":{},"take":{}}];
+function lsGet(k){ try{return localStorage.getItem(k)}catch(e){return null} }
+function lsSet(k,v){ try{localStorage.setItem(k,v)}catch(e){} }
+function storeKey(kind,pid){ return `pres:${kind}:${pid}`; }
+function loadObj(kind,pid){
+let o = {};
+try{ o = JSON.parse(lsGet(storeKey(kind,pid))||'{}') }catch(e){ o = {}; }
+if(!Object.keys(o).length && typeof DATA !== 'undefined'){
+const d = DATA.find(x=>x.pid===pid), f = {memo:'notes', macro:'macro', take:'take'}[kind];
+if(d && f && d[f] && typeof d[f] === 'object') o = d[f];
+}
+return o;
+}
+function saveObj(kind,pid,obj){ lsSet(storeKey(kind,pid),JSON.stringify(obj)); }
+let pi=0, si=0, step=0;
+let view='cover';
+let macroPhase='pre';
+let FIT_CH     = Number(lsGet('pres_fit_ch') || 76);
+let FONT_SCALE = Number(lsGet('pres_font_scale_v2') || 1.14);
+let HICON      = lsGet('pres_hicon') === '1';
+let WHOLE      = false;
+let FONT_MODE  = lsGet('pres_font_mode') || 'serif';
+function P(){ return DATA[pi]; }
+function S(){ return P().sents[si]; }
+function esc(t){ return String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function words(t){ return (t.match(/[A-Za-z][\w'-]*/g)||[]); }
+function wc(t){ return words(t).length; }
+function setPos(l, r=''){ document.getElementById('pos').textContent=l; document.getElementById('posR').textContent=r; }
+function syncHead(){ const el=document.getElementById('pid'); if(el && P()) el.innerHTML = P().title || esc(P().pid||''); }
+function drawCover(){
+const d = P(), main = document.getElementById('main');
+const n = d.sents.length, w = d.sents.reduce((a,s)=>a+wc(s.text),0);
+main.innerHTML = `<div class="cv-wrap">
+<div class="cv-title">${d.title || esc(d.pid)}</div>
+<div class="cv-meta">${n}문장 · ${w}낱말</div>
+<div class="cv-first">${esc((d.sents[0]||{}).text||'')}</div>
+<div class="cv-go">space / → 시작</div>
+<div class="cv-brand">Quod Erat Demonstrandum</div></div>`;
+setPos(`지문 ${pi+1}/${DATA.length}`, '표지');
+}
+function drawMacro(){
+const p=P(), notes=loadObj('macro',p.pid), after=macroPhase==='post';
+const rows=p.sents.map((s,i)=>`<div class="srow" data-jump="${i}">
+<div class="snum">S${i+1}</div><div class="stext">${esc(s.text)}</div>
+<textarea data-stop class="snote" data-note="${i}" placeholder="문장 메모 — 패러프레이즈 · 앞뒤 관계">${esc(notes[String(i)]||'')}</textarea></div>`).join('');
+const main=document.getElementById('main');
+main.innerHTML=`<section class="screen"><div class="macro-wrap">
+<div class="macro-head"><h2 class="screen-title">문장 지도</h2><span class="phase">${after?'분석 후 · 다시 전체':'분석 전 · 전체 구조'}</span></div>
+<div class="sentence-list">${rows}</div></div></section>`;
+main.querySelectorAll('[data-note]').forEach(el=>el.addEventListener('input',()=>{
+const o=loadObj('macro',p.pid); o[el.dataset.note]=el.value; saveObj('macro',p.pid,o); }));
+main.querySelectorAll('[data-jump]').forEach(el=>el.addEventListener('click',e=>{
+if(e.target.closest('[data-stop]')) return;
+e.stopPropagation(); si=Number(el.dataset.jump); step=0; view='analysis'; draw(); }));
+setPos(`지문 ${pi+1}/${DATA.length} · 문장 ${p.sents.length}개`, after?'→ takeaway':'→ S1');
+}
+function memoKey(n){ return si+':'+n.a+'_'+n.b; }
+function focusRows(s){
+return steps(s).flatMap((grp,gi)=>(grp||[]).map((row,ri)=>Object.assign({__gi:gi,__ri:ri}, row)));
+}
+function focusStages(s){
+const rows = focusRows(s), fr = s.frames || [];
+const st = [];
+for(const r of rows){
+const f = fr.find(x => r.a < x.b && r.b > x.a);
+const last = st[st.length-1];
+if(f && last && last.__f === f && !last.__closed){
+last.rows.push(r);
+if(r.b > f.oc) last.__closed = true;
+continue;
+}
+st.push({rows:[r], __f:f || null, __closed:(f ? r.b > f.oc : false), a:r.a, b:r.b});
+}
+st.forEach(g=>{ g.a = g.rows[0].a; g.b = g.rows[g.rows.length-1].b; });
+return st;
+}
+function stageCount(s){ return focusStages(s).length + 1; }
+function fitFlowDisplay(){
+const stage=document.querySelector('#view .flow-stage');
+if(!stage) return;
+const right=stage.getBoundingClientRect().right - 10;
+stage.querySelectorAll('.flow-card').forEach(card=>{
+const band=card.closest('.flow-band');
+const lines=[...card.querySelectorAll('.flow-line')];
+if(!band || !lines.length) return;
+const left=band.getBoundingClientRect().left;
+const avail=Math.max(240, right-left);
+let ratio=1;
+lines.forEach(el=>{
+const w=el.offsetWidth || 1;
+ratio=Math.min(ratio, avail/w);
+});
+if(ratio < .995){
+ratio*=.985;
+lines.forEach(el=>{
+const fs=parseFloat(getComputedStyle(el).fontSize)||16;
+el.style.fontSize=Math.max(24, Math.floor(fs*ratio))+'px';
+});
+}
+});
+}
+function bindMemoInput(el){
+if(!el) return;
+el.addEventListener('input',()=>{
+const o=loadObj('memo',P().pid); o[el.dataset.memo]=el.value; saveObj('memo',P().pid,o);
+});
+}
+function openCurrentMemo(btn){
+const wrap=btn && btn.closest ? btn.closest('.flow-now-memo') : null;
+if(!wrap) return;
+const key=btn.dataset.memo || '';
+wrap.classList.remove('collapsed'); wrap.classList.add('open');
+wrap.innerHTML=`<textarea data-stop class="pv-memo" rows="2" data-memo="${key}"
+placeholder="메모 — 여기에 직접 쓴다"></textarea>`;
+const ta=wrap.querySelector('textarea');
+bindMemoInput(ta); ta.focus();
+}
+function drawStage(){
+const s=S(), stages=focusStages(s), main=document.getElementById('main');
+step = Math.max(0, Math.min(step, stages.length));
+if(step===0){ drawWhole(s, stages, main); return; }
+const curG = stages[step-1], curRow = curG.rows[0], cur = {a:curG.a, b:curG.b};
+const memo = loadObj('memo', P().pid);
+const W = _availW(), px = basePx(W);
+const curMemoKey = memoKey(cur);
+const curMemo = memo[curMemoKey] || '';
+const renderRow = (row, size) => row
+? `<div class="flow-line" style="font-size:${size}px">${esc(row.text)}</div>` : '';
+const prevG = step>1 ? stages[step-2] : null;
+const nextG = step<stages.length ? stages[step] : null;
+const prev = prevG ? prevG.rows[prevG.rows.length-1] : null;
+const nextRow = nextG ? nextG.rows[0] : null;
+const pastPx = Math.max(16, Math.round(px*0.84));
+const nextPx = Math.max(16, Math.round(px*0.80));
+const pastHtml = renderRow(prev, pastPx);
+const nowHtml = curG.rows.map(r=>renderRow(r, px)).join('');
+const nextHtml = renderRow(nextRow, nextPx);
+const dots = P().sents.map((_x,i)=>`<button class="pv-dot${i===si?' on':''}" data-stop onclick="si=${i};step=0;draw()">${i+1}</button>`).join('');
+const fontLabel = FONT_MODE==='sans' ? '본문: 고딕' : '본문: 명조';
+const memoHtml = curMemo
+? `<div class="flow-now-memo open"><textarea data-stop class="pv-memo" rows="2" data-memo="${curMemoKey}"
+placeholder="메모 — 여기에 직접 쓴다">${esc(curMemo)}</textarea></div>`
+: `<div class="flow-now-memo collapsed"><button class="memo-line" data-stop data-memo="${curMemoKey}"
+onclick="openCurrentMemo(this)">메모</button></div>`;
+const t = s.text;
+const wholeHtml = `<span class="wh-off">${esc(t.slice(0,curRow.a))}</span>`
++ `<span class="wh-on">${esc(t.slice(curRow.a,curRow.b))}</span>`
++ `<span class="wh-off">${esc(t.slice(curRow.b))}</span>`;
+main.innerHTML = `<div class="flow-whole${WHOLE?' big':''}" data-stop onclick="toggleWhole()">${wholeHtml}</div>
+<div class="flow-stage${WHOLE?' dim':''}">
+<div class="flow-measure-row bt-row" aria-hidden="true">M</div>
+<div class="flow-band flow-past"><div class="flow-card${pastHtml?'':' flow-empty'}">${pastHtml||'·'}</div></div>
+<div class="flow-band flow-now"><div class="flow-card">${nowHtml}${memoHtml}</div></div>
+<div class="flow-band flow-next"><div class="flow-card${nextHtml?'':' flow-empty'}">${nextHtml||'·'}</div></div>
+</div>
+<div class="pv-foot">
+<div class="pv-pnav">
+<button class="pv-dot" data-stop onclick="gotoPassage(pi-1)">‹</button>
+<span class="pv-pid">지문 ${pi+1}/${DATA.length}</span>
+<button class="pv-dot" data-stop onclick="gotoPassage(pi+1)">›</button></div>
+<div class="pv-dots">${dots}</div>
+<div class="pv-size">
+<button class="pv-dot" data-stop onclick="setFit(FIT_CH-6)">자수 −</button>
+<span class="pv-pid">${FIT_CH}자</span>
+<button class="pv-dot" data-stop onclick="setFit(FIT_CH+6)">＋</button>
+<button class="pv-dot" data-stop onclick="setFontScale(FONT_SCALE-0.08)">크기 −</button>
+<span class="pv-pid">${FONT_SCALE.toFixed(2)}배</span>
+<button class="pv-dot" data-stop onclick="setFontScale(FONT_SCALE+0.08)">＋</button>
+<button class="pv-dot" id="fontModeBtn" data-stop onclick="toggleFontMode()">${fontLabel}</button>
+<button class="pv-dot${WHOLE?' on':''}" data-stop onclick="toggleWhole()">전체문장</button>
+<button class="pv-dot" data-stop onclick="gotoMacro()">문장 지도</button>
+<button class="pv-dot${HICON?' on':''}" id="hiconBtn" data-stop onclick="setHiCon(!HICON)">칠판</button>
+<button class="pv-dot" data-stop onclick="toggleFull()">전체화면</button></div>
+<div class="pv-keys">PgDn/PgUp · n/p 문장 · s 전체문장 · b 감추기 · f 전체화면 · h 칠판 · t 폰트</div>
+<div class="pv-brand">Quod Erat Demonstrandum</div>
+<div class="pv-prog">${step}/${stages.length}</div></div>`;
+fitFlowDisplay();
+main.querySelectorAll('textarea[data-memo]').forEach(bindMemoInput);
+setPos(`지문 ${pi+1}/${DATA.length} · S${si+1}/${P().sents.length}`,
+`${step}/${stages.length}`);
+}
+function drawWhole(s, rows, main){
+const dots = P().sents.map((_x,i)=>`<button class="pv-dot${i===si?' on':''}" data-stop onclick="si=${i};step=0;draw()">${i+1}</button>`).join('');
+const fontLabel = FONT_MODE==='sans' ? '본문: 고딕' : '본문: 명조';
+main.innerHTML = `<div class="flow-whole big intro">${esc(s.text)}</div>
+<div class="pv-foot">
+<div class="pv-pnav">
+<button class="pv-dot" data-stop onclick="gotoPassage(pi-1)">‹</button>
+<span class="pv-pid">지문 ${pi+1}/${DATA.length}</span>
+<button class="pv-dot" data-stop onclick="gotoPassage(pi+1)">›</button></div>
+<div class="pv-dots">${dots}</div>
+<div class="pv-size">
+<button class="pv-dot" data-stop onclick="setFit(FIT_CH-6)">자수 −</button>
+<span class="pv-pid">${FIT_CH}자</span>
+<button class="pv-dot" data-stop onclick="setFit(FIT_CH+6)">＋</button>
+<button class="pv-dot" data-stop onclick="setFontScale(FONT_SCALE-0.08)">크기 −</button>
+<span class="pv-pid">${FONT_SCALE.toFixed(2)}배</span>
+<button class="pv-dot" data-stop onclick="setFontScale(FONT_SCALE+0.08)">＋</button>
+<button class="pv-dot" id="fontModeBtn" data-stop onclick="toggleFontMode()">${fontLabel}</button>
+<button class="pv-dot" data-stop onclick="gotoMacro()">문장 지도</button>
+<button class="pv-dot${HICON?' on':''}" id="hiconBtn" data-stop onclick="setHiCon(!HICON)">칠판</button>
+<button class="pv-dot" data-stop onclick="toggleFull()">전체화면</button></div>
+<div class="pv-keys">space 시작 · n/p 문장 · b 감추기 · f 전체화면 · h 칠판 · t 폰트</div>
+<div class="pv-brand">Quod Erat Demonstrandum</div>
+<div class="pv-prog">통문장</div></div>`;
+setPos(`지문 ${pi+1}/${DATA.length} · S${si+1}/${P().sents.length}`, '통문장');
+}
+function drawTakeaway(){
+const p=P(), obj=loadObj('take',p.pid);
+const grid=['핵심 1','핵심 2','핵심 3','메모'].map((lab,i)=>`<div class="take-label">${lab}</div>
+<textarea data-stop class="take-input" data-take="${i}" placeholder="직접 입력">${esc(obj[String(i)]||'')}</textarea>`).join('');
+const main=document.getElementById('main');
+main.innerHTML=`<section class="screen"><div class="take-wrap"><div class="eyebrow">TAKEAWAY</div>
+<h2 class="screen-title">이 지문에서 가져갈 것</h2><div class="take-grid">${grid}</div>
+<div class="saved">이 브라우저에 자동 저장 · HTML 저장을 누르면 파일에도 담긴다</div></div></section>`;
+main.querySelectorAll('[data-take]').forEach(el=>el.addEventListener('input',()=>{
+const x=loadObj('take',p.pid); x[el.dataset.take]=el.value; saveObj('take',p.pid,x); }));
+setPos(`지문 ${pi+1}/${DATA.length} · takeaway`, pi<DATA.length-1?'→ 다음 지문':'마지막 지문');
+}
+function draw(){
+if(!DATA.length) return;
+syncHead();
+if(view==='cover') drawCover();
+else if(view==='macro') drawMacro();
+else if(view==='analysis') drawStage();
+else drawTakeaway();
+}
+function next(){
+if(view==='cover'){ view='macro'; macroPhase='pre'; draw(); return; }
+if(view==='macro'){
+if(macroPhase==='pre'){ si=0; step=0; view='analysis'; } else view='takeaway';
+draw(); return;
+}
+if(view==='analysis'){
+if(step < stageCount(S())-1){ step++; }
+else if(si < P().sents.length-1){ si++; step=0; }
+else { view='macro'; macroPhase='post'; }
+draw(); return;
+}
+if(view==='takeaway' && pi<DATA.length-1){ pi++; si=0; step=0; view='cover'; macroPhase='pre'; _treeCache={}; draw(); }
+}
+function prev(){
+if(view==='cover'){ if(pi>0){ pi--; si=P().sents.length-1; step=0; view='takeaway'; _treeCache={}; draw(); } return; }
+if(view==='macro'){
+if(macroPhase==='pre'){ view='cover'; }
+else { si=P().sents.length-1; step=stageCount(S())-1; view='analysis'; }
+draw(); return;
+}
+if(view==='analysis'){
+if(step>0) step--;
+else if(si>0){ si--; step=stageCount(S())-1; }
+else { view='macro'; macroPhase='pre'; }
+draw(); return;
+}
+if(view==='takeaway'){ view='macro'; macroPhase='post'; draw(); }
+}
+function nextSentence(){ if(view!=='analysis') return; if(si<P().sents.length-1){ si++; step=0; } else { view='macro'; macroPhase='post'; } draw(); }
+function prevSentence(){ if(view!=='analysis') return; if(si>0){ si--; step=0; draw(); } }
+function gotoMacro(){ view='macro'; macroPhase='pre'; draw(); }
+function gotoPassage(i){ pi=Math.max(0,Math.min(DATA.length-1,i)); si=0; step=0; view='cover'; macroPhase='pre'; _treeCache={}; draw(); }
+function revealAll(){ if(view==='analysis'){ step=stageCount(S())-1; draw(); } }
+function setFit(n){
+FIT_CH = Math.max(24, Math.min(160, Math.round(Number(n)||64)));
+lsSet('pres_fit_ch', String(FIT_CH)); _treeCache={};
+const el=document.getElementById('fitCh'), v=document.getElementById('fitChV');
+if(el) el.value=FIT_CH; if(v) v.textContent=FIT_CH+'자';
+draw();
+}
+function setFontScale(v){
+FONT_SCALE = Math.max(0.6, Math.min(1.8, Number(v)||1));
+lsSet('pres_font_scale_v2', String(FONT_SCALE)); _treeCache={};
+const el=document.getElementById('fontScale'), s=document.getElementById('fontScaleV');
+if(el) el.value=FONT_SCALE; if(s) s.textContent=FONT_SCALE.toFixed(2)+'배';
+draw();
+}
+function applyFontMode(mode){
+FONT_MODE = (mode==='sans') ? 'sans' : 'serif';
+document.body.classList.toggle('font-sans', FONT_MODE==='sans');
+const b=document.getElementById('fontModeBtn');
+if(b) b.textContent = FONT_MODE==='sans' ? '본문: 고딕' : '본문: 명조';
+}
+function setFontMode(mode){
+applyFontMode(mode);
+lsSet('pres_font_mode', FONT_MODE);
+_treeCache={};
+draw();
+}
+function toggleFontMode(){ setFontMode(FONT_MODE==='sans' ? 'serif' : 'sans'); }
+function setHiCon(on){
+HICON=!!on; lsSet('pres_hicon', HICON?'1':'0');
+if(HICON) applyFontMode('sans');
+document.body.classList.toggle('hicon', HICON);
+const b=document.getElementById('hiconBtn'); if(b) b.classList.toggle('on', HICON);
+}
+function toggleWhole(){ WHOLE = !WHOLE; draw(); }
+function toggleFull(){
+const el=document.documentElement;
+if(document.fullscreenElement) document.exitFullscreen(); else if(el.requestFullscreen) el.requestFullscreen();
+}
+addEventListener('keydown', e=>{
+if(!DATA.length) return;
+if(e.target.matches('textarea,input')) return;
+const k=e.key;
+if([' ','ArrowRight','ArrowDown','PageDown','Enter'].includes(k)){ e.preventDefault(); next(); }
+else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){ e.preventDefault(); prev(); }
+else if(k==='n') nextSentence();
+else if(k==='p') prevSentence();
+else if(k==='g') gotoMacro();
+else if(k==='a') revealAll();
+else if(k==='Home'){ e.preventDefault(); si=0; step=0; view='cover'; draw(); }
+else if(k==='End'){ e.preventDefault(); if(view==='analysis'){ si=P().sents.length-1; step=0; draw(); } }
+else if(k==='b'||k==='.'){ e.preventDefault(); document.body.classList.toggle('blank'); }
+else if(k==='f'||k==='F5'){ e.preventDefault(); toggleFull(); }
+else if(k==='h'){ e.preventDefault(); setHiCon(!HICON); }
+else if(k==='t'){ e.preventDefault(); toggleFontMode(); }
+else if(k==='s'){ e.preventDefault(); toggleWhole(); }
+else if(k==='['){ setFit(FIT_CH-6); }
+else if(k===']'){ setFit(FIT_CH+6); }
+else if(k==='-'){ setFontScale(FONT_SCALE-0.08); }
+else if(k==='='||k==='+'){ setFontScale(FONT_SCALE+0.08); }
+});
+addEventListener('click', e=>{
+if(!DATA.length) return;
+if(e.target.closest('[data-stop], .panel, input, textarea, button, a, select')) return;
+const m=document.getElementById('main');
+if(m && m.contains(e.target)){
+const r=m.getBoundingClientRect();
+if(e.clientX < r.left + r.width*0.28){ prev(); return; }
+}
+next();
+});
+window.__classBoot = function(data){
+DATA = data||[]; pi=0; si=0; step=0; view='cover'; macroPhase='pre'; _treeCache={};
+DATA.forEach(d=>{
+[['memo','notes'],['macro','macro'],['take','take']].forEach(([kind,fld])=>{
+const local=loadObj(kind, d.pid), srv=d[fld];
+if(!Object.keys(local).length && srv && Object.keys(srv).length) saveObj(kind, d.pid, srv);
+});
+});
+draw();
+};
+async function saveNotes(){
+const st=document.getElementById('noteStat'); let n=0;
+for(const d of DATA){
+const notes=loadObj('memo', d.pid);
+const r=await fetch('/api/presentation/notes',{method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify({passage_id:d.pid, notes})});
+const j=await r.json(); if(j.ok) n+=Object.keys(j.notes||{}).length;
+}
+if(st) st.textContent=n+'개 메모 저장됨';
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+applyFontMode(FONT_MODE);
+setHiCon(HICON);
+const el=document.getElementById('fitCh'), v=document.getElementById('fitChV');
+if(el){ el.value=FIT_CH; } if(v) v.textContent=FIT_CH+'자';
+const fs=document.getElementById('fontScale'), s=document.getElementById('fontScaleV');
+if(fs){ fs.value=FONT_SCALE; } if(s) s.textContent=FONT_SCALE.toFixed(2)+'배';
+if(DATA.length){
+const vw=document.getElementById('view'); if(vw) vw.style.display='flex';
+const m=document.getElementById('initMsg'); if(m) m.style.display='none';
+__classBoot(DATA);
+}
+});
+addEventListener('resize', ()=>{ _treeCache={}; if(DATA.length && view==='analysis') draw(); });
+let _fileHandle=null;
+function _standalone(){
+DATA.forEach(d=>{ d.notes=loadObj('memo',d.pid); d.macro=loadObj('macro',d.pid); d.take=loadObj('take',d.pid); });
+const blob = JSON.stringify(DATA).split('</scr'+'ipt').join('<\\/scr'+'ipt');
+let html = document.documentElement.outerHTML;
+const mk = '/*__DATA_'+'END__*/';
+const a0 = html.indexOf('let DATA ='), a1 = html.indexOf(mk);
+if(a0>=0 && a1>a0) html = html.slice(0,a0) + 'let DATA = ' + blob + '; ' + html.slice(a1);
+html = html.replace(/<aside class="panel">[\s\S]*?<\/aside>/, '');
+html = html.replace(/<div class="app">/, '<div class="app standalone">');
+return html;
+}
+function _defaultName(){ const d=DATA[0]; return String((d&&d.pid)||'class').replace(/[^\w가-힣().-]/g,'_')+'.html'; }
+async function exportHTML(){
+const st=document.getElementById('noteStat');
+if(!DATA.length){ if(st) st.textContent='지문을 먼저 고르세요'; return; }
+const html=_standalone();
+if(window.showSaveFilePicker){
+try{
+if(!_fileHandle) _fileHandle=await window.showSaveFilePicker({suggestedName:_defaultName(), types:[{description:'HTML', accept:{'text/html':['.html']}}]});
+const w=await _fileHandle.createWritable(); await w.write(html); await w.close();
+if(st) st.textContent='저장됨 · 다시 누르면 같은 파일에 덮어쓴다'; return;
+}catch(e){ if(e&&e.name==='AbortError'){ if(st) st.textContent='취소'; return; } _fileHandle=null; }
+}
+const name=prompt('파일 이름', _defaultName()); if(!name) return;
+const a=document.createElement('a');
+a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));
+a.download=name.endsWith('.html')?name:name+'.html'; a.click();
+setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+if(st) st.textContent='내려받음';
+}
+function saveAsNew(){ _fileHandle=null; exportHTML(); }</script>
+<script src="/static/range_drawer.js"></script><script src="/static/panel_tidy.js?v=20260927a"></script><script src="/static/select_all.js?v=20260927b"></script><script src="/static/tree_picker.js?v=20260927b"></script><script src="/static/print_log.js?v=20261107a"></script>
+
+</body></html>
