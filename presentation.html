@@ -688,7 +688,9 @@ return out;
 const CLAUSE_OPEN = /^(that|which|who|whom|whose|what|why|how|whatever|whoever|whichever|wherever|whenever|where|when|while|whereas|because|since|although|though|if|unless|whether|once|until|as if|even if|even though)\b/i;
 const COORD_OPEN = /^(and|but|or|yet)\b/i;
 const NO_SPLIT = (before, after)=>/\b(as (long|soon|well|far|much|many))\s*$/i.test(before) && /^as\b/i.test(after)
-|| /\b([a-z]+er|less|more|rather|other|fewer)\s*$/i.test(before) && /^than\b/i.test(after);
+|| /\b([a-z]+er|less|more|rather|other|fewer)\s*$/i.test(before) && /^than\b/i.test(after)
+|| /\b(in response|in addition|according|due|thanks|prior|in relation|with regard|with respect|close|next|in contrast|as opposed)\s*$/i.test(before) && /^to\b/i.test(after)
+|| /\b(because|instead|in terms|ahead|regardless|in spite|on behalf|in front|by means|as a result|in favor|out)\s*$/i.test(before) && /^of\b/i.test(after);
 const NO_TAIL = /\b(and|but|or|so|the|a|an|to|of|as|in|on|at|by|for|with|from|into|via|than|about|between|through|among|across|against|without|within|toward|towards|upon|onto|over|under|after|before|during|like|unlike|beyond|around|along|despite|that|which|who|whose|whom|because|since|although|though|if|unless|whether|while|whereas|until|such|is|are|was|were|be|been|being|am|have|has|had|do|does|did|will|would|can|could|may|might|shall|should|must|not|I|we|they|he|she)\s*$/i;
 function markerLed(t){ return PREP_OPEN.test(t) || CLAUSE_OPEN.test(t) || COORD_OPEN.test(t); }
 const MODAL = /^(can|could|will|would|shall|should|may|might|must|not|never)$/i;
@@ -728,91 +730,133 @@ if(!/^(who|whom|whose|which|that|where|when)\b/i.test(t)) return false;
 if(x.form === '관계절' || /명사후치수식/.test(x.lab||'') || /명사후치수식/.test(x.qlab||'')) return true;
 return !!pv && x.kind !== 'marker' && /^(who|whom|which|that)$/i.test(t) && /명사구/.test(pv.form||'');
 }
+const RANK_ORDER = 'ABCDE';
+const SUBORD = /^(because|although|though|if|unless|when|whenever|while|whereas|since|until|once|after|before|as if|even if|even though|so that|wherever)\b/i;
 function seamCands(s, ps){
 const T = (a,b)=>s.text.slice(a,b).trim();
-const out = [], open = [];
-const setT1 = (pos, why)=>{ const c = out.find(c=>c.pos === pos); if(c) Object.assign(c, {tier:1, why}); };
+const END = s.text.length, tree = s.tree || {a:0, b:END};
+const at = new Map();
+const put = (pos, rank, why, d, extra)=>{
+if(!(pos > 0 && pos < END)) return null;
+const c = at.get(pos);
+if(!c){ const n = Object.assign({pos, rank, why, d, bad:NO_TAIL.test(T(0, pos))}, extra||{}); at.set(pos, n); return n; }
+if(RANK_ORDER.indexOf(rank) < RANK_ORDER.indexOf(c.rank)) Object.assign(c, {rank, why}, extra||{});
+else if(rank === c.rank && extra && extra.force) Object.assign(c, {why, force:true, list:false});
+c.d = Math.min(c.d, d);
+return c;
+};
+const press = (pos, why, dd)=>{ const c = at.get(pos); if(c && c.rank !== 'A') Object.assign(c, {rank:'E', why, d:c.d + dd}); };
+const leaf = n => ps.find(x=>x.a >= n.a && x.a < n.b);
 const spanEnd = new Map();
-(function walk(n){
-const p = ps.find(x=>x.a >= n.a && x.a < n.b);
-if(p) spanEnd.set(p.a, Math.max(spanEnd.get(p.a)||0, n.b));
-(n.ch||[]).forEach(walk);
-})(s.tree || {a:0, b:s.text.length});
-ps.forEach((x,k)=>{
-const t = T(x.a, x.b);
-if(k > 0){
-const prev = T(ps[k-1].a, x.a);
-let closed = false;
-while(open.length && x.d <= open[open.length-1].d && k > open[open.length-1].k + 1){ open.pop(); closed = true; }
-let tier = 3, why = 'k10';
-if(isConjAdv(s, ps[k-1]))           { tier = 1; why = 'k7'; }
-else if(/([;:—]|[.?!]["”’']?)$/.test(prev)) { tier = 1; why = 'k11'; }
-else if(opensClause(x, t) && isRelative(x, t, prev, ps[k-1])) { tier = 2; why = '관계절'; }
-else if(opensClause(x, t))          { tier = 1; why = 'k12'; }
-else if(COORD_OPEN.test(t))         { if(wc(T(x.a, spanEnd.get(x.a) || x.b)) >= 3){ tier = 1; why = '등위'; } else why = 'k8'; }
-else if(closed)                     { tier = 1; why = 'k15'; }
-else if(/,$/.test(prev) && !isConjAdv(s, x)) { tier = 1; why = 'k13'; }
-else if(x.form === '동사구' || /술부/.test(x.lab||'')) { tier = 2; why = 'k9'; }
-else if(/^(부정사구|분사구|동명사구|전치사구)$/.test(x.form||'') || x.kind === 'verbal') { tier = 2; why = 'k16'; }
-out.push({pos:x.a, d:x.d, tier, why, bad:NO_TAIL.test(prev)});
-if(opensClause(x, t) && !isRelative(x, t, prev, ps[k-1])){
+(function walk(n){ const p = leaf(n); if(p) spanEnd.set(p.a, Math.max(spanEnd.get(p.a)||0, n.b)); (n.ch||[]).forEach(walk); })(tree);
+ps.forEach((x, k)=>{
+const t = T(x.a, x.b), prev = k ? T(ps[k-1].a, x.a) : '';
+if(!k){}
+else if(isConjAdv(s, ps[k-1]))                          put(x.a, 'A', '접속부사 뒤', x.d);
+else if(/([;:—]|[.?!]["”’']?)$/.test(prev))        put(x.a, 'A', '부호 뒤', x.d);
+else if(opensClause(x, t) && isRelative(x, t, prev, ps[k-1])) put(x.a, 'B', '관계절', x.d);
+else if(opensClause(x, t))                        put(x.a, SUBORD.test(t) ? 'A' : 'B', SUBORD.test(t) ? '부사절' : '명사절 머리', x.d);
+else if(COORD_OPEN.test(t)){ if(wc(T(x.a, spanEnd.get(x.a) || x.b)) >= 3) put(x.a, 'A', '등위', x.d, {list:true}); }
+else if(/,$/.test(prev) && !isConjAdv(s, x))      put(x.a, 'A', '쉼표 뒤', x.d, {list:true});
+else if(x.form === '동사구' || /술부/.test(x.lab||'')) put(x.a, 'D', '동사 앞', x.d + 0.5);
+else if(/^(부정사구|분사구|동명사구|전치사구)$/.test(x.form||'') || x.kind === 'verbal') put(x.a, 'D', '구 앞', x.d);
+else                                              put(x.a, 'E', '깊은 곳', x.d);
+if(k && opensClause(x, t) && !isRelative(x, t, prev, ps[k-1])){
 let h = k-1;
 if(wc(T(ps[h].a, x.a)) === 1 && PREP_OPEN.test(T(ps[h].a, x.a)) && h > 0){
-Object.assign(out[out.length-1], {tier:3, why:'k10'});
-setT1(ps[h].a, 'k12'); h--;
+const c = at.get(x.a); if(c) Object.assign(c, {rank:'E', why:'k0'});
+put(ps[h].a, 'B', '전치사+절', ps[h].d); h--;
 }
 const vb = h > 0 && ps[h-1].form === '동사구' && ps[h-1].kind !== 'span';
 const inf = ps[h] && (ps[h].kind === 'verbal' || ps[h].form === '부정사구');
-const objCl = /^(that|what|whether|how|why|which|who|whom|where)\b/i.test(t);
-if(h > 0 && !vb && inf && objCl && /^to\s/i.test(T(ps[h].a, ps[h].b)) && wc(T(ps[h].a, ps[h].b)) <= 3) setT1(ps[h].a, 'to+절');
+if(h > 0 && !vb && inf && /^(that|what|whether|how|why|which|who|whom|where)\b/i.test(t)
+&& /^to\s/i.test(T(ps[h].a, ps[h].b)) && wc(T(ps[h].a, ps[h].b)) <= 3) put(ps[h].a, 'B', 'to+절', ps[h].d);
 }
-}
-if(opensClause(x, t)) open.push({d:x.d, k});
-const seg = s.text.slice(x.a, x.b), re = /\s+(?=\S)/g;
-let m;
+const seg = s.text.slice(x.a, x.b), re = /\s+(?=\S)/g; let m;
 while((m = re.exec(seg))){
-const p = x.a + m.index + m[0].length;
-const before = T(x.a, p);
-if(/[,;:—]$/.test(before)) out.push({pos:p, d:x.d+1, tier:1, why:'k4', bad:NO_TAIL.test(before)});
-else if(PREP_OPEN.test(s.text.slice(p))) out.push({pos:p, d:x.d+2, tier:2, why:'k3', bad:NO_TAIL.test(before)});
-else if(CLAUSE_OPEN.test(s.text.slice(p)) && !/^that\b/i.test(s.text.slice(p))) out.push({pos:p, d:x.d+1, tier:2, why:'k0', bad:NO_TAIL.test(before)});
-else if(/^(and|but|or)\s+/i.test(s.text.slice(p)) && markerLed(s.text.slice(p).replace(/^(and|but|or)\s+/i, '')))
-out.push({pos:p, d:x.d+1, tier:2, why:'k5', bad:NO_TAIL.test(before)});
+const p = x.a + m.index + m[0].length, before = T(x.a, p), after = s.text.slice(p);
+if(/[,;:—]$/.test(before))                       put(p, 'A', '덩이 안 쉼표', x.d+1, {list:true});
+else if(CLAUSE_OPEN.test(after) && !/^that\b/i.test(after)) put(p, SUBORD.test(after) ? 'A' : 'B', '덩이 안 절 머리', x.d+1);
+else if(PREP_OPEN.test(after)){ const c = put(p, 'D', '덩이 안 전치사', x.d+2); if(c && /\b(do|does|did)\s*$/i.test(before)) c.bad = false; }
+else if(/^(and|but|or)\s+/i.test(after) && markerLed(after.replace(/^(and|but|or)\s+/i, ''))) put(p, 'D', '덩이 안 등위', x.d+1);
 }
 if(/술부/.test(x.lab||'') && x.kind === 'span'){
 const ws = [...seg.matchAll(/\S+/g)].map(m=>({w:m[0].replace(/[^A-Za-z'-]/g,''), a:x.a + m.index}));
 const e = verbGroupEnd(ws);
 let j = e + 1; while(e > 0 && j < ws.length && !(PREP_OPEN.test(ws[j].w) && !/^of$/i.test(ws[j].w))) j++;
-if(e > 0 && j - e >= 3) out.push({pos:ws[e].a, d:x.d+1, tier:0, why:'k1', bad:NO_TAIL.test(T(x.a, ws[e].a))});
+if(e > 0 && j - e >= 3) put(ws[e].a, 'C', '동사|구성요소', x.d+1);
 }
 });
-(function walk(n, d){
+(function walk(n, d, top){
+const f = (n.kind && n.kind !== 'span') ? '' : (n.form || '');
 const ks = (n.ch||[]).filter(x=>hasWord(s,x)).sort((x,y)=>x.a-y.a);
-const v = ks[0];
-ks.forEach((k,i)=>{
+const head = leaf(n);
+const nonRestr = f === '관계절' && /,\s*$/.test(s.text.slice(0, n.a));
+if((f === '주절' && top) || /^(부사절|분사구문)$/.test(f) || nonRestr){
+let a0 = head ? head.a : n.a;
+const lead = s.text.slice(a0).match(/^((?:precisely|just|only|even|simply|largely|partly|mainly|especially|exactly|right|long|soon)\s+)(?=(because|as|if|when|since|after|before|while|though|although|once|until|so)\b)/i);
+if(lead){
+if(/,\s*$/.test(s.text.slice(0, a0))){ const c = at.get(a0 + lead[1].length); if(c) c.bad = true; }
+else { const c = at.get(a0); if(c) c.bad = true; a0 += lead[1].length; }
+}
+put(a0, 'A', f === '주절' ? '주절 경계' : (nonRestr ? '관계절(쉼표)' : '부사절'), d, {force:true});
+let b0 = n.b; while(b0 < END && /[\s,;:—–-]/.test(s.text[b0])) b0++;
+if(b0 < END && /[A-Za-z]/.test(s.text.slice(b0))) put(b0, 'A', '절 끝', d, {force:true});
+}
+if(/^(명사절|인용절)$/.test(f) && head) put(head.a, 'B', '명사절 머리', d);
+if(f === '관계절' && !nonRestr && head) put(head.a, 'B', '관계절', d);
+(n.co||[]).forEach(m=>{
+if(m <= n.a || m >= n.b) return;
+let p = m; while(p < END && /\s/.test(s.text[p])) p++;
+if(COORD_OPEN.test(s.text.slice(p)) && wc(T(n.a, p)) >= 3 && wc(T(p, n.b)) >= 3){ const c = put(p, 'A', '등위', 1); if(c) c.bad = false; }
+});
+ks.forEach((k, i)=>{
 if(i && /술부/.test(k.lab||'') && /주어/.test(ks[i-1].lab||'')){
-const p = ps.find(x=>x.a >= k.a && x.a < k.b);
-if(p && p.a > 0) out.push({pos:p.a, d:d+0.5, tier:0, why:'k9', subjW:wc(T(ks[i-1].a, ks[i-1].b)), bad:NO_TAIL.test(T(0, p.a))});
+const p = leaf(k); if(p) put(p.a, 'C', '주어|동사', d + 0.5, {subjW: wc(T(ks[i-1].a, ks[i-1].b))});
 }
 });
+const v = ks[0];
 if(n.form === '동사구' && v && v.form === '동사구' && (v.kind === 'head' || v.kind === 'verbal'))
-ks.slice(1).forEach((c, i)=>{
-if(c.lab === '목적격보어' && ks[i].lab === '목적어') return;
-const p = ps.find(x=>x.a >= c.a && x.a < c.b);
-if(p && p.a > 0) out.push({pos:p.a, d, tier:0, why:'k6', bad:NO_TAIL.test(T(0, p.a))});
+ks.slice(1).forEach(c=>{ const p = leaf(c); if(p && !(p.form === '동사구' && (p.kind === 'head' || p.kind === 'verbal'))) put(p.a, 'C', '동사|구성요소', d + 1); });
+ks.forEach(k=>walk(k, d + 1, top && (f === '문장' || !n.form)));
+})(tree, 0, true);
+(function walk(n){
+const ks = (n.ch||[]).filter(x=>hasWord(s,x)).sort((x,y)=>x.a-y.a);
+ks.forEach((k, i)=>{
+if(i && k.lab === '목적격보어' && ks[i-1].lab === '목적어'){
+const p = leaf(k), q = leaf(ks[i-1]);
+if(p) press(p.a, '5형식 안', 6); if(q) press(q.a, '5형식 안', 6);
+}
 });
-ks.forEach(k=>walk(k, d+1));
-})(s.tree || {a:0, b:s.text.length}, 0);
-out.forEach(c=>{ if(NO_SPLIT(s.text.slice(0, c.pos), s.text.slice(c.pos))) c.bad = true; });
-const paren = []; { let o = -1; for(let i=0; i<s.text.length; i++){ if(s.text[i] === '(') o = i; else if(s.text[i] === ')' && o >= 0){ paren.push([o, i]); o = -1; } } }
-out.forEach(c=>{ if(paren.some(([o, e])=>c.pos > o + 1 && c.pos <= e)) c.bad = true; });
+ks.forEach(walk);
+})(tree);
 ps.forEach((x, k)=>{
 if(!k) return;
 const pv = ps[k-1], t = T(x.a, x.b);
 if(((pv.form === '동사구' && pv.kind !== 'span') || pv.form === '형용사구') && /^to\s+(?!the\b|a\b|an\b|this\b|that\b|these\b|those\b|his\b|her\b|their\b|its\b|our\b|my\b|your\b)/i.test(t))
-out.forEach(c=>{ if(c.pos === x.a && c.tier !== 1) Object.assign(c, {tier:3, why:'k2'}); });
+press(x.a, '동사+to 부정사', 0);
 });
-return out;
+at.forEach(c=>{ if(/^of\s/i.test(s.text.slice(c.pos))) press(c.pos, 'of 앞', 5); });
+const nw = t => (t.match(/[A-Za-z][A-Za-z'-]*/g)||[]).length;
+(function walk(n){
+const ms = (n.co||[]).filter(m=>m > n.a && m < n.b);
+if(ms.length){
+const bd = [n.a, ...ms, n.b], items = [];
+for(let i=0; i<bd.length-1; i++) items.push(T(bd[i], bd[i+1]).replace(/^(,|and|or|but)\s*/i, '').replace(/^(and|or|but)\s+/i, ''));
+const first = items[0].replace(/^(such as|including|like|as|for example,?)\s+/i, '');
+if([first, ...items.slice(1)].every(t=>nw(t) <= 2)){
+const lo = bd[0] + (items[0].length - first.length);
+at.forEach(c=>{ if(c.pos > lo && c.pos < n.b) c.bad = true; });
+}
+}
+(n.ch||[]).forEach(walk);
+})(tree);
+const paren = []; { let o = -1; for(let i=0; i<END; i++){ if(s.text[i] === '(') o = i; else if(s.text[i] === ')' && o >= 0){ paren.push([o, i]); o = -1; } } }
+at.forEach(c=>{
+if(NO_SPLIT(s.text.slice(0, c.pos), s.text.slice(c.pos))) c.bad = true;
+if(paren.some(([o, e])=>c.pos > o + 1 && c.pos <= e)) c.bad = true;
+});
+return [...at.values()].sort((x,y)=>x.pos-y.pos);
 }
 function steps(s){
 const W = _rowW(), px = nomPx(_availW());
@@ -826,61 +870,9 @@ const roomy = (a,b)=>FIT(textOf(s, a, b), px, W * 0.8);
 const inQuote = p => { const h = s.text.slice(0, p); return ((h.match(/"/g)||[]).length % 2 === 1
 || (h.match(/“/g)||[]).length > (h.match(/”/g)||[]).length)
 && /^\s*[.,;:!?]*["”]/.test(s.text.slice(p)); };
-const cand = seamCands(s, ps).filter(c => !inQuote(c.pos));
+const cand = seamCands(s, ps).filter(c => !c.bad && !inQuote(c.pos));
 const HARD = new Set();
-const isT1 = p => HARD.has(p);
-const lead = (a, b)=>{
-const t = T(a, b);
-if(/^to\s/i.test(t)){
-const pv = ps.filter(x=>x.b <= a + 1).pop();
-if(pv && pv.form === '동사구' && pv.kind !== 'span') return false;
-}
-return markerLed(t) && wc(t) >= 3;
-};
-const subjW = (c, a)=>{ const k = cand.find(x=>x.pos === c.pos && x.subjW != null); return k ? k.subjW : wc(T(a, c.pos).replace(CLAUSE_OPEN, '').replace(COORD_OPEN, '')); };
-const ok = (c, a, b, L3 = true) => !c.bad && wc(T(a, c.pos)) >= (c.tier === 1 || !L3 ? 2 : 3) && wc(T(c.pos, b)) >= 2
-&& !(c.why === 'k9' && subjW(c, a) < 4);
-const LIST = /^(k13|k4|등위)$/;
-const needOf = p => cand.some(c=>c.pos === p && c.tier === 1 && !LIST.test(c.why)) ? 2 : 3;
-function breath(a, b){
-const ps1 = [...new Set(cand.filter(c=>c.tier === 1 && !c.bad && c.pos > a && c.pos < b).map(c=>c.pos))].sort((x,y)=>x-y);
-const out = []; let lo = a;
-const headLike = p => /^(and|but|or|so|yet|that|which|who|what|how|whether)\b/i.test(s.text.slice(p))
-|| ps.some(x=>x.a === p && (x.form === '동사구' || /술부/.test(x.lab||'')));
-let skip = -1;
-ps1.forEach((p, i)=>{
-if(p === skip) return;
-const nx = i+1 < ps1.length ? ps1[i+1] : b, need = needOf(p);
-if(wc(T(lo, p)) < need || wc(T(p, b)) < 2) return;
-if(wc(T(p, nx)) >= need){ out.push([lo, p]); lo = p; HARD.add(p); }
-else if(headLike(p) && nx < b){ out.push([lo, p]); lo = p; HARD.add(p); skip = nx; }
-});
-out.push([lo, b]);
-return out;
-}
-function fold(a, b){
-if(fits(a, b)) return [[a, b]];
-let cs = cand.filter(c=>c.pos > a && c.pos < b && ok(c, a, b));
-if(!cs.length) cs = cand.filter(c=>c.pos > a && c.pos < b && ok(c, a, b, false));
-const w3 = c => wc(T(c.pos, b)) >= 3;
-const lv = [c=>c.tier === 0, c=>c.tier === 1 || c.tier === 2, c=>c.tier === 3];
-let pool = [];
-for(const g of [w3, ()=>true]){ for(const f of lv){ pool = cs.filter(c=>g(c) && f(c)); if(pool.length) break; } if(pool.length) break; }
-if(!pool.length) return [[a, b]];
-const dm = Math.min(...pool.map(c=>c.d));
-const cuts = [...new Set(pool.filter(c=>c.d === dm).map(c=>c.pos))].sort((x,y)=>x-y);
-const bd = [a, ...cuts, b], parts = [];
-for(let i=0; i<bd.length-1; i++) parts.push([bd[i], bd[i+1]]);
-const merged = [parts[0]];
-for(let i=1; i<parts.length; i++){
-const L = merged[merged.length-1], P = parts[i];
-const leads = i === parts.length-1 && b < END && isT1(b)
-&& cand.some(c=>c.pos === P[0] && c.why === 'k9');
-if(!isT1(P[0]) && !leads && (lead(P[0], P[1]) ? roomy(L[0], P[1]) : fits(L[0], P[1]))) L[1] = P[1]; else merged.push(P);
-}
-return merged.flatMap(p=>fold(p[0], p[1]));
-}
-let start = 0, spans = [];
+const LONE = /^(and|but|or|nor|so|yet|even|just|only|especially|precisely|right)$/i;
 if(fits(0, END)){
 const rows = [{a:0, b:END, ask:'', lab:''}];
 const q = ps.find(x=>askOf(x)); if(q){ rows[0].ask = askOf(q); rows[0].lab = q.lab||q.qlab||''; }
@@ -888,12 +880,65 @@ rows[0].text = textOf(s, 0, END);
 s._sk = key; s._st = [rows];
 return s._st;
 }
+function always(a, b){
+const out = []; let lo = a;
+const ps1 = cand.filter(c=>c.rank === 'A' && c.pos > a && c.pos < b);
+ps1.forEach((c, i)=>{
+const L = T(lo, c.pos), nx = i+1 < ps1.length ? ps1[i+1].pos : b;
+if(LONE.test(L) || wc(T(c.pos, b)) < 1) return;
+if(c.list){ if(wc(L) < 3 || wc(T(c.pos, nx)) < 3) return; }
+else if(wc(L) < 2 && !/[,;:—]$/.test(L)) return;
+out.push([lo, c.pos]); lo = c.pos; HARD.add(c.pos);
+});
+out.push([lo, b]);
+return out;
+}
+const leftMin = {A:2, B:1, C:3, D:3, E:3};
+function okAt(c, a, b, loose){
+const L = T(a, c.pos);
+if(LONE.test(L) || wc(T(c.pos, b)) < 2) return false;
+if(c.why === '주어|동사' && (c.subjW != null ? c.subjW : wc(L)) < 2) return false;
+if(c.rank === 'B' && /관계절/.test(c.why) && wc(L) < 2) return false;
+if(c.rank === 'B' && wc(T(c.pos, b)) < 3) return false;
+return wc(L) >= (loose ? Math.min(2, leftMin[c.rank]) : leftMin[c.rank]);
+}
+function lead(a, b){
+const t = T(a, b);
+if(/^to\s/i.test(t)){ const pv = ps.filter(x=>x.b <= a + 1).pop(); if(pv && pv.form === '동사구' && pv.kind !== 'span') return false; }
+return markerLed(t) && wc(t) >= 3;
+}
+function fold(a, b){
+if(fits(a, b)) return [[a, b]];
+for(const [loose, r] of [[false,'B'],[false,'C'],[false,'D'],[false,'E'],[true,'C'],[true,'D'],[true,'E']]){
+let pool = cand.filter(c=>(c.rank === r || (r === 'D' && c.rank === 'A')) && c.pos > a && c.pos < b && okAt(c, a, b, loose));
+if(!pool.length) continue;
+if(r === 'B'){
+const sp = cand.filter(c=>c.why === '주어|동사' && c.rank === 'C' && c.pos > a && c.pos < b && okAt(c, a, b));
+const bmin = Math.min(...pool.map(c=>c.d)), b0 = pool.filter(c=>c.d === bmin).reduce((x, y)=> y.pos < x.pos ? y : x);
+if(sp.some(c=>c.d < bmin && b0.pos < c.pos)) continue;
+}
+const w3 = pool.filter(c=>wc(T(c.pos, b)) >= 3); if(w3.length) pool = w3;
+const dm = Math.min(...pool.map(c=>c.d));
+let cuts = pool.filter(c=>c.d === dm);
+if(r === 'B') cuts = [cuts.reduce((x, y)=> y.pos < x.pos ? y : x)];
+cuts.forEach(c=>{ if(r === 'B' || c.why === '주어|동사') HARD.add(c.pos); });
+const bd = [a, ...[...new Set(cuts.map(c=>c.pos))].sort((x,y)=>x-y), b], parts = [];
+for(let i=0; i<bd.length-1; i++) parts.push([bd[i], bd[i+1]]);
+const merged = [parts[0]];
+for(let i=1; i<parts.length; i++){
+const L = merged[merged.length-1], P = parts[i];
+if(!HARD.has(P[0]) && (lead(P[0], P[1]) ? roomy(L[0], P[1]) : fits(L[0], P[1]))) L[1] = P[1]; else merged.push(P);
+}
+return merged.flatMap(p=>fold(p[0], p[1]));
+}
+return [[a, b]];
+}
+let start = 0, spans = [];
 if(ps.length > 1 && isConjAdv(s, ps[0])){ spans.push([0, ps[1].a]); start = ps[1].a; HARD.add(start); }
-spans = spans.concat(breath(start, END).flatMap(p=>fold(p[0], p[1])));
+spans = spans.concat(always(start, END).flatMap(p=>fold(p[0], p[1])));
 for(let n2=1; n2<spans.length; ){
 const P = spans[n2], L = spans[n2-1];
-const leads = P[1] < END && isT1(P[1]) && cand.some(c=>c.pos === P[0] && c.why === 'k9');
-if(!isT1(P[0]) && !leads && (lead(P[0], P[1]) ? roomy(L[0], P[1]) : fits(L[0], P[1]))){ L[1] = P[1]; spans.splice(n2, 1); } else n2++;
+if(!HARD.has(P[0]) && (lead(P[0], P[1]) ? roomy(L[0], P[1]) : fits(L[0], P[1]))){ L[1] = P[1]; spans.splice(n2, 1); } else n2++;
 }
 const rows = spans.map(([a, b])=>{
 const q = ps.find(x=>x.a >= a && x.a < b && askOf(x));
@@ -917,7 +962,7 @@ const st = [];
 for(const r of rows){
 if(!r.text) continue;
 const g = st[st.length-1];
-if(g && !r.mac && FIT(textOf(s, g[0].a, r.b), px, W)){ g.push(r); continue; }
+if(g && !r.mac && !HARD.has(r.a) && FIT(textOf(s, g[0].a, r.b), px, W)){ g.push(r); continue; }
 st.push([r]);
 }
 s._sk = key; s._st = st;
